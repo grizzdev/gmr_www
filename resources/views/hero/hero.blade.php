@@ -9,8 +9,10 @@
 					<div class="col-sm-12 col-md-6">
 						<div class="row">
 							<div class="col-xs-12">
-								@if($hero->file->id)
-								<img src="{{ $hero->file->url() }}" alt="{{ $hero->name }}" class="img-responsive" style="min-width: 100%" />
+								@if($hero->file_id)
+								<img src="{{ $hero->file->url() }}" alt="{{ $hero->name }}" class="img-responsive img-rounded" />
+								@else
+								<img src="{{ asset('uploads/2015/05/Profile-generic.jpg') }}" alt="{{ $hero->name }}" class="img-responsive img-rounded" />
 								@endif
 							</div>
 						</div>
