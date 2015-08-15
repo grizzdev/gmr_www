@@ -16275,7 +16275,7 @@ body {
 
 header nav {
   height: 75px;
-  background: rgba(255, 255, 255, 0.95) !important; }
+  background: rgba(255, 255, 255, 0.9) !important; }
   header nav .container,
   header nav .container-fluid {
     height: 74px; }
@@ -16304,7 +16304,12 @@ header nav {
           max-height: 24px; }
     header nav .container .navbar-collapse,
     header nav .container-fluid .navbar-collapse {
-      max-height: 600px !important; }
+      max-height: 600px !important;
+      background: rgba(255, 255, 255, 0) !important; }
+      @media (max-width: 768px) {
+        header nav .container .navbar-collapse,
+        header nav .container-fluid .navbar-collapse {
+          background: rgba(255, 255, 255, 0.9) !important; } }
       header nav .container .navbar-collapse ul.nav > li.active a,
       header nav .container .navbar-collapse ul.navbar-nav > li.active a,
       header nav .container-fluid .navbar-collapse ul.nav > li.active a,

@@ -30,7 +30,7 @@ header {
 
 	nav {
 		height: 75px;
-		background: rgba(255, 255, 255, 0.95) !important;
+		background: rgba(255, 255, 255, 0.9) !important;
 
 		.container,
 		.container-fluid {
@@ -66,8 +66,12 @@ header {
 			}
 
 			.navbar-collapse {
-				//background: rgba(255, 255, 255, 0.95) !important;
 				max-height: 600px !important;
+				background: rgba(255, 255, 255, 0.0) !important;
+
+				@media (max-width: $screen-sm-min) {
+					background: rgba(255, 255, 255, 0.9) !important;
+				}
 
 				ul {
 
