@@ -1,0 +1,18 @@
+payment types
+
+user
+	login/logout
+	account
+	orders
+
+product
+	move attribute logic to model
+	child attribute pricing
+
+cron
+	update product sales/amounts
+
+order
+	on refunded/cancelled:
+		update hero->raised
+
