@@ -44,20 +44,12 @@ Route::post('cart', 'ShopController@updateCart');
 Route::delete('cart/{key}', 'ShopController@deleteCart');
 Route::put('cart', 'ShopController@addCart');
 
-Route::get('checkout', 'ShopController@checkout');
-Route::post('checkout', 'ShopController@postCheckout');
-Route::post('checkout/states', 'ShopController@states');
-Route::post('checkout/paypal', 'ShopController@postPayPal');
-Route::get('checkout/token', 'ShopController@paypalToken');
+Route::group(['middleware' => 'secure', 'prefix' => 'checkout'], function() {
+	Route::get('/', 'ShopController@checkout');
+	Route::post('/', 'ShopController@postCheckout');
+	Route::post('/states', 'ShopController@states');
+	Route::post('/paypal', 'ShopController@postPayPal');
+	Route::get('/token', 'ShopController@paypalToken');
+});
 
 Route::get('order/{hash}', 'ShopController@order');
-
-Route::group(['prefix' => 'demo'], function() {
-	Route::get('', 'DemoController@home');
-	Route::get('about', 'DemoController@about');
-	Route::get('contact', 'DemoController@contact');
-	Route::get('faq', 'DemoController@faq');
-	Route::get('shop', 'DemoController@shop');
-	Route::get('product', 'DemoController@product');
-	Route::get('team', 'DemoController@team');
-});
