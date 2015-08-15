@@ -217,5 +217,4 @@
 		</div>
 	</div>
 </div>
-<pre>{{ print_r(session('cart')) }}</pre>
 @endsection
