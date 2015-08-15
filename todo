@@ -1,5 +1,11 @@
+DELETE ORDERS FROM xxx forward!!!!
+
 nominate page
 	smooth scroll to top on error
+
+product page
+	hero-bar
+			.toFixed(2) contribution amount
 
 payment types
 
