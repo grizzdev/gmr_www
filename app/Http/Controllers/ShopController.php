@@ -199,7 +199,7 @@ class ShopController extends Controller {
 		$items = $request->session()->get('cart');
 
 		if (empty($items)) {
-			return redirect('cart');
+			return redirect(url('cart'));
 		}
 
 		$lcountries = Location::countries();
