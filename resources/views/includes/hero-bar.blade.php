@@ -2,7 +2,11 @@
 	<div class="hero-bar-inner">
 		<div class="row vcenter">
 			<div class="col-xs-7 col-sm-8 col-md-5">
+				@if($hero->file_id)
 				<img src="{{ $hero->file->url() }}" alt="{{ $hero->name }}" class="hidden-xs" />
+				@else
+				<img src="{{ asset('uploads/2015/05/Profile-generic.jpg') }}" alt="{{ $hero->name }}" class="hidden-xs" />
+				@endif
 				<h5 class="pt-5 pb-10">{{ $hero->name }}</h5>
 				<div class="progress">
 					<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{ floor((($hero->raised + $hero->contribution_in_cart()) / $hero->goal) * 100) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ floor((($hero->raised + $hero->contribution_in_cart()) / $hero->goal) * 100) }}%;">
