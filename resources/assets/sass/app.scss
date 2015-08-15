@@ -635,7 +635,7 @@ i.caring-bridge {
 			float: left;
 			display: inline-block;
 			height: 72px !important;
-			margin: -5px 10px 0 0;
+			margin: 0 10px 0 0;
 		}
 
 		h5 {
@@ -646,6 +646,10 @@ i.caring-bridge {
 
 		p {
 			color: $white;
+		}
+
+		.brd-rt.brd-lt {
+			//height: 72px;
 		}
 	}
 }

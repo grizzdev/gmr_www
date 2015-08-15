@@ -127,18 +127,19 @@ class HeroController extends Controller {
 	public function postNominate(Request $request) {
 		$sidekick_id = null;
 		if (!empty($request->input('sidekick-email')) && !empty($request->input('sidekick-name'))) {
-			$sidekick = User::firstOrCreate([
+			$sidekick = User::firstOrNew([
 				'email' => $request->input('sidekick-email'),
 				'name' => $request->input('sidekick-name')
 			]);
+			$sidekick->save();
 
 			$sidekick_id = $sidekick->id;
 		}
 
-		$nominee = User::firstOrCreate([
-			'email' => $request->input('email'),
-			'name' => $request->input('name')
+		$nominee = User::firstOrNew([
+			'email' => $request->input('email')
 		]);
+		$nominee->name = $request->input('name');
 
 		$birth_date = date('Y-m-d', strtotime($request->input('hero-dob-month').'/'.$request->input('hero-dob-day').'/'.$request->input('hero-dob-year')));
 
@@ -158,6 +159,8 @@ class HeroController extends Controller {
 			'twitter_url' => $request->input('twitter-url'),
 			'youtube_url' => $request->input('youtube-url'),
 			'caringbridge_url' => $request->input('caringbridge-url'),
+			'goal' => 0,
+			'raised' => 0,
 			'active' => false,
 			'funded' => false,
 			'file_id' => $request->input('file-id'),
