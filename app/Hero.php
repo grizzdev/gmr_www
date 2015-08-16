@@ -160,18 +160,20 @@ class Hero extends Model implements SluggableInterface {
 
 		if (session('cart')) {
 			foreach (session('cart') as $item) {
-				if ($item['attributes'][39] == $this->id) {
-					if (!empty($item['attributes'][38])) {
-						$contribution += $item['attributes'][38];
-					} else {
-						$product = Product::find($item['product_id']);
-						$contribution += ($product->contribution_amount * $item['quantity']);
+				if (isset($item['attributes'])) {
+					if ($item['attributes'][39] == $this->id) {
+						if (!empty($item['attributes'][38])) {
+							$contribution += $item['attributes'][38];
+						} else {
+							$product = Product::find($item['product_id']);
+							$contribution += ($product->contribution_amount * $item['quantity']);
+						}
 					}
 				}
 			}
 		}
 
-		return $contribution;
+		return is_float($contribution) ? number_format($contribution, 2, '.', '') : $contribution;
 	}
 
 }

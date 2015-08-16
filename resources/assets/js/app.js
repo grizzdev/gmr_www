@@ -80,13 +80,7 @@ $('#nominateForm').validator({
 	$('#nominateForm').find('.form-control-feedback').removeClass('glyphicon-ok');
 });
 
-$('#cartForm').validator({
-	disable: true,
-}).on('submit', function(e) {
-	if (e.isDefaultPrevented()) {
-		return false
-	}
-}).on('ajax:success', function(e, data, status, xhr) {
+$('#cart-content').on('ajax:success', '#cartForm', function(e, data, status, xhr) {
 	$('#cart-content').html(data.view);
 	$('#cart-count').html(data.count);
 });
@@ -108,7 +102,7 @@ $('#productFrom').validator({
 	$('#productModal').modal('show');
 
 	if ($('.hero-bar').length) {
-		$('.hero-contributing').html('$'+data.contribution);
+		$('.hero-contributing').html('$'+parseFloat(data.contribution).toFixed(2));
 		$('.hero-bar').find('.progress-bar').attr('aria-valuenow', data.percentage).css('width', data.percentage+'%');
 		$('.hero-bar').find('.progress-bar span').html(data.percentage+'%');
 	}
