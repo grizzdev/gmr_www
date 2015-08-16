@@ -30,7 +30,6 @@
 		<meta property="og:title" content="{{ $title or null }} | Gamerosity" />
 		<meta property="og:description" content="{{ $description or 'Gamerosity' }}" />
 		<meta property="og:image" content="{{ asset('img/footer.png') }}" />
-</head>
 	</head>
 	<body>
 		@yield('page')
