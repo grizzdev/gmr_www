@@ -97,7 +97,7 @@
 	</div>
 </div>
 <div class="home-section-video full-width" id="video">
-	<iframe src="http://player.vimeo.com/video/58801763?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff" allowfullscreen="" id="fitvid542864"></iframe>
+	<iframe src="//player.vimeo.com/video/58801763?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff" allowfullscreen="" id="fitvid542864"></iframe>
 </div>
 <div class="home-section-shop full-width">
 	<div class="row">

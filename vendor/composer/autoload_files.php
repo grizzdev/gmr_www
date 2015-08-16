@@ -8,8 +8,8 @@ $baseDir = dirname($vendorDir);
 return array(
     $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php',
     $vendorDir . '/symfony/var-dumper/Resources/functions/dump.php',
-    $vendorDir . '/guzzlehttp/promises/src/functions.php',
-    $vendorDir . '/guzzlehttp/psr7/src/functions.php',
+    $vendorDir . '/guzzlehttp/psr7/src/functions_include.php',
+    $vendorDir . '/guzzlehttp/promises/src/functions_include.php',
     $vendorDir . '/nikic/php-parser/lib/bootstrap.php',
     $vendorDir . '/mtdowling/jmespath.php/src/JmesPath.php',
     $vendorDir . '/guzzlehttp/guzzle/src/functions_include.php',

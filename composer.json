@@ -10,11 +10,11 @@
         "cviebrock/eloquent-sluggable": "^3.0",
         "laravelcollective/html": "5.1.*",
         "barryvdh/laravel-debugbar": "^2.0",
-        "laravel/cashier": "~5.0",
         "aws/aws-sdk-php-laravel": "~3.0",
         "zizaco/entrust": "dev-laravel-5",
         "jenssegers/agent": "^2.1",
-        "vinkla/hashids": "^2.0"
+        "vinkla/hashids": "^2.0",
+	"laravel/cashier": "~5.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
