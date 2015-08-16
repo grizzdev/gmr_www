@@ -57,7 +57,9 @@ class HeroController extends Controller {
 
 	public function hero($slug) {
 		$hero = Hero::where('slug', '=', $slug)->where('active', '=', 1)->first();
-		session(['hero_slug' => $slug]);
+		if (!$hero->funded) {
+			session(['hero_slug' => $slug]);
+		}
 
 		if (!empty($hero->id)) {
 			return view('hero.hero', ['title' => $hero->name, 'hero' => $hero]);
@@ -67,7 +69,7 @@ class HeroController extends Controller {
 	}
 
 	public function hall() {
-		$heroes = Hero::where('active', '=', 1)->where('funded', '=', 1)->paginate(16);
+		$heroes = Hero::where('active', '=', 1)->where('funded', '=', 1)->paginate(24);
 
 		if ($heroes->count()) {
 			return view('hero.hall', ['title' => 'Hall of Heroes', 'heroes' => $heroes]);

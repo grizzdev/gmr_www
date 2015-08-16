@@ -65,6 +65,7 @@
 								<span class="raised-of-goal">${{ $hero->raised }} RAISED OF ${{ $hero->goal() }} GOAL</span>
 							</div>
 						</div>
+						@if(!$hero->funded)
 						<div class="row pt-10 text-center">
 							<div class="col-xs-5">
 								<h2>${{ (($hero->goal() - $hero->raised) > 0) ? ($hero->goal() - $hero->raised): 0 }}</h2>
@@ -84,6 +85,7 @@
 								<a href="{{ url('product/donate/'.$hero->slug) }}" class="btn btn-danger">DONATE TO THIS CAMPAIGN</a>
 							</div>
 						</div>
+						@endif
 					</div>
 				</div>
 				<div class="row pt-40 pb-40">
@@ -95,7 +97,9 @@
 			</div>
 		</div>
 	</section>
+	@if(!$hero->funded)
 	@include('includes.hero-bar', ['hero' => $hero]);
+	@endif
 	<section class="container-fluid">
 		<div class="row hero-content-bottom">
 			<div class="col-sm-12 col-md-10 col-md-offset-1 pt-40">

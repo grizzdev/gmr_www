@@ -9,8 +9,8 @@
 				@endif
 				<h5 class="pt-5 pb-10">{{ $hero->name }}</h5>
 				<div class="progress">
-					<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{ floor((($hero->raised + $hero->contribution_in_cart()) / $hero->goal) * 100) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ floor((($hero->raised + $hero->contribution_in_cart()) / $hero->goal) * 100) }}%;">
-						<span>{{ floor((($hero->raised + $hero->contribution_in_cart()) / $hero->goal) * 100) }}% Complete</span>
+					<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{ $hero->percent() }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $hero->percent() }}%;">
+						<span>{{ $hero->percent() }}% Complete</span>
 					</div>
 				</div>
 			</div>
