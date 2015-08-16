@@ -1,9 +1,13 @@
 DELETE ORDERS FROM xxx forward!!!!
 
+robots.txt
+charge stripe tokens!!
+
 nominate page
 	smooth scroll to top on error
 
 product page
+	only active heroes in select
 	hero-bar
 			.toFixed(2) contribution amount
 
@@ -24,4 +28,6 @@ cron
 order
 	on refunded/cancelled:
 		update hero->raised
+	email
+		number_format subtotal (all numbers for that matter)
 
