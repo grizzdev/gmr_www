@@ -110,7 +110,7 @@ $order = \App\Order::find($order['id']);
 					<tr>
 						<th colspan="2" rowspan="3"></th>
 						<td align="right">Subtotal</td>
-						<td align="right">${{ $checkout['total'] }}
+						<td align="right">${{ number_format($checkout['total'], 2, '.', '') }}
 					</tr>
 					<tr>
 						<td align="right">Shipping</td>

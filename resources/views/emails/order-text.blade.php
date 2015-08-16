@@ -50,6 +50,6 @@ Items:
 	Qty: {{ $item['quantity'] }}
 @endforeach
 
-Subtotal: ${{ $checkout['total'] }}
+Subtotal: ${{ number_format($checkout['total'], 2, '.', '') }}
 Shipping: FREE
-Total: ${{ $checkout['total'] }}
+Total: ${{ number_format($checkout['total'], 2, '.', '') }}

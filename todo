@@ -1,16 +1,16 @@
 DELETE ORDERS FROM xxx forward!!!!
 
-robots.txt
 charge stripe tokens!!
 fix nomination emails
+new email templates
+insecure middleware
+cache
+s3 w/referrer
+check shipping calc
+gamerosity bracelets
 
 nominate page
 	smooth scroll to top on error
-
-product page
-	only active heroes in select
-	hero-bar
-			.toFixed(2) contribution amount
 
 payment types
 
@@ -29,6 +29,4 @@ cron
 order
 	on refunded/cancelled:
 		update hero->raised
-	email
-		number_format subtotal (all numbers for that matter)
 

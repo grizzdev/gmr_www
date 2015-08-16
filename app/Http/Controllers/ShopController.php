@@ -620,7 +620,7 @@ class ShopController extends Controller {
 
 	public static function calculate_shipping() {
 		$base_shipping = 0;
-		$lightweight = 0; // (bracelets, stickers, etc) $2 for first time, $.50 for each additional
+		$lightweight = 0; // (bracelets, stickers, etc) $2 for first item, $.50 for each additional
 		$garments = 0; // $5.50 for first item, $1.50 each additional
 		$hats = 0; // $7 for first item, $1.50 for each additional
 		$hoodies = 0; // $8 for first item, $2.50 for each additional
@@ -634,22 +634,22 @@ class ShopController extends Controller {
 						if ($base_shipping < 7) {
 							$base_shipping = 7;
 						}
-						$hats++;
+						$hats += $item['quantity'];
 					} elseif($category->name == 'Garments') {
 						if ($base_shipping < 5.5) {
 							$base_shipping = 5.5;
 						}
-						$garments++;
+						$garments += $item['quantity'];
 					} elseif($category->name == 'Sweats') {
 						if ($base_shipping < 8) {
 							$base_shipping = 8;
 						}
-						$hoodies++;
+						$hoodies += $item['quantity'];
 					} elseif(in_array($category->name, $lightweights)) {
 						if ($base_shipping < 2) {
 							$base_shipping = 2;
 						}
-						$lightweight++;
+						$lightweight += $item['quantity'];
 					}
 				}
 			}

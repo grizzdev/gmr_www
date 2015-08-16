@@ -1,4 +1,4 @@
-<footer>
+<footer class="hidden-print">
 	<div class="container-fluid text-center">
 		<div class="row">
 			<div class="footer-image mb-30 col-xs-12 wow fadeInUpBig" data-wow-duration="1.5s">

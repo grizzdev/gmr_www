@@ -832,6 +832,21 @@ i.caring-bridge {
 	}
 }
 
+.order-content {
+	@media print {
+		font-size: 0.8571428571em;
+
+		.col-xs-12 {
+			width: 50% !important;
+			float: left !important;
+		}
+
+		table {
+			display: block;
+		}
+	}
+}
+
 footer {
 	position: relative;
 	padding: 40px 0;
