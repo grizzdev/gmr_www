@@ -211,7 +211,7 @@
 				<p>{{ $product->name }} added to cart.</p>
 			</div>
 			<div class="modal-footer">
-				<a href="{{ url('cart') }}" class="btn btn-success">View Cart</a>
+				<a href="{{ url('cart') }}" class="btn btn-primary">View Cart</a>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Continue Shopping</button>
 			</div>
 		</div>
