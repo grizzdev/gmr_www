@@ -16801,6 +16801,15 @@ i.caring-bridge {
     .shop-products .shop-product .product-button:hover {
       background-color: #CCC; }
 
+@media print {
+  .order-content {
+    font-size: 0.8571428571em; }
+    .order-content .col-xs-12 {
+      width: 50% !important;
+      float: left !important; }
+    .order-content table {
+      display: block; } }
+
 footer {
   position: relative;
   padding: 40px 0;
