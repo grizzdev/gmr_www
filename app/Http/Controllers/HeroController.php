@@ -67,7 +67,7 @@ class HeroController extends Controller {
 	}
 
 	public function hall() {
-		$heroes = Hero::where('active', '=', 1)->where('funded', '=', 1)->paginate(16);
+		$heroes = Hero::where('active', '=', 1)->where('funded', '=', 1)->paginate(24);
 
 		if ($heroes->count()) {
 			return view('hero.hall', ['title' => 'Hall of Heroes', 'heroes' => $heroes]);
