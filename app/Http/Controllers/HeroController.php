@@ -35,12 +35,12 @@ class HeroController extends Controller {
 
 	public function search(Request $request) {
 		if (!empty($request->input('hero-search'))) {
-			$heroes = Hero::where('name', 'LIKE', "%{$request->input('hero-search')}%")
+			$heroes = Hero::where('active', '=', 1)
+				->where('funded', '=', 0)
+				->where('name', 'LIKE', "%{$request->input('hero-search')}%")
 				->orWhere('cancer_type', 'LIKE', "%{$request->input('hero-search')}%")
 				->orWhere('hospital_name', 'LIKE', "%{$request->input('hero-search')}%")
 				->orWhere('hospital_location', 'LIKE', "%{$request->input('hero-search')}%")
-				->where('active', '=', 1)
-				->where('funded', '=', 0)
 				->get();
 				$paginate = false;
 		} else {

@@ -16684,7 +16684,7 @@ i.caring-bridge {
     background: rgba(8, 100, 163, 0.9);
     color: #FFF;
     padding: 0 15px;
-    height: 72px; }
+    height: 72px !important; }
     .hero-bar .hero-bar-inner.affix {
       position: fixed;
       z-index: 20;

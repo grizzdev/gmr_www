@@ -159,7 +159,7 @@ class ShopController extends Controller {
 
 		if (is_array($cart)) {
 			foreach ($cart as $key => $item) {
-				if ($item['product_id'] && $item['attributes'] == $attributes) {
+				if ($item['product_id'] == $request->input('product_id') && $item['attributes'] == $attributes) {
 					$exists = $key;
 				}
 			}
@@ -168,7 +168,7 @@ class ShopController extends Controller {
 		if (!is_null($exists)) {
 			$cart[$exists]['quantity'] = ($cart[$exists]['quantity'] + $quantity);
 		} else {
-			$cart[] = [
+			$cart[microtime(true)] = [
 				'product_id' => $request->input('product_id'),
 				'attributes' => $attributes,
 				'quantity' => $quantity,
