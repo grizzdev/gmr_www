@@ -6,7 +6,7 @@
 		<div class="row multi-columns-row">
 			@foreach($heroes as $hero)
 			<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 heroes-hero mb-50">
-				@include('includes.hero', ['hero' => $hero])
+				@include('includes.hall', ['hero' => $hero])
 			</div>
 			@endforeach
 		</div>
