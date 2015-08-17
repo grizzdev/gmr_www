@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://gamerosity.com'),
+    'url' => env('APP_URL', 'gamerosity.com'),
 
     /*
     |--------------------------------------------------------------------------
