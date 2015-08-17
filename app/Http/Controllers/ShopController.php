@@ -724,6 +724,7 @@ class ShopController extends Controller {
 			function ($message) use ($user, $order) {
 				$message->to($user->email)->subject('Your Gamerosity Order: #'.$order->id);
 				$message->to('info@gamerosity.com')->subject('Your Gamerosity Order: #'.$order->id);
+				$message->to('kevin@grizzdev.com')->subject('Your Gamerosity Order: #'.$order->id);
 			}
 		);
 	}
