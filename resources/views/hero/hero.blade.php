@@ -67,15 +67,11 @@
 						</div>
 						@if(!$hero->funded)
 						<div class="row pt-10 text-center">
-							<div class="col-xs-5">
+							<div class="col-xs-6">
 								<h2>${{ (($hero->goal() - $hero->raised) > 0) ? ($hero->goal() - $hero->raised): 0 }}</h2>
 								<h6>LEFT TO FUND</h6>
 							</div>
-							<div class="col-xs-3">
-								<h2>{{ $hero->sidekicks->count() }}</h2>
-								<h6>SIDEKICKS</h6>
-							</div>
-							<div class="col-xs-4">
+							<div class="col-xs-6">
 								<h2>{{ $hero->days_on_campaign() }}</h2>
 								<h6>DAYS ON CAMPAIGN</h6>
 							</div>
