@@ -7,8 +7,10 @@ use Closure;
 class Secure {
 
 	public function handle($request, Closure $next) {
-		if (!$request->secure()) {
-			return redirect(secure_url($request->path()));
+		if (env('APP_ENV') != 'development') {
+			if (!$request->secure()) {
+				return redirect(secure_url($request->path()));
+			}
 		}
 
 		return $next($request);
