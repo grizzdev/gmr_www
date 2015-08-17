@@ -117,6 +117,14 @@
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-xs-6">
+								<b>Order Number:</b>
+							</div>
+							<div class="col-xs-6">
+							{{ $order->id }}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-6">
 								<b>Order Date:</b>
 							</div>
 							<div class="col-xs-6">
