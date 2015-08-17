@@ -4,7 +4,9 @@
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th colspan="3">PRODUCT</th>
+					<th></th>
+					<th class="hidden-xs"></th>
+					<th>PRODUCT</th>
 					<th>PRICE</th>
 					<th style="width:100px">QUANTITY</th>
 					<th>TOTAL</th>
@@ -16,9 +18,9 @@
 					<td style="width:72px" align="center">
 						<a href="{{ url('cart', $key) }}" data-method="delete" data-remote="true" rel="nofollow" class="item-remove"><i class="glyphicon glyphicon-remove"></i></a>
 					</td>
-					<td style="width:72px" align="center">
+					<td class="hidden-xs" style="width:72px" align="center">
 						@if(!empty($item['product']->files()->first()->id))
-						<img src="{{ $item['product']->files()->first()->url() }}" alt="{{ $item['product']->name }}" class="img-thumbnail" />
+						<img src="{{ $item['product']->files()->first()->url() }}" alt="{{ $item['product']->name }}" class="img-thumbnail hidden-xs" />
 						@endif
 					</td>
 					<td>
@@ -59,39 +61,46 @@
 				</tr>
 				@endforeach
 			</tbody>
+		</table>
+		<table class="table">
 			<tfoot>
 				<tr>
-					<td colspan="2">
-						{!! Form::text('coupon_code', null, ['class' => 'form-control', 'placeholder' => 'COUPON CODE', 'id' => 'coupon_code']) !!}
+					<td colspan="3">
+						<div class="row">
+							<div class="col-xs-5 col-sm-2">
+								{!! Form::text('coupon_code', null, ['class' => 'form-control', 'placeholder' => 'COUPON CODE', 'id' => 'coupon_code', 'style' => 'max-width:144px']) !!}
+							</div>
+							<div class="col-xs-7 col-sm-10">
+								{!! Form::button('APPLY COUPON', ['class' => 'btn btn-sm btn-primary btn-coupon']) !!}
+							</div>
+						</div>
 					</td>
-					<td colspan="2">
-						{!! Form::button('APPLY COUPON', ['class' => 'btn btn-primary btn-coupon']) !!}
-					</td>
-					<td colspan="2" align="right">
-						{!! Form::submit('UPDATE CART', ['class' => 'btn btn-primary']) !!}
+					<td align="right">
+						{!! Form::submit('UPDATE CART', ['class' => 'btn btn-sm btn-primary']) !!}
 					</td>
 				</tr>
 				<tr>
-					<td rowspan="{{ (\App\Http\Controllers\ShopController::calculate_discount() == 0) ? 3 : 4 }}" colspan="3" align="right">
+					<td rowspan="{{ (\App\Http\Controllers\ShopController::calculate_discount() == 0) ? 3 : 4 }}" width="50%"></td>
+					<td rowspan="{{ (\App\Http\Controllers\ShopController::calculate_discount() == 0) ? 3 : 4 }}" align="right">
 						<h3 style="margin:0">Cart Totals</h3>
 					</td>
-					<th colspan="2" align="right">SUBTOTAL</th>
+					<th align="right">SUBTOTAL</th>
 					<td align="right">${{ number_format($cart['subtotal'], 2, '.', '') }}
 				</tr>
 				<tr>
-					<th colspan="2" align="right">SHIPPING</th>
+					<th align="right">SHIPPING</th>
 					<td align="right">
 						{{ (\App\Http\Controllers\ShopController::calculate_shipping() > 0) ? '$'.number_format(\App\Http\Controllers\ShopController::calculate_shipping(), 2, '.', '') : 'FREE' }}
 					</td>
 				</tr>
 				@if(session('coupon') && \App\Http\Controllers\ShopController::calculate_discount() > 0)
 				<tr>
-					<th colspan="2" align="right">DISCOUNT</th>
+					<th align="right">DISCOUNT</th>
 					<td align="right">- ${{ number_format(\App\Http\Controllers\ShopController::calculate_discount(), 2, '.', '') }}</td>
 				</tr>
 				@endif
 				<tr>
-					<th colspan="2" align="right">TOTAL</th>
+					<th align="right">TOTAL</th>
 					<td align="right">${{ number_format(($cart['subtotal'] + \App\Http\Controllers\ShopController::calculate_shipping() - \App\Http\Controllers\ShopController::calculate_discount()), 2, '.', '') }}
 				</tr>
 			</tfoot>
