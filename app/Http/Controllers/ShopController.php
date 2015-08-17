@@ -410,29 +410,7 @@ class ShopController extends Controller {
 				'status_id' => 1
 			]);
 
-			$checkout = (array) $order->checkout;
-
-			Mail::queue(
-				[
-					'emails.order-html',
-					'emails.order-text'
-				],
-				[
-					'logo' => config('mail.view.logo'),
-					'order' => $order,
-					'checkout' => $checkout,
-					'cart' => (array) $order->cart,
-					'meta' => (array) $order->meta,
-					'billing_state' => Location::find($checkout['billing-state-id']),
-					'billing_country' => Location::find($checkout['billing-country-id']),
-					'shipping_state' => Location::find($checkout['shipping-state-id']),
-					'shipping_country' => Location::find($checkout['shipping-country-id'])
-				],
-				function ($message) use ($user, $order) {
-					$message->to($user->email)->subject('Your Gamerosity Order: #'.$order->id);
-					$message->to('info@gamerosity.com')->subject('Your Gamerosity Order: #'.$order->id);
-				}
-			);
+			$this->send_order_email($order->id, $user->id);
 
 			$hash = HashIDs::encode($order->id);
 
@@ -720,6 +698,34 @@ class ShopController extends Controller {
 		}
 
 		return floor($monthly_total);
+	}
+
+	public static function send_order_email($order_id, $user_id) {
+		$order = \App\Order::find($order_id);
+		$user = \App\User::find($user_id);
+		$checkout = (array) $order->checkout;
+
+		Mail::queue(
+			[
+				'emails.order-html',
+				'emails.order-text'
+			],
+			[
+				'logo' => config('mail.view.logo'),
+				'order' => $order,
+				'checkout' => $checkout,
+				'cart' => (array) $order->cart,
+				'meta' => (array) $order->meta,
+				'billing_state' => Location::find($checkout['billing-state-id']),
+				'billing_country' => Location::find($checkout['billing-country-id']),
+				'shipping_state' => Location::find($checkout['shipping-state-id']),
+				'shipping_country' => Location::find($checkout['shipping-country-id'])
+			],
+			function ($message) use ($user, $order) {
+				$message->to($user->email)->subject('Your Gamerosity Order: #'.$order->id);
+				$message->to('info@gamerosity.com')->subject('Your Gamerosity Order: #'.$order->id);
+			}
+		);
 	}
 
 }
