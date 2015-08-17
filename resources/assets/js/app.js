@@ -208,7 +208,7 @@ if ($('#checkoutForm').length) {
 					$('#payment-token').val(response.TOKEN);
 					$('#checkoutForm').submit();
 					if (response.REDIRECT_URL) {
-						window.location = response.REDIRECT_URL+response.TOKEN;
+						document.location.href = response.REDIRECT_URL+response.TOKEN;
 					}
 				}
 			});
@@ -216,7 +216,7 @@ if ($('#checkoutForm').length) {
 		}
 	}).on('ajax:success', function(e, data, status, xhr) {
 		if (data.hash) {
-			window.location = '/order/'+data.hash;
+			document.location.href = '/order/'+data.hash;
 		}
 	});
 }
@@ -251,7 +251,7 @@ if ($('#shop-category').length) {
 			}
 		}
 		url = url+'/category/'+$(this).val();
-		window.location = url;
+		document.location.href = url;
 	});
 }
 
@@ -266,21 +266,21 @@ if ($('#shop-sort').length) {
 			}
 		}
 		url = url+'/sort/'+$(this).val();
-		window.location = url;
+		document.location.href = url;
 	});
 }
 
 if ($('#shopSearchTopForm').length) {
 	$('#shopSearchTopForm').on('submit', function(e) {
 		e.preventDefault();
-		window.location = '/shop/search/'+$('#shop-search-top').val().replace(/ /g, '+');
+		document.location.href = '/shop/search/'+$('#shop-search-top').val().replace(/ /g, '+');
 	});
 }
 
 if ($('#shopSearchSideForm').length) {
 	$('#shopSearchSideForm').on('submit', function(e) {
 		e.preventDefault();
-		window.location = '/shop/search/'+$('#shop-search-side').val().replace(/ /g, '+');
+		document.location.href = '/shop/search/'+$('#shop-search-side').val().replace(/ /g, '+');
 	});
 }
 

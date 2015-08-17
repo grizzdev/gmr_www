@@ -16269,7 +16269,9 @@ button.close {
 html,
 body {
   -webkit-font-smoothing: antialiased;
-  min-height: 100%;
+  min-height: 100% !important;
+  height: 100% !important;
+  padding: 0 !important;
   font-family: 'Open Sans', sans-serif;
   font-weight: 300; }
 
@@ -16341,6 +16343,10 @@ header nav {
           header nav .container-fluid .navbar-collapse ul.nav > li ul.dropdown-menu li a:hover,
           header nav .container-fluid .navbar-collapse ul.navbar-nav > li ul.dropdown-menu li a:hover {
             background: rgba(255, 255, 255, 0.3); }
+
+.body-wrapper {
+  min-height: 100%;
+  margin-bottom: -483px !important; }
 
 i.caring-bridge {
   display: inline-block;
@@ -16810,11 +16816,15 @@ i.caring-bridge {
     .order-content table {
       display: block; } }
 
+.footer-push {
+  height: 483px; }
+
 footer {
   position: relative;
   padding: 40px 0;
   background-color: #011E32;
-  overflow: hidden; }
+  overflow: hidden;
+  height: 483px; }
   footer .footer-social-links {
     padding-bottom: 30px; }
     footer .footer-social-links a {
