@@ -200,21 +200,13 @@
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="productModal">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title">Success!</h4>
-			</div>
-			<div class="modal-body">
-				<p>{{ $product->name }} added to cart.</p>
-			</div>
-			<div class="modal-footer">
-				<a href="{{ url('cart') }}" class="btn btn-primary">View Cart</a>
-				<button type="button" class="btn btn-default" data-dismiss="modal">Continue Shopping</button>
-			</div>
-		</div>
-	</div>
-</div>
+@include('includes.modal', [
+	'id' => 'productModal',
+	'title' => 'Success!',
+	'content' => '<p>'.$product->name.' added to cart.</p>',
+	'buttons' => [
+		'<a href="{{ url(\'cart\') }}" class="btn btn-primary">View Cart</a>',
+		'<button type="button" class="btn btn-default" data-dismiss="modal">Continue Shopping</button>'
+	]
+]);
 @endsection

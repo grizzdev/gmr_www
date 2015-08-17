@@ -303,7 +303,11 @@
 					</div>
 				</div>
 			</div>
-			{!! Form::hidden('', config('services.stripe.key'), ['id' => 'stripe-pk']) !!}
+			{!! Form::hidden('credit-card-number', null, ['id' => 'credit-card-number']) !!}
+			{!! Form::hidden('credit-card-expiration-month', null, ['id' => 'credit-card-expiration-month']) !!}
+			{!! Form::hidden('credit-card-expiration-year', null, ['id' => 'credit-card-expiration-year']) !!}
+			{!! Form::hidden('credit-card-ccv', null, ['id' => 'credit-card-ccv']) !!}
+			<?php /*{!! Form::hidden('', config('services.stripe.key'), ['id' => 'stripe-pk']) !!}*/ ?>
 			{!! Form::hidden('payment-type', session('checkout.payment-type'), ['id' => 'payment-type']) !!}
 			{!! Form::hidden('payment-token', session('checkout.payment-token'), ['id' => 'payment-token']) !!}
 			{!! Form::hidden('discount', number_format(\App\Http\Controllers\ShopController::calculate_discount(), 2, '.', '')) !!}
@@ -313,4 +317,22 @@
 		{!! Form::close() !!}
 	</div>
 </div>
+@include('includes.modal', [
+	'id' => 'creditCardModal',
+	'title' => 'Credit Card Information',
+	'view' => 'includes/credit-card-form',
+	'buttons' => [
+		'<a class="btn btn-danger">Finish and Pay</a>',
+		'<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>'
+	]
+])
+@include('includes.modal', [
+	'id' => 'errorModal',
+	'title' => 'Error!',
+	'content' => '<p>There are errors in the form.</p><p>Please correct the fields marked with: <i class="glyphicon glyphicon-remove" style="color:#a94442"></i></p>',
+	'buttons' => [
+		'<button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>'
+	]
+])
+
 @endsection

@@ -23,7 +23,20 @@ class HomeController extends Controller {
 	}
 
 	public function crossdomain() {
-		return response(view('home.crossdomain'))->header('Content-Type', 'application/xml');
+		//return response(view('home.crossdomain'))->header('Content-Type', 'application/xml');
+		$order = \App\Order::find(3858);
+		$checkout = (array) $order->checkout;
+		return view('emails/order-html', [
+			'logo' => config('mail.view.logo'),
+			'order' => $order,
+			'checkout' => $checkout,
+			'cart' => (array) $order->cart,
+			'meta' => (array) $order->meta,
+			'billing_state' => \App\Location::find($checkout['billing-state-id']),
+			'billing_country' => \App\Location::find($checkout['billing-country-id']),
+			'shipping_state' => \App\Location::find($checkout['shipping-state-id']),
+			'shipping_country' => \App\Location::find($checkout['shipping-country-id'])
+		]);
 	}
 
 	public function upload(Request $request) {

@@ -414,9 +414,11 @@ class ShopController extends Controller {
 
 			$hash = HashIDs::encode($order->id);
 
-			$request->session()->forget('cart');
-			$request->session()->forget('checkout');
-			$request->session()->forget('coupon');
+			if (env('APP_ENV') != 'development') {
+				$request->session()->forget('cart');
+				$request->session()->forget('checkout');
+				$request->session()->forget('coupon');
+			}
 
 			if (!empty($request->input('token'))) {
 				return redirect(url("order/$hash"));

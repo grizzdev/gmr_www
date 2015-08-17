@@ -34,7 +34,7 @@
 	<body>
 		@yield('page')
 		<div id="fb-root"></div>
-		<script src="https://checkout.stripe.com/checkout.js"></script>
+		<?php /*<script src="https://checkout.stripe.com/checkout.js"></script>*/?>
 		<script src="{{ elixir('js/all.js') }}"></script>
 		<script>
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
