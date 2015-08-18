@@ -100,7 +100,7 @@ class HeroController extends Controller {
 			$days[$d] = $d;
 		}
 
-		for ($y = (date('Y') - 1); $y >= (date('Y') - 20); $y--) {
+		for ($y = date('Y'); $y >= (date('Y') - 21); $y--) {
 			$years[$y] = $y;
 		}
 
@@ -131,21 +131,11 @@ class HeroController extends Controller {
 	}
 
 	public function postNominate(Request $request) {
-		$sidekick_id = null;
-		if (!empty($request->input('sidekick-email')) && !empty($request->input('sidekick-name'))) {
-			$sidekick = User::firstOrNew([
-				'email' => $request->input('sidekick-email'),
-				'name' => $request->input('sidekick-name')
-			]);
-			$sidekick->save();
-
-			$sidekick_id = $sidekick->id;
-		}
-
 		$nominee = User::firstOrNew([
 			'email' => $request->input('email')
 		]);
 		$nominee->name = $request->input('name');
+		$nominee->save();
 
 		$birth_date = date('Y-m-d', strtotime($request->input('hero-dob-month').'/'.$request->input('hero-dob-day').'/'.$request->input('hero-dob-year')));
 
@@ -180,7 +170,8 @@ class HeroController extends Controller {
 			],
 			[
 				'logo' => config('mail.view.logo'),
-				'request' => $request
+				'request' => $request->all(),
+				'birth_date' => $birth_date
 			],
 			function ($message) {
 				$message->to('info@gamerosity.com')->subject('New Hero Nomination');

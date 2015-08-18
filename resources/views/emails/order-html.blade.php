@@ -1,16 +1,16 @@
 <?php
-$old_checkout = $checkout;
-$checkout = [];
-foreach($old_checkout as $key => $val) {
-	$checkout[$key] = $val;
-}
-$order = \App\Order::find($order['id']);
+$checkout = (array)json_decode($order->checkout_json);
+$cart = (array)json_decode($order->cart_json);
 ?>
 @extends('layouts.email')
 
 @section('content')
-<h1>Thank you for your Order!</h1>
-<table width="100%" style="table-layout:fixed" cellspacing="4">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="order-table">
+	<tr>
+		<td colspan="2">
+			<h1>Thank you for your Order!</h1>
+		</td>
+	</tr>
 	<tr>
 		<td width="50%">
 			<h2>Billing Details</h2>
@@ -21,8 +21,6 @@ $order = \App\Order::find($order['id']);
 	</tr>
 	<tr>
 		<td valign="top">
-			<b>Address:</b>
-			<br />
 			{{ $checkout['billing-address-1'] }}
 			<br />
 			@if(!empty($checkout['billing-address-2']))
@@ -34,8 +32,6 @@ $order = \App\Order::find($order['id']);
 			{{ $billing_country['name'] }}
 		</td>
 		<td valign="top">
-			<b>Address:</b>
-			<br />
 			{{ $checkout['shipping-address-1'] }}
 			<br />
 			@if(!empty($checkout['shipping-address-2']))
@@ -77,8 +73,11 @@ $order = \App\Order::find($order['id']);
 			<b>Total Contribution:</b> ${{ $order->contribution() }}
 			<br />
 			<b>Payment Type:</b> {{ ($checkout['payment-type'] == 'paypal') ? 'PayPal' : 'Credit Card' }}
-			<br />
-			<table width="100%">
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" colspan="2">
+			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="items-table">
 				<thead>
 					<tr>
 						<th>Item</th>
@@ -91,39 +90,43 @@ $order = \App\Order::find($order['id']);
 					@foreach($cart as $item)
 					<tr>
 						<td>
-							<b>{{ $item['name'] }}</b>
-							@foreach($item['attributes'] as $attr)
+							<b>{{ $item->name }}</b>
+						@foreach($item->attributes as $attr)
+							@if($attr->name != 'Amount')
 							<br />
 							<small>
-								<b>{{ $attr['name'] }}:</b>
-								{{ $attr['value'] }}
+								<b>{{ $attr->name }}:</b>
+								{{ $attr->value }}
 							</small>
-							@endforeach
+							@else
+							<?php $item->price += $attr->value ?>
+							@endif
+						@endforeach
 						</td>
-						<td>${{ number_format($item['price'], 2, '.', '') }}</td>
-						<td align="center">{{ $item['quantity'] }}</td>
-						<td align="right">${{ number_format($item['price'] * $item['quantity'], 2, '.', '') }}</td>
+						<td>${{ number_format($item->price, 2, '.', '') }}</td>
+						<td align="center">{{ $item->quantity }}</td>
+						<td align="right">${{ number_format($item->price * $item->quantity, 2, '.', '') }}</td>
 					</tr>
 					@endforeach
 				</tbody>
 				<tfoot>
 					<tr>
 						<th colspan="2" rowspan="3"></th>
-						<td align="right">Subtotal</td>
+						<th align="right">Subtotal</th>
 						<td align="right">${{ number_format($checkout['total'], 2, '.', '') }}
 					</tr>
 					<tr>
-						<td align="right">Shipping</td>
+						<th align="right">Shipping</th>
 						<td align="right">{{ ($checkout['shipping'] > 0) ? '$'.number_format($checkout['shipping'], 2, '.', '') : 'FREE' }}</td>
 					</tr>
 					@if($checkout['discount'] > 0)
 					<tr>
-						<td align="right">Discount</td>
+						<th align="right">Discount</th>
 						<td align="right">{{ '- $'.number_format($checkout['discount'], 2, '.', '') }}</td>
 					</tr>
 					@endif
 					<tr>
-						<td align="right">Total</td>
+						<th align="right">Total</th>
 						<td align="right">${{ number_format($checkout['total'], 2, '.', '') }}</td>
 					</tr>
 				</tfoot>
