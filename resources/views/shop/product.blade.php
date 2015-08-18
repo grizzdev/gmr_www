@@ -126,6 +126,7 @@
 							</div>
 						</div>
 						{!! Form::hidden('product_id', $product->id) !!}
+						{!! Form::hidden('_token', csrf_token()) !!}
 					{!! Form::close() !!}
 					<div class="row">
 						<div class="col-xs-12">
