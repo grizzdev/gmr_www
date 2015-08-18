@@ -106,6 +106,7 @@
 			</tfoot>
 		</table>
 	</div>
+	{!! Form::hidden('_token', csrf_token()) !!}
 {!! Form::close() !!}
 <div class="text-right">
 	<a href="{{ url('checkout') }}" class="btn btn-danger">PROCEED TO CHECKOUT</a>

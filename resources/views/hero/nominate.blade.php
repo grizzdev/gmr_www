@@ -216,8 +216,8 @@
 				<div class="form-group text-right">
 					{!! Form::submit('Send Nomination', ['class' => 'btn btn-danger', 'data-disable-with' => 'Nominating...']) !!}
 				</div>
-				{!! Form::token() !!}
 				{!! Form::hidden('file-id', null, ['id' => 'file-id']) !!}
+				{!! Form::token() !!}
 			{!! Form::close() !!}
 		</div>
 	</div>

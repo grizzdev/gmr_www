@@ -60,6 +60,7 @@
 							<button type="submit" class="btn btn-default btn-lg pb-11"><i class="fa fa-search"></i></button>
 						</span>
 					</div>
+					{!! Form::token() !!}
 				{!! Form::close() !!}
 			</div>
 		</div>

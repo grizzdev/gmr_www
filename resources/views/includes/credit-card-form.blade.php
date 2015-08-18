@@ -40,4 +40,5 @@
 			</div>
 		</div>
 	</div>
-</form>
+	{!! Form::hidden('_token', csrf_token()) !!}
+{!! Form::close() !!}

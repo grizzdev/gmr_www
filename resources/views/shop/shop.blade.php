@@ -23,6 +23,7 @@
 									<button type="submit" class="btn btn-default pt-7"><i class="fa fa-search"></i></button>
 								</span>
 							</div>
+							{!! Form::hidden('_token', csrf_token()) !!}
 						{!! Form::close() !!}
 					</div>
 					<div class="visible-xs visible-sm col-xs-4">
@@ -63,6 +64,7 @@
 									{!! Form::text('shop-search', urldecode($slugs['search']), ['class' => 'form-control mb-5', 'placeholder' => 'SEARCH FOR PRODUCTS...', 'id' => 'shop-search-side']) !!}
 									{!! Form::submit('SEARCH', ['class' => 'btn btn-default']) !!}
 								</div>
+								{!! Form::hidden('_token', csrf_token()) !!}
 							{!! Form::close() !!}
 						</div>
 					</div>
