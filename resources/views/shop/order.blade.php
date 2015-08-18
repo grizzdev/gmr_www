@@ -155,8 +155,8 @@
 								{{ ($checkout['payment-type'] == 'paypal') ? 'PayPal' : 'Credit Card' }}
 							</div>
 						</div>
-						<div class="row table-responsive">
-							<br />
+						<br />
+						<div class="table-responsive">
 							<table class="table table-striped">
 								<thead>
 									<tr>
