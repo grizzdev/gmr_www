@@ -710,7 +710,7 @@ class ShopController extends Controller {
 		//Mail::send('emails.order-html',
 		Mail::queue(
 			[
-				'emails.order-html'
+				'emails.order-html',
 				'emails.order-text'
 			],
 			[
