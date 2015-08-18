@@ -143,9 +143,9 @@ return [
         'address' => null,
 
         'logo' => [
-            'path' => public_path().'/img/logo.png',
-            'width' => '177',
-            'height' => '35'
+            'path' => public_path().'/img/logo_250x225.png',
+            'width' => '250',
+            'height' => '225'
         ],
 
         'twitter' => 'gamerosity',

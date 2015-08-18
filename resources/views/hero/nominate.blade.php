@@ -181,20 +181,6 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
-					<h4>Add a Sidekick</h4>
-					<small>A Sidekick is a family member or friend who will help lighten the load with the campaign.</small>
-					<div class="row">
-						<div class="col-sm-12 col-md-6 pb-5">
-							{!! Form::label('sidekick-name', 'Sidekick\'s Name', ['class' => 'control-label']) !!}
-							{!! Form::text('sidekick-name', null, ['class' => 'form-control']) !!}
-						</div>
-						<div class="col-sm-12 col-md-6">
-							{!! Form::label('sidekick-email', 'Sidekick\'s Email', ['class' => 'control-label']) !!}
-							{!! Form::email('sidekick-email', null, ['class' => 'form-control']) !!}
-						</div>
-					</div>
-				</div>
 				<div class="row">
 					<div class="col-xs-12">
 						<h4>Terms and Conditions</h4>

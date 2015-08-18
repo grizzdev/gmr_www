@@ -1,11 +1,6 @@
 <?php
-$old_checkout = $checkout;
-$checkout = [];
-foreach($old_checkout as $key => $val) {
-	$checkout[$key] = $val;
-}
-
-$order = \App\Order::find($order['id']);
+$checkout = (array)json_decode($order->checkout_json);
+$cart = (array)json_decode($order->cart_json);
 ?>
 Thank you for your Order!
 
@@ -42,12 +37,16 @@ Payment Type - {{ ($checkout['payment-type'] == 'paypal') ? 'PayPal' : 'Credit C
 
 Items:
 @foreach($cart as $item)
-	{{ $item['name'] }}
-	@foreach($item['attributes'] as $attr)
-	{{ $attr['name'] }}: {{ $attr['value'] }}
+	{{ $item->name }}
+	@foreach($item->attributes as $attr)
+		@if($attr->name != 'Amount')
+	{{ $attr->name }}: {{ $attr->value }}
+		@else
+		<?php $item->price += $attr->value ?>
+		@endif
 	@endforeach
-	Price: ${{ number_format($item['price'], 2, '.', '') }}
-	Qty: {{ $item['quantity'] }}
+	Price: ${{ number_format($item->price, 2, '.', '') }}
+	Qty: {{ $item->quantity }}
 @endforeach
 
 Subtotal: ${{ number_format($checkout['total'], 2, '.', '') }}
