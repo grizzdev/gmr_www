@@ -291,6 +291,7 @@
 						</div>
 					</div>
 				</div>
+				<?php /*
 				<div class="col-xs-12 col-sm-6">
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -302,6 +303,7 @@
 						</div>
 					</div>
 				</div>
+				*/ ?>
 			</div>
 			{!! Form::hidden('credit-card-number', null, ['id' => 'credit-card-number']) !!}
 			{!! Form::hidden('credit-card-expiration-month', null, ['id' => 'credit-card-expiration-month']) !!}
