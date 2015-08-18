@@ -720,7 +720,9 @@ class ShopController extends Controller {
 				'billing_state' => Location::find($checkout['billing-state-id']),
 				'billing_country' => Location::find($checkout['billing-country-id']),
 				'shipping_state' => Location::find($checkout['shipping-state-id']),
-				'shipping_country' => Location::find($checkout['shipping-country-id'])
+				'shipping_country' => Location::find($checkout['shipping-country-id']),
+				'status' => $order->status->name,
+				'contribution' => $order->contribution()
 			],
 			function ($message) use ($user, $order) {
 				$message->to($user->email)->subject('Your Gamerosity Order: #'.$order->id);

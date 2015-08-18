@@ -1,6 +1,6 @@
 <?php
-$checkout = (array)json_decode($order->checkout_json);
-$cart = (array)json_decode($order->cart_json);
+$checkout = (array)json_decode($order['checkout_json']);
+$cart = (array)json_decode($order['cart_json']);
 ?>
 Thank you for your Order!
 
@@ -30,9 +30,9 @@ Personal Details:
 {!! nl2br($checkout['notes']) !!}
 
 Order Details:
-Date - {{ date('n/j/y g:ia', strtotime($order->created_at)) }}
-Status - {{ $order->status->name }}
-Contribution - ${{ $order->contribution() }}
+Date - {{ date('n/j/y g:ia', strtotime($order['created_at'])) }}
+Status - {{ $status }}
+Contribution - ${{ $contribution }}
 Payment Type - {{ ($checkout['payment-type'] == 'paypal') ? 'PayPal' : 'Credit Card' }}
 
 Items:
