@@ -379,7 +379,7 @@ class ShopController extends Controller {
 				$user->name = $checkout['first-name'].' '.$checkout['last-name'];
 
 				if (!empty($checkout['create-account']) && $checkout['create-account'] == 'Y') {
-					$password = HashIDs::encrypt(rand(5,2005));
+					$password = HashIDs::encode(rand(5,2005));
 					$user->password = Hash::make($password);
 
 					Mail::queue(
@@ -710,7 +710,7 @@ class ShopController extends Controller {
 		//Mail::send('emails.order-html',
 		Mail::queue(
 			[
-				'emails.order-html'
+				'emails.order-html',
 				'emails.order-text'
 			],
 			[
