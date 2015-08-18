@@ -1,6 +1,6 @@
 <?php
-$checkout = (array)json_decode($order->checkout_json);
-$cart = (array)json_decode($order->cart_json);
+$checkout = (array)json_decode($order['checkout_json']);
+$cart = (array)json_decode($order['cart_json']);
 ?>
 @extends('layouts.email')
 
@@ -66,11 +66,11 @@ $cart = (array)json_decode($order->cart_json);
 			<b>Notes:</b> {!! nl2br($checkout['notes']) !!}
 		</td>
 		<td valign="top">
-			<b>Order Date:</b> {{ date('n/j/y g:ia', strtotime($order->created_at)) }}
+			<b>Order Date:</b> {{ date('n/j/y g:ia', strtotime($order['created_at'])) }}
 			<br />
-			<b>Order Status:</b> {{ $order->status->name }}
+			<b>Order Status:</b> {{ $status }}
 			<br />
-			<b>Total Contribution:</b> ${{ $order->contribution() }}
+			<b>Total Contribution:</b> ${{ $contribution }}
 			<br />
 			<b>Payment Type:</b> {{ ($checkout['payment-type'] == 'paypal') ? 'PayPal' : 'Credit Card' }}
 		</td>
