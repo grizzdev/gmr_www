@@ -277,13 +277,11 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-xs-12 col-sm-6">&nbsp;</div>
 				<div class="col-xs-12 col-sm-6">
 					<h4>Payment</h4>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-xs-12 col-sm-6">&nbsp;</div>
 				<div class="col-xs-12 col-sm-6">
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -295,7 +293,6 @@
 						</div>
 					</div>
 				</div>
-				<?php /*
 				<div class="col-xs-12 col-sm-6">
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -307,13 +304,11 @@
 						</div>
 					</div>
 				</div>
-				*/ ?>
 			</div>
 			{!! Form::hidden('credit-card-number', null, ['id' => 'credit-card-number']) !!}
 			{!! Form::hidden('credit-card-expiration-month', null, ['id' => 'credit-card-expiration-month']) !!}
 			{!! Form::hidden('credit-card-expiration-year', null, ['id' => 'credit-card-expiration-year']) !!}
 			{!! Form::hidden('credit-card-ccv', null, ['id' => 'credit-card-ccv']) !!}
-			<?php /*{!! Form::hidden('', config('services.stripe.key'), ['id' => 'stripe-pk']) !!}*/ ?>
 			{!! Form::hidden('payment-type', session('checkout.payment-type'), ['id' => 'payment-type']) !!}
 			{!! Form::hidden('payment-token', session('checkout.payment-token'), ['id' => 'payment-token']) !!}
 			{!! Form::hidden('discount', number_format(\App\Http\Controllers\ShopController::calculate_discount(), 2, '.', '')) !!}
