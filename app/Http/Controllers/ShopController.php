@@ -307,7 +307,7 @@ class ShopController extends Controller {
 									$model = $modelname::find($value);
 									$value = $model->name;
 
-									if ($attribute->model == 'Hero') {
+									/*if ($attribute->model == 'Hero') {
 										if ($product->id == 1) {
 											$raised = ($model->raised + $item['attributes'][38]);
 										} else {
@@ -316,7 +316,7 @@ class ShopController extends Controller {
 
 										$model->raised = $raised;
 										$model->save();
-									}
+									}*/
 								}
 								break;
 						}
@@ -707,17 +707,16 @@ class ShopController extends Controller {
 		$user = \App\User::find($user_id);
 		$checkout = (array) $order->checkout;
 
+		//Mail::send('emails.order-html',
 		Mail::queue(
 			[
-				'emails.order-html',
+				'emails.order-html'
 				'emails.order-text'
 			],
 			[
+				'title' => 'Gamerosity Order #'.$order->id,
 				'logo' => config('mail.view.logo'),
 				'order' => $order,
-				'checkout' => $checkout,
-				'cart' => (array) $order->cart,
-				'meta' => (array) $order->meta,
 				'billing_state' => Location::find($checkout['billing-state-id']),
 				'billing_country' => Location::find($checkout['billing-country-id']),
 				'shipping_state' => Location::find($checkout['shipping-state-id']),
