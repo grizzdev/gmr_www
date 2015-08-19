@@ -49,6 +49,9 @@ Items:
 	Qty: {{ $item->quantity }}
 @endforeach
 
-Subtotal: ${{ number_format($checkout['total'], 2, '.', '') }}
-Shipping: FREE
-Total: ${{ number_format($checkout['total'], 2, '.', '') }}
+Subtotal: ${{ number_format($checkout['subtotal'] + $checkout['gamerosity-donation'], 2, '.', '') }}
+Shipping: {{ ($checkout['shipping'] > 0) ? '$'.number_format($checkout['shipping'], 2, '.', '') : 'FREE' }}
+@if($checkout['discount'] > 0)
+Discount: {{ '- $'.number_format($checkout['discount'], 2, '.', '') }}
+@endif
+Total: ${{ (($checkout['subtotal'] + $checkout['shipping'] - $checkout['discount'] + $checkout['gamerosity-donation']) < 0) ? '0.00' : number_format($checkout['subtotal'] + $checkout['shipping'] - $checkout['discount'] + $checkout['gamerosity-donation'], 2, '.', '') }}

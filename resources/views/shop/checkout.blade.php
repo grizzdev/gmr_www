@@ -314,7 +314,7 @@
 			{!! Form::hidden('discount', number_format(\App\Http\Controllers\ShopController::calculate_discount(), 2, '.', '')) !!}
 			{!! Form::hidden('shipping', number_format(\App\Http\Controllers\ShopController::calculate_shipping(), 2, '.', '')) !!}
 			{!! Form::hidden('subtotal', number_format($cart['subtotal'], 2, '.', ''), ['id' => 'subtotal']) !!}
-			{!! Form::hidden('total', number_format($cart['subtotal'] + session('checkout.gamerosity-donation'), 2, '.', ''), ['id' => 'total']) !!}
+			{!! Form::hidden('total', number_format(\App\Http\Controllers\ShopController::calculate_total(), 2, '.', ''), ['id' => 'total']) !!}
 			{!! Form::hidden('_token', csrf_token()) !!}
 		{!! Form::close() !!}
 	</div>

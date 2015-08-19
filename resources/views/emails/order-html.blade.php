@@ -111,9 +111,9 @@ $cart = (array)json_decode($order['cart_json']);
 				</tbody>
 				<tfoot>
 					<tr>
-						<th colspan="2" rowspan="3"></th>
+						<th colspan="2" rowspan="{{ ($checkout['discount'] > 0) ? 4 : 3 }}"></th>
 						<th align="right">Subtotal</th>
-						<td align="right">${{ number_format($checkout['total'], 2, '.', '') }}
+						<td align="right">${{ number_format($checkout['subtotal'] + $checkout['gamerosity-donation'], 2, '.', '') }}
 					</tr>
 					<tr>
 						<th align="right">Shipping</th>
@@ -127,7 +127,7 @@ $cart = (array)json_decode($order['cart_json']);
 					@endif
 					<tr>
 						<th align="right">Total</th>
-						<td align="right">${{ number_format($checkout['total'], 2, '.', '') }}</td>
+						<td align="right">${{ (($checkout['total'] + $checkout['shipping'] - $checkout['discount'] + $checkout['gamerosity-donation']) < 0) ? '0.00' : number_format($checkout['subtotal'] + $checkout['shipping'] - $checkout['discount'] + $checkout['gamerosity-donation'], 2, '.', '') }}</td>
 					</tr>
 				</tfoot>
 			</table>

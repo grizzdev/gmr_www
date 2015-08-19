@@ -191,17 +191,29 @@
 								</tbody>
 								<tfoot>
 									<tr>
-										<th colspan="2" rowspan="3"></th>
+										<th colspan="2" rowspan="{{ ($checkout['discount'] > 0) ? 4 : 3 }}"></th>
 										<td align="right">Subtotal</td>
-										<td align="right">${{ $checkout['total'] }}
+										<td align="right">${{ number_format($checkout['subtotal'] + $checkout['gamerosity-donation'], 2, '.', '') }}
 									</tr>
 									<tr>
 										<td align="right">Shipping</td>
-										<td align="right">{{ (!empty($checkout['shipping'])) ? $checkout['shipping'] : 'FREE' }}</td>
+										<td align="right">{{ (!empty($checkout['shipping'])) ? number_format($checkout['shipping'], 2, '.', '') : 'FREE' }}</td>
 									</tr>
+									@if($checkout['discount'] > 0)
+									<tr>
+										<td align="right">Discount</td>
+										<td align="right">- ${{ number_format($checkout['discount'], 2, '.', '') }}</td>
+									</tr>
+									@endif
 									<tr>
 										<td align="right">Total</td>
-										<td align="right">${{ number_format($checkout['total'], 2, '.', '') }}</td>
+										<td align="right">
+											@if(0 > ($checkout['subtotal'] + $checkout['shipping'] - $checkout['discount'] + $checkout['gamerosity-donation']))
+											$0.00
+											@else
+											${{ number_format($checkout['subtotal'] + $checkout['shipping'] - $checkout['discount'] + $checkout['gamerosity-donation'], 2, '.', '') }}
+											@endif
+										</td>
 									</tr>
 								</tfoot>
 							</table>
@@ -212,4 +224,5 @@
 		</div>
 	</div>
 </div>
+<pre>{{ print_r($checkout) }}</pre>
 @endsection
