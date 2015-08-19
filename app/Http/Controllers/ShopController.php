@@ -691,6 +691,12 @@ class ShopController extends Controller {
 		return $discount;
 	}
 
+	public static function calculate_total() {
+		$cart = self::buildItemsForView(session('cart'));
+		$total = $cart['subtotal'] + self::calculate_shipping() - self::calculate_discount() + session('checkout.gamerosity-donation');
+		return $total;
+	}
+
 	public static function monthly_total() {
 		$monthly_total = 0;
 
