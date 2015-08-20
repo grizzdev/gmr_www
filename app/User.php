@@ -33,4 +33,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		'subscription_ends_at'
 	];
 
+	public function orders() {
+		return $this->hasMany('\App\Order');
+	}
+
+	public function logs() {
+		return $this->hasMany('\App\Log');
+	}
+
 }

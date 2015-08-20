@@ -71,4 +71,8 @@ class Order extends Model {
 		return number_format($contribution, 2, '.', '');
 	}
 
+	public function logs() {
+		return $this->morphMany('\App\Log', 'loggable');
+	}
+
 }

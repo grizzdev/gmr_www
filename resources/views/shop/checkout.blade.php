@@ -328,13 +328,4 @@
 		'<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>'
 	]
 ])
-@include('includes.modal', [
-	'id' => 'errorModal',
-	'title' => 'Error!',
-	'content' => '<p>There are errors in the form.</p><p>Please correct the fields marked with: <i class="glyphicon glyphicon-remove" style="color:#a94442"></i></p>',
-	'buttons' => [
-		'<button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>'
-	]
-])
-
 @endsection

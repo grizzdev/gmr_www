@@ -21,6 +21,7 @@ return array(
     'CreateHeroSidekickTable' => $baseDir . '/database/migrations/2015_08_10_103544_create_hero_sidekick_table.php',
     'CreateHeroesTable' => $baseDir . '/database/migrations/2015_08_06_002126_create_heroes_table.php',
     'CreateLocationsTable' => $baseDir . '/database/migrations/2015_08_06_232101_create_locations_table.php',
+    'CreateLogsTable' => $baseDir . '/database/migrations/2015_08_19_220728_create_logs_table.php',
     'CreateOrdersTable' => $baseDir . '/database/migrations/2015_08_09_112620_create_orders_table.php',
     'CreatePackagesTable' => $baseDir . '/database/migrations/2015_08_09_223300_create_packages_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
