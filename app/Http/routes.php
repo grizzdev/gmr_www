@@ -53,10 +53,15 @@ Route::group(['middleware' => 'insecure'], function() {
 });
 
 Route::group(['middleware' => 'secure'], function() {
-	Route::get('my-account', 'AccountController@index');
-	Route::get('my-account/orders', 'AccountController@orders');
-	Route::get('my-account/order/{id}', 'AccountController@order');
-	Route::delete('my-account/order/{id}', 'AccountController@cancelOrder');
+	Route::group(['middleware' => 'auth'], function() {
+		Route::get('my-account', 'AccountController@index');
+		Route::post('my-account', 'AccountController@save');
+		Route::get('my-account/orders', 'AccountController@orders');
+		Route::get('my-account/order/{id}', 'AccountController@order');
+		Route::delete('my-account/order/{id}', 'AccountController@cancelOrder');
+		Route::get('my-account/logs', 'AccountController@logs');
+	});
+
 	Route::get('checkout', 'ShopController@checkout');
 	Route::post('checkout', 'ShopController@postCheckout');
 	Route::post('checkout/states', 'ShopController@states');

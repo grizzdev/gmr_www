@@ -16727,7 +16727,8 @@ i.caring-bridge {
 .checkout-form label,
 #forgotForm label,
 #loginForm label,
-#resetForm label {
+#resetForm label,
+#accountForm label {
   font-size: 1.285714286em;
   font-weight: 300;
   color: #777; }
@@ -16737,7 +16738,8 @@ i.caring-bridge {
 .checkout-form .input-group,
 #forgotForm .input-group,
 #loginForm .input-group,
-#resetForm .input-group {
+#resetForm .input-group,
+#accountForm .input-group {
   width: 100%; }
 
 #forgotForm .row .col-xs-12:last-child {

@@ -414,7 +414,7 @@ class ShopController extends Controller {
 			Log::create([
 				'user_id' => $user->id,
 				'loggable_id' => $order->id,
-				'loggable_type' => '\App\Order',
+				'loggable_type' => 'App\Order',
 				'data' => 'Created Order #'.$order->id
 			]);
 
