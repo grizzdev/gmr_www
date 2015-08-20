@@ -79,7 +79,9 @@ class AuthController extends Controller {
 		// the IP address of the client making these requests into this application.
 		$throttles = $this->isUsingThrottlesLoginsTrait();
 
-		$seconds = (int) Cache::get($this->getLoginLockExpirationKey($request)) - time();
+		$username = $request->input($this->loginUsername());
+		$loginLockExpirationKey = 'login:expiration:'.md5($username.$request->ip());
+		$seconds = (int) Cache::get($loginLockExpirationKey) - time();
 
 		if ($throttles && $this->hasTooManyLoginAttempts($request)) {
 
