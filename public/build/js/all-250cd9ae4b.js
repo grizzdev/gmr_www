@@ -9946,22 +9946,6 @@ $.ajaxSetup({
 	}
 });
 
-function showModal(id, content, title, buttons) {
-	content = ((typeof content !== 'undefined') ? content : null);
-	title = ((typeof title !== 'undefined') ? title : null);
-	buttons = ((typeof buttons !== 'undefined') ? buttons : []);
-
-	if ($('#'+id).length) {
-		$('#'+id).find('.modal-title').html(title);
-		$('#'+id).find('.modal-body').html(content);
-		$('#'+id).find('.modal-footer').html('');
-		$(buttons).each(function(i, button) {
-			$(button).appendTo('.modal-footer')
-		});
-		$('#'+id).modal('show');
-	}
-}
-
 (function(d, s, id) {
 	var js, fjs = d.getElementsByTagName(s)[0];
 	if (d.getElementById(id)) return;
@@ -9980,11 +9964,6 @@ function showModal(id, content, title, buttons) {
 	} }(document, 'script', 'twitter-wjs'));
 
 new WOW().init();
-
-$('.link-to-top').on('click', function(e) {
-	e.preventDefault();
-	$('html, body').animate({ scrollTop: 0 }, 'slow');
-});
 
 $('[data-toggle="tooltip"]').tooltip();
 
@@ -10021,6 +10000,17 @@ $(document).delegate('*[data-toggle="state"]', 'change', function(e) {
 	}).done(function(response) {
 		$(parentElement).html(response);
 	});
+});
+
+$('#cart-content').on('click', '.btn-coupon', function(e) {
+	if ($('#coupon_code').val() != '') {
+		$('#cartForm').submit();
+	}
+});
+
+$('.link-to-top').on('click', function(e) {
+	e.preventDefault();
+	$('html, body').animate({ scrollTop: 0 }, 'slow');
 });
 
 $('#forgotModalLink').on('click', function(e) {
@@ -10107,19 +10097,6 @@ $('#nominateForm').validator({
 	showModal('errorModal', '<p>An unspecified error has occurred.</p><p>Please try again later.</p>', 'Error!');
 });
 
-$('#cart-content').on('ajax:success', '#cartForm', function(e, data, status, xhr) {
-	$('#cart-content').html(data.view);
-	$('#cart-count').html(data.count);
-}).on('ajax:error', function(e, data, status, xhr) {
-	showModal('errorModal', '<p>An unspecified error has occurred.</p><p>Please try again later.</p>', 'Error!');
-});
-
-$('#cart-content').on('click', '.btn-coupon', function(e) {
-	if ($('#coupon_code').val() != '') {
-		$('#cartForm').submit();
-	}
-});
-
 $('#productFrom').validator({
 	disable: true,
 }).on('submit', function(e) {
@@ -10151,6 +10128,13 @@ $('#accountForm').validator({
 	} else {
 		showModal('errorModal', data.error, 'Error!');
 	}
+}).on('ajax:error', function(e, data, status, xhr) {
+	showModal('errorModal', '<p>An unspecified error has occurred.</p><p>Please try again later.</p>', 'Error!');
+});
+
+$('#cart-content').on('ajax:success', '#cartForm', function(e, data, status, xhr) {
+	$('#cart-content').html(data.view);
+	$('#cart-count').html(data.count);
 }).on('ajax:error', function(e, data, status, xhr) {
 	showModal('errorModal', '<p>An unspecified error has occurred.</p><p>Please try again later.</p>', 'Error!');
 });
@@ -10376,6 +10360,33 @@ if ($('a.category-link').length) {
 	});
 }
 
+$('.form-hero').on('submit', function(e) {
+	e.preventDefault();
+	var id = $
+	$.ajax({
+		url: $(this).attr('action'),
+		method: 'POST',
+		dataType: 'json',
+		data: $(this).serialize(),
+	}).done(function(response) {
+		$('.tr-'+response.id).addClass('success');
+	});
+});
+
+if ($('#heroesSearchForm').length) {
+	$('#heroesSearchForm').on('submit', function(e) {
+		e.preventDefault();
+		$.ajax({
+			url: $(this).attr('action'),
+			method: 'POST',
+			dataType: 'html',
+			data: $(this).serialize(),
+		}).done(function(response) {
+			$('.heroes-list').html(response);
+		});
+	});
+}
+
 function setShippingCountry() {
 	var stateId = $('#billing-state-id').val();
 	var countryId = $('#billing-country-id').val();
@@ -10427,31 +10438,20 @@ function calculate_total() {
 	$('#total').val(total);
 }
 
-$('.form-hero').on('submit', function(e) {
-	e.preventDefault();
-	var id = $
-	$.ajax({
-		url: $(this).attr('action'),
-		method: 'POST',
-		dataType: 'json',
-		data: $(this).serialize(),
-	}).done(function(response) {
-		$('.tr-'+response.id).addClass('success');
-	});
-});
+function showModal(id, content, title, buttons) {
+	content = ((typeof content !== 'undefined') ? content : null);
+	title = ((typeof title !== 'undefined') ? title : null);
+	buttons = ((typeof buttons !== 'undefined') ? buttons : []);
 
-if ($('#heroesSearchForm').length) {
-	$('#heroesSearchForm').on('submit', function(e) {
-		e.preventDefault();
-		$.ajax({
-			url: $(this).attr('action'),
-			method: 'POST',
-			dataType: 'html',
-			data: $(this).serialize(),
-		}).done(function(response) {
-			$('.heroes-list').html(response);
+	if ($('#'+id).length) {
+		$('#'+id).find('.modal-title').html(title);
+		$('#'+id).find('.modal-body').html(content);
+		$('#'+id).find('.modal-footer').html('');
+		$(buttons).each(function(i, button) {
+			$(button).appendTo('.modal-footer')
 		});
-	});
+		$('#'+id).modal('show');
+	}
 }
 
 //# sourceMappingURL=all.js.map
