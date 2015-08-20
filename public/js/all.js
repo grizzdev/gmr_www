@@ -10139,6 +10139,22 @@ $('#productFrom').validator({
 	showModal('errorModal', '<p>An unspecified error has occurred.</p><p>Please try again later.</p>', 'Error!');
 });
 
+$('#accountForm').validator({
+	disable: true
+}).on('submit', function(e) {
+	if (e.isDefaultPrevented()) {
+		return false;
+	}
+}).on('ajax:success', function(e, data, status, xhr) {
+	if (typeof data.error === 'undefined') {
+		showModal('errorModal', 'Account Saved', 'Success!');
+	} else {
+		showModal('errorModal', data.error, 'Error!');
+	}
+}).on('ajax:error', function(e, data, status, xhr) {
+	showModal('errorModal', '<p>An unspecified error has occurred.</p><p>Please try again later.</p>', 'Error!');
+});
+
 $('.btn-cancel-order').bind('ajax:success', function(e, data, status, xhr) {
 	document.location.href = document.location.href;
 }).bind('ajax:error', function(e, data, status, xhr) {

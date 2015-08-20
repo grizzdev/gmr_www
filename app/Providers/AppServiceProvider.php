@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider {
 	 * @return void
 	 */
 	public function boot() {
-		Order::saving(function ($order) {
+		Order::saving(function($order) {
 			// Order status change
 			if ($order->getOriginal('status_id') != $order->status_id && $order->status_id != 1) {
 				$old_status = Status::find($order->getOriginal('status_id'));
@@ -65,6 +65,45 @@ class AppServiceProvider extends ServiceProvider {
 				} elseif ($order->status_id == 8) {
 					// send order declined email
 				}
+			}
+		});
+
+
+		User::created(function($user) {
+			Log::create([
+				'user_id' => $user->id,
+				'loggable_id' => $user->id,
+				'loggable_type' => 'App\User',
+				'data' => 'Account Created'
+			]);
+		});
+
+		User::saving(function($user) {
+			if ($user->getOriginal('name') != $user->name) {
+				Log::create([
+					'user_id' => Auth::user()->id,
+					'loggable_id' => $user->id,
+					'loggable_type' => 'App\User',
+					'data' => 'Changed Name from '.$user->getOriginal('name').' to '.$user->name
+				]);
+			}
+
+			if ($user->getOriginal('email') != $user->email) {
+				Log::create([
+					'user_id' => Auth::user()->id,
+					'loggable_id' => $user->id,
+					'loggable_type' => 'App\User',
+					'data' => 'Changed Email from '.$user->getOriginal('email').' to '.$user->email
+				]);
+			}
+
+			if ($user->getOriginal('password') != $user->password) {
+				Log::create([
+					'user_id' => Auth::user()->id,
+					'loggable_id' => $user->id,
+					'loggable_type' => 'App\User',
+					'data' => 'Changed Password'
+				]);
 			}
 		});
 	}
