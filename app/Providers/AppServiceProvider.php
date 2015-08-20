@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider {
 				Log::create([
 					'user_id' => Auth::user()->id,
 					'loggable_id' => $order->id,
-					'loggable_type' => '\App\Order',
+					'loggable_type' => 'App\Order',
 					'data' => 'Changed Status from '.$old_status->name.' to '.$order->status->name
 				]);
 
