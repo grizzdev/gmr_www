@@ -28,17 +28,42 @@
 					<li><a href="{{ url('hall-of-heroes') }}">Hall of Heroes</a></li>
 					<li><a href="{{ url('nominate-a-hero') }}">Nominate A Hero</a></li>
 					<li><a href="{{ url('cart') }}"><i class="fa fa-shopping-cart"></i> (<span id="cart-count">{{ (is_array(session('cart'))) ? count(session('cart')) : 0 }}</span>)</a></li>
-					@if(0 && Auth::check())
+					@if(Auth::check())
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cogs"></i> <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="{{ url('my-account') }}"><i class="fa fa-user"></i> My Account</a></li>
 							<li><a href="{{ url('my-account/orders') }}"><i class="fa fa-gift"></i> My Orders</a></li>
-							<li><a href="{{ url('logout') }}"><i class="fa fa-sign-out"></i> Logout</a></li>
+							<li><a href="{{ url('auth/logout') }}"><i class="fa fa-sign-out"></i> Logout</a></li>
 						</ul>
 					</li>
-					@elseif(0)
-					<li><a href="{{ url('login') }}" title="Sign In To Your Gamerosity Account"><i class="fa fa-sign-in"></i></a></li>
+					@else
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							<i class="fa fa-sign-in"></i>
+							<span class="caret"></span>
+						</a>
+						<div class="dropdown-menu pt-5 pb-5 pl-5 pr-5 text-center">
+							{!! Form::open(['url' => 'auth/login', 'id' => 'loginForm', 'data-remote' => true]) !!}
+								<div class="form-group has-feedback">
+									<div class="input-group">
+										{!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'email address', 'required' => true, 'id' => 'login-email']) !!}
+										<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+									</div>
+								</div>
+								<div class="form-group has-feedback">
+									<div class="input-group">
+										{!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'password', 'required' => true, 'id' => 'login-password']) !!}
+										<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+									</div>
+								</div>
+								<div class="form-group has-feedback text-center">
+									{!! Form::submit('Login', ['class' => 'btn btn-danger']) !!}
+								</div>
+							{!! Form::close() !!}
+							<a href="#forgotModal" id="forgotModalLink"><small>Forgot Password?</small></a>
+						</div>
+					</li>
 					@endif
 				</ul>
 			</div>

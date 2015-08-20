@@ -4,6 +4,22 @@ $.ajaxSetup({
 	}
 });
 
+function showModal(id, content, title, buttons) {
+	content = ((typeof content !== 'undefined') ? content : null);
+	title = ((typeof title !== 'undefined') ? title : null);
+	buttons = ((typeof buttons !== 'undefined') ? buttons : []);
+
+	if ($('#'+id).length) {
+		$('#'+id).find('.modal-title').html(title);
+		$('#'+id).find('.modal-body').html(content);
+		$('#'+id).find('.modal-footer').html('');
+		$(buttons).each(function(i, button) {
+			$(button).appendTo('.modal-footer')
+		});
+		$('#'+id).modal('show');
+	}
+}
+
 (function(d, s, id) {
 	var js, fjs = d.getElementsByTagName(s)[0];
 	if (d.getElementById(id)) return;
@@ -22,6 +38,11 @@ $.ajaxSetup({
 	} }(document, 'script', 'twitter-wjs'));
 
 new WOW().init();
+
+$('.link-to-top').on('click', function(e) {
+	e.preventDefault();
+	$('html, body').animate({ scrollTop: 0 }, 'slow');
+});
 
 $('[data-toggle="tooltip"]').tooltip();
 
@@ -60,10 +81,63 @@ $(document).delegate('*[data-toggle="state"]', 'change', function(e) {
 	});
 });
 
+$('#forgotModalLink').on('click', function(e) {
+	e.preventDefault();
+	$('#forgotModal').modal('show');
+});
+
+$('#forgotModal').on('click', '.btn-danger', function(e) {
+	e.preventDefault();
+	$('#forgotForm').submit();
+});
+
+$('#loginForm').validator({
+	disable: true
+}).on('submit', function(e) {
+	if (e.isDefaultPrevented()) {
+		return false;
+	}
+}).on('ajax:success', function(e, data, status, xhr) {
+	if (typeof data.error === 'undefined') {
+		document.location.href = '/my-account';
+	} else {
+		showModal('errorModal', data.error, 'Error!');
+	}
+}).on('ajax:error', function(e, data, status, xhr) {
+	showModal('errorModal', '<p>An unspecified error has occurred.</p><p>Please try again later.</p>', 'Error!');
+});
+
+$('#forgotForm').validator({
+	disable: true
+}).on('submit', function(e) {
+	if (e.isDefaultPrevented()) {
+		return false;
+	}
+}).on('ajax:success', function(e, data, status, xhr) {
+	$('#forgotForm .row').find('.col-xs-12:first-child').hide();
+	$('#forgotForm .row').find('.col-xs-12:last-child').show();
+	$('#forgotModal .modal-footer button').hide();
+}).on('ajax:error', function(e, data, status, xhr) {
+	showModal('errorModal', '<p>An unspecified error has occurred.</p><p>Please try again later.</p>', 'Error!');
+});
+
+$('#resetForm').validator({
+	disable: true
+}).on('submit', function(e) {
+	if (e.isDefaultPrevented()) {
+		return false;
+	}
+}).on('ajax:success', function(e, data, status, xhr) {
+	document.location.href = '/';
+}).on('ajax:error', function(e, data, status, xhr) {
+	showModal('errorModal', '<p>An unspecified error has occurred.</p><p>Please try again later.</p>', 'Error!');
+});
+
 $('#contactForm').validator({
 	disable: true
 }).on('submit', function(e) {
 	if (e.isDefaultPrevented()) {
+		$('html, body').animate({ scrollTop: 0 }, 'slow');
 		return false;
 	}
 }).on('ajax:success', function(e, data, status, xhr) {
@@ -71,12 +145,15 @@ $('#contactForm').validator({
 	$('#contactForm')[0].reset();
 	$('#contactForm').find('.has-success').removeClass('has-success');
 	$('#contactForm').find('.form-control-feedback').removeClass('glyphicon-ok');
+}).on('ajax:error', function(e, data, status, xhr) {
+	showModal('errorModal', '<p>An unspecified error has occurred.</p><p>Please try again later.</p>', 'Error!');
 });
 
 $('#nominateForm').validator({
 	disable: true,
 }).on('submit', function(e) {
 	if (e.isDefaultPrevented()) {
+		$('html, body').animate({ scrollTop: 0 }, 'slow');
 		return false;
 	}
 }).on('ajax:success', function(e, data, status, xhr) {
@@ -84,14 +161,18 @@ $('#nominateForm').validator({
 	$('#nominateForm')[0].reset();
 	$('#nominateForm').find('.has-success').removeClass('has-success');
 	$('#nominateForm').find('.form-control-feedback').removeClass('glyphicon-ok');
+}).on('ajax:error', function(e, data, status, xhr) {
+	showModal('errorModal', '<p>An unspecified error has occurred.</p><p>Please try again later.</p>', 'Error!');
 });
 
 $('#cart-content').on('ajax:success', '#cartForm', function(e, data, status, xhr) {
 	$('#cart-content').html(data.view);
 	$('#cart-count').html(data.count);
+}).on('ajax:error', function(e, data, status, xhr) {
+	showModal('errorModal', '<p>An unspecified error has occurred.</p><p>Please try again later.</p>', 'Error!');
 });
 
-$('.btn-coupon').on('click', function(e) {
+$('#cart-content').on('click', '.btn-coupon', function(e) {
 	if ($('#coupon_code').val() != '') {
 		$('#cartForm').submit();
 	}
@@ -112,6 +193,14 @@ $('#productFrom').validator({
 		$('.hero-bar').find('.progress-bar').attr('aria-valuenow', data.percentage).css('width', data.percentage+'%');
 		$('.hero-bar').find('.progress-bar span').html(data.percentage+'%');
 	}
+}).on('ajax:error', function(e, data, status, xhr) {
+	showModal('errorModal', '<p>An unspecified error has occurred.</p><p>Please try again later.</p>', 'Error!');
+});
+
+$('.btn-cancel-order').bind('ajax:success', function(e, data, status, xhr) {
+	document.location.href = document.location.href;
+}).bind('ajax:error', function(e, data, status, xhr) {
+	showModal('errorModal', '<p>An unspecified error has occurred.</p><p>Please try again later.</p>', 'Error!');
 });
 
 if ($('#checkoutForm').length) {
@@ -247,6 +336,8 @@ if ($('#checkoutForm').length) {
 		if (data.hash) {
 			document.location.href = '/order/'+data.hash;
 		}
+	}).on('ajax:error', function(e, data, status, xhr) {
+		showModal('errorModal', '<p>An unspecified error has occurred.</p><p>Please try again later.</p>', 'Error!');
 	});
 }
 

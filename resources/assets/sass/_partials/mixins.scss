@@ -62,11 +62,11 @@
 	}
 
 	.pt-#{$i} {
-		padding-top: #{$i}px;
+		padding-top: #{$i}px !important;
 	}
 
 	.pb-#{$i} {
-		padding-bottom: #{$i}px;
+		padding-bottom: #{$i}px !important;
 	}
 
 	.pl-#{$i} {
@@ -74,7 +74,7 @@
 	}
 
 	.pr-#{$i} {
-		padding-right: #{$i}px;
+		padding-right: #{$i}px !important;
 	}
 }
 

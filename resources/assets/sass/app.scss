@@ -94,14 +94,14 @@ header {
 								padding: 0 15px;
 							}
 
-							ul.dropdown-menu {
+							.dropdown-menu {
 								background: rgba(8, 100, 163, 0.9);
 								color: $white;
 								padding: 0;
 
-								li {
+								> li {
 
-									a {
+									> a {
 										color: $white;
 										line-height: 1em;
 										padding: 11px 15px;
@@ -110,6 +110,18 @@ header {
 										&:hover {
 											background: rgba(255, 255, 255, 0.3);
 										}
+									}
+								}
+
+								> a {
+									display: block;
+									text-align: center;
+									color: $white;
+									line-height: 1em;
+									padding: 0;
+
+									&:hover {
+										text-decoration: none;
 									}
 								}
 							}
@@ -664,7 +676,10 @@ i.caring-bridge {
 
 .contact-form,
 .nominate-form,
-.checkout-form {
+.checkout-form,
+#forgotForm,
+#loginForm,
+#resetForm {
 
 	label {
 		font-size: 1.285714286em;
@@ -674,6 +689,19 @@ i.caring-bridge {
 
 	.input-group {
 		width: 100%;
+	}
+}
+
+#forgotForm {
+	.row {
+		.col-xs-12 {
+			&:first-child {
+			}
+
+			&:last-child {
+				display: none;
+			}
+		}
 	}
 }
 

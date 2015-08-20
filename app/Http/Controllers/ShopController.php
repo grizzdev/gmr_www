@@ -19,6 +19,7 @@ use App\Package as Package;
 use App\Hero as Hero;
 use App\Status as Status;
 use App\Shop as Shop;
+use App\Log as Log;
 use View;
 use Response;
 use GuzzleHttp\Client as Client;
@@ -384,8 +385,8 @@ class ShopController extends Controller {
 
 					Mail::queue(
 						[
-							'emails.user-create-html',
-							'emails.user-create-text'
+							'emails.user.create-html',
+							'emails.user.create-text'
 						],
 						[
 							'logo' => config('mail.view.logo'),
@@ -408,6 +409,13 @@ class ShopController extends Controller {
 				'meta_json' => json_encode($meta),
 				'user_id' => $user->id,
 				'status_id' => 1
+			]);
+
+			Log::create([
+				'user_id' => $user->id,
+				'loggable_id' => $order->id,
+				'loggable_type' => '\App\Order',
+				'data' => 'Created Order #'.$order->id
 			]);
 
 			$this->send_order_email($order->id, $user->id);
@@ -713,11 +721,11 @@ class ShopController extends Controller {
 		$user = \App\User::find($user_id);
 		$checkout = (array) $order->checkout;
 
-		//Mail::send('emails.order-html',
+		//Mail::send('emails.order.create-html',
 		Mail::queue(
 			[
-				'emails.order-html',
-				'emails.order-text'
+				'emails.order.create-html',
+				'emails.order.create-text'
 			],
 			[
 				'title' => 'Gamerosity Order #'.$order->id,

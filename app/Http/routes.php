@@ -12,6 +12,10 @@
 */
 
 // http/s routes
+Route::get('home', function() {
+	return redirect('');
+});
+
 Route::get('cart', 'ShopController@cart');
 Route::post('cart', 'ShopController@updateCart');
 Route::delete('cart/{key}', 'ShopController@deleteCart');
@@ -48,6 +52,10 @@ Route::group(['middleware' => 'insecure'], function() {
 });
 
 Route::group(['middleware' => 'secure'], function() {
+	Route::get('my-account', 'AccountController@index');
+	Route::get('my-account/orders', 'AccountController@orders');
+	Route::get('my-account/order/{id}', 'AccountController@order');
+	Route::delete('my-account/order/{id}', 'AccountController@cancelOrder');
 	Route::get('checkout', 'ShopController@checkout');
 	Route::post('checkout', 'ShopController@postCheckout');
 	Route::post('checkout/states', 'ShopController@states');
@@ -55,4 +63,9 @@ Route::group(['middleware' => 'secure'], function() {
 	Route::get('checkout/token', 'ShopController@paypalToken');
 
 	Route::get('order/{hash}', 'ShopController@order');
+
+	Route::controllers([
+		'auth' => 'Auth\AuthController',
+		'password' => 'Auth\PasswordController'
+	]);
 });
