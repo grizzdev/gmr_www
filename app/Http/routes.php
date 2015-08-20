@@ -12,10 +12,6 @@
 */
 
 // http/s routes
-Route::get('home', function() {
-	return redirect('');
-});
-
 Route::get('cart', 'ShopController@cart');
 Route::post('cart', 'ShopController@updateCart');
 Route::delete('cart/{key}', 'ShopController@deleteCart');
@@ -27,6 +23,7 @@ Route::post('upload/', 'HomeController@upload');
 
 // http-only routes
 Route::group(['middleware' => 'insecure'], function() {
+	Route::get('home', 'HomeController@home');
 	Route::get('', 'HomeController@home');
 
 	Route::get('about', 'AboutController@about');
