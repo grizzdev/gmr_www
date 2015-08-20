@@ -12,6 +12,10 @@
 */
 
 // http/s routes
+Route::controllers([
+	'auth' => 'Auth\AuthController',
+	'password' => 'Auth\PasswordController'
+]);
 Route::get('cart', 'ShopController@cart');
 Route::post('cart', 'ShopController@updateCart');
 Route::delete('cart/{key}', 'ShopController@deleteCart');
@@ -60,9 +64,4 @@ Route::group(['middleware' => 'secure'], function() {
 	Route::get('checkout/token', 'ShopController@paypalToken');
 
 	Route::get('order/{hash}', 'ShopController@order');
-
-	Route::controllers([
-		'auth' => 'Auth\AuthController',
-		'password' => 'Auth\PasswordController'
-	]);
 });
