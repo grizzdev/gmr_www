@@ -131,18 +131,19 @@ class HeroController extends Controller {
 	}
 
 	public function postNominate(Request $request) {
-		$nominee = User::firstOrNew([
+		/*$nominee = User::firstOrNew([
 			'email' => $request->input('email')
 		]);
 		$nominee->name = $request->input('name');
-		$nominee->save();
+		$nominee->save();*/
 
 		$birth_date = date('Y-m-d', strtotime($request->input('hero-dob-month').'/'.$request->input('hero-dob-day').'/'.$request->input('hero-dob-year')));
 
-		$hero = Hero::create([
+		/*$hero = Hero::create([
 			'name' => $request->input('hero-name'),
 			'overview' => $request->input('overview'),
 			'birth_date' => $birth_date,
+			'gender' => $request->input('hero-gender'),
 			'address' => $request->input('hero-address'),
 			'city' => $request->input('hero-city'),
 			'state' => $request->input('hero-state'),
@@ -161,7 +162,7 @@ class HeroController extends Controller {
 			'funded' => false,
 			'file_id' => $request->input('file-id'),
 			'nominee_id' => $nominee->id
-		]);
+		]);*/
 
 		Mail::queue(
 			[

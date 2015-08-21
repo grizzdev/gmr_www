@@ -61,6 +61,33 @@
 						</div>
 					</div>
 				</div>
+				<div class="row">
+					<div class="col-sm-12 col-md-6">
+						<div class="form-group">
+							{!! Form::label('image', 'Hero\'s Picture', ['class' => 'control-label']) !!}
+							<div type="input-group">
+								<span class="btn btn-primary fileinput-button">
+									<i class="glyphicon glyphicon-plus"></i>
+									<span>Add Image</span>
+									{!! Form::file('image', ['data-url' => 'upload']) !!}
+								</span>
+								<span id="file-name"></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-3">
+						<div class="form-group">
+							{!! Form::label('hero-shirt-size', 'Hero\'s Shirt Size', ['class' => 'control-label']) !!}
+							{!! Form::select('hero-shirt-size', $sizes, null, ['class' => 'form-control']) !!}
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-3">
+						<div class="form-group">
+							{!! Form::label('hero-gender', 'Hero\'s Gender', ['class' => 'control-label']) !!}
+							{!! Form::select('hero-gender', ['m' => 'Male', 'f' => 'Female'], null, ['class' => 'form-control']) !!}
+						</div>
+					</div>
+				</div>
 				<div class="form-group has-feedback">
 					{!! Form::label('hero-address', 'Hero\'s Shipping Address', ['class' => 'control-label']) !!}
 					<div class="input-group">
@@ -95,13 +122,6 @@
 					</div>
 				</div>
 				<div class="form-group">
-					{!! Form::label('overview', 'Overview', ['class' => 'control-label']) !!}
-					<div class="input-group">
-						{!! Form::textarea('overview', null, ['class' => 'form-control', 'required' => true, 'rows' => 5]) !!}
-						<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-					</div>
-				</div>
-				<div class="form-group">
 					{!! Form::label('cancer', 'Type(s) of Cancer', ['class' => 'control-label']) !!}
 					<div class="input-group">
 						{!! Form::text('cancer', null, ['class' => 'form-control', 'required' => true]) !!}
@@ -128,55 +148,42 @@
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-sm-12 col-md-6">
-						<div class="form-group">
-							{!! Form::label('image', 'Hero\'s Picture', ['class' => 'control-label']) !!}
-							<div type="input-group">
-								<span class="btn btn-primary fileinput-button">
-									<i class="glyphicon glyphicon-plus"></i>
-									<span>Add Image</span>
-									{!! Form::file('image', ['data-url' => 'upload']) !!}
-								</span>
-								<span id="file-name"></span>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-12 col-md-6">
-						<div class="form-group">
-							{!! Form::label('hero-shirt-size', 'Hero\'s Shirt Size' , ['class' => 'control-label']) !!}
-							{!! Form::select('hero-shirt-size', $sizes, null, ['class' => 'form-control']) !!}
-						</div>
+				<div class="form-group">
+					{!! Form::label('overview', 'Overview', ['class' => 'control-label']) !!}
+					<div class="input-group">
+						{!! Form::textarea('overview', null, ['class' => 'form-control', 'required' => true, 'rows' => 5]) !!}
+						<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 					</div>
 				</div>
-				<div class="form-group">
-					<h4>Social Networking Sites</h4>
-					<small>Enter full url</small>
-					<div class="row">
-						<div class="col-sm-12 col-md-6">
-							<div class="form-group">
-								{!! Form::label('facebook-url', 'Facebook', ['class' => 'control-label']) !!}
-								{!! Form::text('facebook-url', null, ['class' => 'form-control']) !!}
+				<div class="row">
+					<div class="col-xs-12">
+						<h4>Social Networking Sites <small>(enter full url)</small></h4>
+						<div class="row">
+							<div class="col-sm-12 col-md-6">
+								<div class="form-group">
+									{!! Form::label('facebook-url', 'Facebook', ['class' => 'control-label']) !!}
+									{!! Form::text('facebook-url', null, ['class' => 'form-control']) !!}
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-6">
+								<div class="form-group">
+									{!! Form::label('twitter-url', 'Twitter', ['class' => 'control-label']) !!}
+									{!! Form::text('twitter-url', null, ['class' => 'form-control']) !!}
+								</div>
 							</div>
 						</div>
-						<div class="col-sm-12 col-md-6">
-							<div class="form-group">
-								{!! Form::label('twitter-url', 'Twitter', ['class' => 'control-label']) !!}
-								{!! Form::text('twitter-url', null, ['class' => 'form-control']) !!}
+						<div class="row">
+							<div class="col-sm-12 col-md-6">
+								<div class="form-group">
+									{!! Form::label('youtube-url', 'YouTube', ['class' => 'control-label']) !!}
+									{!! Form::text('youtube-url', null, ['class' => 'form-control']) !!}
+								</div>
 							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-12 col-md-6">
-							<div class="form-group">
-								{!! Form::label('youtube-url', 'YouTube', ['class' => 'control-label']) !!}
-								{!! Form::text('youtube-url', null, ['class' => 'form-control']) !!}
-							</div>
-						</div>
-						<div class="col-sm-12 col-md-6">
-							<div class="form-group">
-								{!! Form::label('caringbridge-url', 'Caring Bridge', ['class' => 'control-label']) !!}
-								{!! Form::text('caringbridge-url', null, ['class' => 'form-control']) !!}
+							<div class="col-sm-12 col-md-6">
+								<div class="form-group">
+									{!! Form::label('caringbridge-url', 'Caring Bridge', ['class' => 'control-label']) !!}
+									{!! Form::text('caringbridge-url', null, ['class' => 'form-control']) !!}
+								</div>
 							</div>
 						</div>
 					</div>

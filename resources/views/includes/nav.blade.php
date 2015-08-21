@@ -44,7 +44,7 @@
 							<span class="caret"></span>
 						</a>
 						<div class="dropdown-menu pt-5 pb-5 pl-5 pr-5 text-center">
-							{!! Form::open(['url' => 'auth/login', 'id' => 'loginForm', 'data-remote' => true]) !!}
+							{!! Form::open(['url' => secure_url('auth/login'), 'id' => 'loginForm', 'data-remote' => true]) !!}
 								<div class="form-group has-feedback">
 									<div class="input-group">
 										{!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'email address', 'required' => true, 'id' => 'login-email']) !!}

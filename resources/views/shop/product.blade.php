@@ -122,7 +122,7 @@
 								{!! Form::number('quantity', 1, ['class' => 'form-control']) !!}
 							</div>
 							<div class="col-xs-10">
-								{!! Form::submit('ADD TO CART', ['class' => 'btn btn-primary']) !!}
+								{!! Form::submit('ADD TO CART', ['class' => 'btn btn-primary', 'data-disable-with' => 'ADDING...']) !!}
 							</div>
 						</div>
 						{!! Form::hidden('product_id', $product->id) !!}

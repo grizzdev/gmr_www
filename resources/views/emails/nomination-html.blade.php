@@ -1,58 +1,65 @@
+<?php
+$request['hero-state'] = \App\Location::find($request['hero-state-id']);
+?>
 @extends('layouts.email')
 
 @section('content')
 <table cellspacing="2">
 	<tr>
 		<th align="right" valign="top">Name:</th>
-		<td>{{ $request['hero-name'] }}</td>
+		<td>{!! $request['hero-name'] !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Birth Date:</th>
-		<td>{{ $birth_date }}</td>
+		<td>{!! $birth_date !!}</td>
+	</tr>
+	<tr>
+		<th align="right" valign="top">Gender:</th>
+		<td>{!! ($request['hero-gender'] == 'm') ? 'Male' : 'Female' !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Address:</th>
-		<td>{{ $request['hero-address'] }}, {{ $request['hero-city'] }}, {{ $request['hero-state'] }} {{ $request['hero-zip'] }}</td>
+		<td>{!! $request['hero-address'] !!}, {!! $request['hero-city'] !!}, {!! $request['hero-state']->name !!} {!! $request['hero-zip'] !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Shirt Size:</th>
-		<td>{{ strtoupper($request['hero-shirt-size']) }}</td>
+		<td>{!! strtoupper($request['hero-shirt-size']) !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Hospital:</th>
-		<td>{{ $request['hospital-name'] }}, {{ $request['hospital-location'] }}</td>
+		<td>{!! $request['hospital-name'] !!}, {!! $request['hospital-location'] !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Cancer Type(s):</th>
-		<td>{{ $request['cancer'] }}</td>
+		<td>{!! $request['cancer'] !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Nominee:</th>
-		<td><a href="mailto:{{ $request['email'] }}">{{ $request['name'] }}</a></td>
+		<td>{!! $request['name'] !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Relationship:</th>
-		<td>{{ $request['relationship'] }}</td>
+		<td>{!! $request['relationship'] !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Facebook:</th>
-		<td>{{ $request['facebook-url'] }}</td>
+		<td>{!! $request['facebook-url'] !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Twitter:</th>
-		<td>{{ $request['twitter-url'] }}</td>
+		<td>{!! $request['twitter-url'] !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">YouTube:</th>
-		<td>{{ $request['youtube-url'] }}</td>
+		<td>{!! $request['youtube-url'] !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Caring Bridge:</th>
-		<td>{{ $request['caringbridge-url'] }}</td>
+		<td>{!! $request['caringbridge-url'] !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Overview:</th>
-		<td><pre>{{ $request['overview'] }}</pre></td>
+		<td><p>{!! nl2br($request['overview']) !!}</p></td>
 	</tr>
 </table>
 @endsection
