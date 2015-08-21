@@ -21,6 +21,7 @@ class ContactController extends Controller {
 				'emails.contact-text'
 			],
 			[
+				'title' => 'New Contact Form Submission',
 				'logo' => config('mail.view.logo'),
 				'name' => $request->input('name'),
 				'email' => $request->input('email'),

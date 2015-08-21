@@ -16,7 +16,7 @@
 	</tr>
 	<tr>
 		<th align="right" valign="top">Message:</th>
-		<td><pre>{{ $comments }}</pre></td>
+		<td><p>{!! nl2br($comments) !!}</p></td>
 	</tr>
 </table>
 @endsection
