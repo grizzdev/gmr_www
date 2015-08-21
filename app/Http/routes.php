@@ -12,6 +12,7 @@
 */
 
 // http/s routes
+Route::get('test', 'HomeController@test');
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController'
