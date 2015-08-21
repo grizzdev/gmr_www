@@ -1,21 +1,17 @@
 <?php
-
-$birth_date = date('m/d/Y', strtotime($request->input('hero-dob-month').'/'.$request->input('hero-dob-day').'/'.$request->input('hero-dob-year')));
-
+$request['hero-state'] = \App\Location::find($request['hero-state-id']);
 ?>
-Name: {{ $request->input('hero-name') }}
-Birth Date: {{ $birth_date }}
-Address: {{ $request->input('hero-address') }}, {{ $request->input('hero-city') }}, {{ $request->input('hero-state') }} {{ $request->input('hero-zip') }}
-Shirt Size: {{ strtoupper($request->input('hero-shirt-size')) }}
-Hospital: {{ $request->input('hospital-name') }}, {{ $request->input('hospital-location') }}
-Cancer Type(s): {{ $request->input('cancer') }}
-Nominee: {{ $request->input('email') }} {{ $request->input('name') }}
-Relationship: {{ $request->input('relationship') }}
-Facebook: {{ $request->input('facebook-url') }}
-Twitter: {{ $request->input('twitter-url') }}
-YouTube: {{ $request->input('youtube-url') }}
-Caring Bridge: {{ $request->input('caringbridge-url') }}
-Overview: {{ $request->input('overview') }}
-@if(!empty($request->input('sidekick-name')) && !empty($request->input('sidekick-email')))
-Sidekick: {{ $request->input('sidekick-email') }} {{ $request->input('sidekick-name') }}
-@endif
+Name: {!! $request['hero-name'] !!}
+Birth Date: {!! $birth_date !!}
+Gender: {!! ($request['hero-gender'] == 'm') ? 'Male' : 'Female' !!}
+Address: {!! $request['hero-address'] !!}, {!! $request['hero-city'] !!}, {!! $request['hero-state']->name !!} {!! $request['hero-zip'] !!}
+Shirt Size: {!! strtoupper($request['hero-shirt-size']) !!}
+Hospital: {!! $request['hospital-name'] !!}, {!! $request['hospital-location'] !!}
+Cancer Type(s): {!! $request['cancer'] !!}
+Nominee: {!! $request['name'] !!} <{!! $request['email'] !!}>
+Relationship: {!! $request['relationship'] !!}
+Facebook: {!! $request['facebook-url'] !!}
+Twitter: {!! $request['twitter-url'] !!}
+YouTube: {!! $request['youtube-url'] !!}
+Caring Bridge: {!! $request['caringbridge-url'] !!}
+Overview: {!! $request['overview'] !!}
