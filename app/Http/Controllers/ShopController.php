@@ -565,17 +565,32 @@ class ShopController extends Controller {
 	}
 
 	private function getProducts($slugs) {
-		if (empty($slugs['category'])) {
-			$products = Product::where('deleted_at', '=', null);
-		} else {
+		$products = Product::where('deleted_at', '=', null);
+		if (!empty($slugs['category'])) {
 			$category = Category::where('slug', '=', $slugs['category'])->first();
 
-			if ($slugs['category'] != 'sale') {
-				$products = Product::whereHas('categories', function($query) use ($category) {
-					$query->where('categories.id', '=', $category->id);
+			if ($category) {
+				if ($slugs['category'] != 'sale') {
+					$products = Product::whereHas('categories', function($query) use ($category) {
+						$query->where('categories.id', '=', $category->id);
+					});
+				} else {
+					$products = Product::where('sale_price', '!=', '0');
+				}
+			} else {
+				$products->where('id', '=', null);
+			}
+		}
+
+		if (!empty($slugs['tag'])) {
+			$tag = Tag::where('slug', '=', $slugs['tag'])->first();
+
+			if ($tag) {
+				$products->whereHas('tags', function($query) use ($tag) {
+					$query->where('tags.id', '=', $tag->id);
 				});
 			} else {
-				$products = Product::where('sale_price', '!=', '0');
+				$products->where('id', '=', null);
 			}
 		}
 

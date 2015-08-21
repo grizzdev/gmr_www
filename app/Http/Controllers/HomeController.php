@@ -4,11 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Redirect;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\File;
 
 class HomeController extends Controller {
+
+	public function test(Request $request) {
+		$allowed = [
+			'127.0.0.1',
+			'10.0.4.1'
+		];
+
+		if (!in_array($request->ip(), $allowed)) {
+			return Redirect::to('/');
+		} else {
+			// let's do some work
+		}
+	}
 
 	public function home() {
 		return view('home.home', ['title' => 'Home']);
