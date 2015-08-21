@@ -79,7 +79,7 @@ class AppServiceProvider extends ServiceProvider {
 		});
 
 		User::saving(function($user) {
-			if ($user->getOriginal('name') != $user->name) {
+			if (!empty($user->getOriginal('name')) && $user->getOriginal('name') != $user->name) {
 				Log::create([
 					'user_id' => Auth::user()->id,
 					'loggable_id' => $user->id,
@@ -88,7 +88,7 @@ class AppServiceProvider extends ServiceProvider {
 				]);
 			}
 
-			if ($user->getOriginal('email') != $user->email) {
+			if (!empty($user->getOriginal('email')) && $user->getOriginal('email') != $user->email) {
 				Log::create([
 					'user_id' => Auth::user()->id,
 					'loggable_id' => $user->id,
@@ -97,7 +97,7 @@ class AppServiceProvider extends ServiceProvider {
 				]);
 			}
 
-			if ($user->getOriginal('password') != $user->password) {
+			if (!empty($user->getOriginal('password')) && $user->getOriginal('password') != $user->password) {
 				Log::create([
 					'user_id' => Auth::user()->id,
 					'loggable_id' => $user->id,
