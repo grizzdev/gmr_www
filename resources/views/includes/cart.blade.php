@@ -71,12 +71,12 @@
 								{!! Form::text('coupon_code', null, ['class' => 'form-control', 'placeholder' => 'COUPON CODE', 'id' => 'coupon_code', 'style' => 'max-width:144px']) !!}
 							</div>
 							<div class="col-xs-7 col-sm-10">
-								{!! Form::button('APPLY COUPON', ['class' => 'btn btn-sm btn-primary btn-coupon']) !!}
+								{!! Form::button('APPLY COUPON', ['class' => 'btn btn-sm btn-primary btn-coupon', 'data-disable-with' => 'APPLYING...']) !!}
 							</div>
 						</div>
 					</td>
 					<td align="right">
-						{!! Form::submit('UPDATE CART', ['class' => 'btn btn-sm btn-primary']) !!}
+						{!! Form::submit('UPDATE CART', ['class' => 'btn btn-sm btn-primary', 'data-disable-with' => 'UPDATING...']) !!}
 					</td>
 				</tr>
 				<tr>
