@@ -14,8 +14,10 @@ class HomeController extends Controller {
 	public function test(Request $request) {
 		$allowed = [
 			'127.0.0.1',
-			'10.0.4.1'
+			'10.0.4.1',
+			'65.103.70.94'
 		];
+		exit();
 
 		if (!in_array($request->ip(), $allowed)) {
 			return Redirect::to('/');
