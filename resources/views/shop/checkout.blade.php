@@ -305,12 +305,9 @@
 					</div>
 				</div>
 			</div>
-			{!! Form::hidden('credit-card-number', null, ['id' => 'credit-card-number']) !!}
-			{!! Form::hidden('credit-card-expiration-month', null, ['id' => 'credit-card-expiration-month']) !!}
-			{!! Form::hidden('credit-card-expiration-year', null, ['id' => 'credit-card-expiration-year']) !!}
-			{!! Form::hidden('credit-card-ccv', null, ['id' => 'credit-card-ccv']) !!}
-			{!! Form::hidden('payment-type', session('checkout.payment-type'), ['id' => 'payment-type']) !!}
-			{!! Form::hidden('payment-token', session('checkout.payment-token'), ['id' => 'payment-token']) !!}
+			{!! Form::hidden(null, config('services.stripe.key'), ['id' => 'stripe-pk']) !!}
+			{!! Form::hidden('payment-type', null, ['id' => 'payment-type']) !!}
+			{!! Form::hidden('payment-token', null, ['id' => 'payment-token']) !!}
 			{!! Form::hidden('discount', number_format(\App\Http\Controllers\ShopController::calculate_discount(), 2, '.', '')) !!}
 			{!! Form::hidden('shipping', number_format(\App\Http\Controllers\ShopController::calculate_shipping(), 2, '.', '')) !!}
 			{!! Form::hidden('subtotal', number_format($cart['subtotal'], 2, '.', ''), ['id' => 'subtotal']) !!}
@@ -319,13 +316,4 @@
 		{!! Form::close() !!}
 	</div>
 </div>
-@include('includes.modal', [
-	'id' => 'creditCardModal',
-	'title' => 'Credit Card Information',
-	'view' => 'includes/credit-card-form',
-	'buttons' => [
-		'<a class="btn btn-danger">Finish and Pay</a>',
-		'<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>'
-	]
-])
 @endsection

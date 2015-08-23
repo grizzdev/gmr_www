@@ -252,41 +252,19 @@ if ($('#checkoutForm').length) {
 		}
 	});
 
-	/*var handler = StripeCheckout.configure({
+	var handler = StripeCheckout.configure({
 		key: $('#stripe-pk').val(),
 		image: '/img/logo_hero_128x128.png',
 		token: function(token) {
 			$('#payment-token').val(token.id);
 			$('#checkoutForm').submit();
 		}
-	});*/
+	});
 
 	$('.credit-card-button').on('click', function(e) {
 		e.preventDefault();
 		$('#payment-type').val('stripe');
-		//if ($('#payment-token').val() == '') {
-			//$('#creditCardModal').modal('show');
-		//} else {
-			$('#checkoutForm').submit();
-		//}
-	});
-
-	$('#creditCardForm').validator({
-		disable: true
-	}).on('submit', function(e) {
-		if (!e.isDefaultPrevented()) {
-			$('#credit-card-number').val($('#creditCardForm').find('[name="credit-card-number"]').val());
-			$('#credit-card-expiration-month').val($('#creditCardForm').find('[name="credit-card-expiration-month"]').val());
-			$('#credit-card-expiration-year').val($('#creditCardForm').find('[name="credit-card-expiration-year"]').val());
-			$('#credit-card-ccv').val($('#creditCardForm').find('[name="credit-card-ccv"]').val());
-			$('#payment-token').val(true);
-			$('#checkoutForm').submit();
-		}
-		return false;
-	});
-
-	$('#creditCardModal').on('click', 'a.btn-danger', function(e) {
-		$('#creditCardForm').submit();
+		$('#checkoutForm').submit();
 	});
 
 	$('.pay-pal-button').on('click', function(e) {
@@ -295,9 +273,9 @@ if ($('#checkoutForm').length) {
 		$('#checkoutForm').submit();
 	});
 
-	//$(window).on('popstate', function() {
-		//handler.close();
-	//});
+	$(window).on('popstate', function() {
+		handler.close();
+	});
 
 	$('#checkoutForm').validator({
 		disable: true,
@@ -307,13 +285,12 @@ if ($('#checkoutForm').length) {
 			$('#errorModal').modal('show');
 			return false;
 		} else if ($('#payment-type').val() == 'stripe' && $('#payment-token').val() == '') {
-			$('#creditCardModal').modal('show');
-			//handler.open({
-				//name: 'Gamerosity.com',
-				//amount: ($('#total').val() * 100),
-				//email: $('#email-address').val(),
-				//allowRememberMe: false
-			//});
+			handler.open({
+				name: 'Gamerosity.com',
+				amount: ($('#total').val() * 100),
+				email: $('#email-address').val(),
+				allowRememberMe: false
+			});
 			return false;
 		} else if($('#payment-type').val() == 'paypal' && $('#payment-token').val() == '') {
 			$.ajax({
