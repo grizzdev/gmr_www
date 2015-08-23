@@ -81,7 +81,7 @@ class AppServiceProvider extends ServiceProvider {
 		User::saving(function($user) {
 			if (!empty($user->getOriginal('name')) && $user->getOriginal('name') != $user->name) {
 				Log::create([
-					'user_id' => Auth::user()->id,
+					'user_id' => (Auth::check()) ? Auth::user()->id : $user->id,
 					'loggable_id' => $user->id,
 					'loggable_type' => 'App\User',
 					'data' => 'Changed Name from '.$user->getOriginal('name').' to '.$user->name
@@ -90,7 +90,7 @@ class AppServiceProvider extends ServiceProvider {
 
 			if (!empty($user->getOriginal('email')) && $user->getOriginal('email') != $user->email) {
 				Log::create([
-					'user_id' => Auth::user()->id,
+					'user_id' => (Auth::check()) ? Auth::user()->id : $user->id,
 					'loggable_id' => $user->id,
 					'loggable_type' => 'App\User',
 					'data' => 'Changed Email from '.$user->getOriginal('email').' to '.$user->email
@@ -99,7 +99,7 @@ class AppServiceProvider extends ServiceProvider {
 
 			if (!empty($user->getOriginal('password')) && $user->getOriginal('password') != $user->password) {
 				Log::create([
-					'user_id' => Auth::user()->id,
+					'user_id' => (Auth::check()) ? Auth::user()->id : $user->id,
 					'loggable_id' => $user->id,
 					'loggable_type' => 'App\User',
 					'data' => 'Changed Password'

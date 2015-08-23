@@ -307,17 +307,6 @@ class ShopController extends Controller {
 									$modelname = "\\App\\{$attribute->model}";
 									$model = $modelname::find($value);
 									$value = $model->name;
-
-									/*if ($attribute->model == 'Hero') {
-										if ($product->id == 1) {
-											$raised = ($model->raised + $item['attributes'][38]);
-										} else {
-											$raised = ($model->raised + $product->contribution_amount);
-										}
-
-										$model->raised = $raised;
-										$model->save();
-									}*/
 								}
 								break;
 						}
