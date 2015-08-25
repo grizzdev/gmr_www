@@ -15,7 +15,7 @@
         "zizaco/entrust": "dev-laravel-5",
         "jenssegers/agent": "^2.1",
         "vinkla/hashids": "^2.0",
-        "stripe/stripe-php": "3.*"
+        "barryvdh/laravel-cors": "0.7.x"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

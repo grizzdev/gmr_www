@@ -16725,8 +16725,8 @@ i.caring-bridge {
 .contact-form label,
 .nominate-form label,
 .checkout-form label,
+.login-form label,
 #forgotForm label,
-#loginForm label,
 #resetForm label,
 #accountForm label {
   font-size: 1.285714286em;
@@ -16736,8 +16736,8 @@ i.caring-bridge {
 .contact-form .input-group,
 .nominate-form .input-group,
 .checkout-form .input-group,
+.login-form .input-group,
 #forgotForm .input-group,
-#loginForm .input-group,
 #resetForm .input-group,
 #accountForm .input-group {
   width: 100%; }
@@ -16840,6 +16840,17 @@ i.caring-bridge {
       float: left !important; }
     .order-content table {
       display: block; } }
+
+@media (min-width: 1200px) {
+  .login-content {
+    padding-top: 80px;
+    min-height: 500px;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center; } }
 
 .footer-push {
   height: 483px; }

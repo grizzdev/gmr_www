@@ -71,7 +71,7 @@ $('.link-to-top').on('click', function(e) {
 	$('html, body').animate({ scrollTop: 0 }, 'slow');
 });
 
-$('#forgotModalLink').on('click', function(e) {
+$('.forgot-modal-link').on('click', function(e) {
 	e.preventDefault();
 	$('#forgotModal').modal('show');
 });
@@ -81,7 +81,7 @@ $('#forgotModal').on('click', '.btn-danger', function(e) {
 	$('#forgotForm').submit();
 });
 
-$('#loginForm').validator({
+$('.login-form').validator({
 	disable: true
 }).on('submit', function(e) {
 	if (e.isDefaultPrevented()) {
@@ -108,6 +108,7 @@ $('#forgotForm').validator({
 	$('#forgotForm .row').find('.col-xs-12:last-child').show();
 	$('#forgotModal .modal-footer button').hide();
 }).on('ajax:error', function(e, data, status, xhr) {
+	$('#forgotModal').modal('hide');
 	showModal('errorModal', '<p>An unspecified error has occurred.</p><p>Please try again later.</p>', 'Error!');
 });
 

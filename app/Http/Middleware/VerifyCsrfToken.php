@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use DB;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
 
 class VerifyCsrfToken extends BaseVerifier {
@@ -31,7 +32,7 @@ class VerifyCsrfToken extends BaseVerifier {
 			'headers' => $request->header()
 		]);
 
-		\DB::table('requests')->insert([
+		DB::table('requests')->insert([
 			'payload_json' => $data,
 			'created_at' => date('Y-m-d H:i:s')
 		]);

@@ -1,4 +1,4 @@
-{!! Form::open(['secure_url' => 'password/email', 'id' => 'forgotForm', 'data-remote' => true]) !!}
+{!! Form::open(['url' => url('password/email'), 'id' => 'forgotForm', 'data-remote' => true]) !!}
 <div class="row">
 	<div class="col-xs-12">
 		<div class="form-group has-feedback">

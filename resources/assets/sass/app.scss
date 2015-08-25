@@ -667,18 +667,14 @@ i.caring-bridge {
 		p {
 			color: $white;
 		}
-
-		.brd-rt.brd-lt {
-			//height: 72px;
-		}
 	}
 }
 
 .contact-form,
 .nominate-form,
 .checkout-form,
+.login-form,
 #forgotForm,
-#loginForm,
 #resetForm,
 #accountForm {
 
@@ -881,6 +877,14 @@ i.caring-bridge {
 		table {
 			display: block;
 		}
+	}
+}
+
+.login-content {
+	@media (min-width: $screen-lg-min) {
+		padding-top: 80px;
+		min-height: 500px;
+		@include vcenter();
 	}
 }
 

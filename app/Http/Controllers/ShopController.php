@@ -149,43 +149,45 @@ class ShopController extends Controller {
 	}
 
 	public function addCart(Request $request) {
-		$cart = $request->session()->get('cart');
-		$exists = null;
-		$attributes = [];
-		$quantity = $request->input('quantity');
+		/*
+			$cart = $request->session()->get('cart');
+			$exists = null;
+			$attributes = [];
+			$quantity = $request->input('quantity');
 
-		if (!empty($request->input('attributes'))) {
-			$attributes = $request->input('attributes');
-		}
+			if (!empty($request->input('attributes'))) {
+				$attributes = $request->input('attributes');
+			}
 
-		if (is_array($cart)) {
-			foreach ($cart as $key => $item) {
-				if ($item['product_id'] == $request->input('product_id') && $item['attributes'] == $attributes) {
-					$exists = $key;
+			if (is_array($cart)) {
+				foreach ($cart as $key => $item) {
+					if ($item['product_id'] == $request->input('product_id') && $item['attributes'] == $attributes) {
+						$exists = $key;
+					}
 				}
 			}
-		}
 
-		if (!is_null($exists)) {
-			$cart[$exists]['quantity'] = ($cart[$exists]['quantity'] + $quantity);
-		} else {
-			$cart[microtime(true)] = [
-				'product_id' => $request->input('product_id'),
-				'attributes' => $attributes,
-				'quantity' => $quantity,
-			];
-		}
+			if (!is_null($exists)) {
+				$cart[$exists]['quantity'] = ($cart[$exists]['quantity'] + $quantity);
+			} else {
+				$cart[microtime(true)] = [
+					'product_id' => $request->input('product_id'),
+					'attributes' => $attributes,
+					'quantity' => $quantity,
+				];
+			}
 
-		$request->session()->put('cart', $cart);
+			$request->session()->put('cart', $cart);
 
-		if (session('hero_slug')) {
-			$hero = Hero::where('slug', '=', session('hero_slug'))->first();
-			$contribution = $hero->contribution_in_cart();
-			$percentage = floor((($hero->raised + $contribution) / $hero->goal) * 100);
-		} else {
-			$contribution = 0;
-			$percentage = 0;
-		}
+			if (session('hero_slug')) {
+				$hero = Hero::where('slug', '=', session('hero_slug'))->first();
+				$contribution = $hero->contribution_in_cart();
+				$percentage = floor((($hero->raised + $contribution) / $hero->goal) * 100);
+			} else {
+				$contribution = 0;
+				$percentage = 0;
+			}
+		*/
 
 		return Response::json([
 			'count' => count($cart),
@@ -725,28 +727,21 @@ class ShopController extends Controller {
 		$user = \App\User::find($user_id);
 		$checkout = (array) $order->checkout;
 
-		//Mail::send('emails.order.create-html',
-		Mail::queue(
-			[
-				'emails.order.create-html',
-				'emails.order.create-text'
-			],
-			[
-				'title' => 'Gamerosity Order #'.$order->id,
-				'logo' => config('mail.view.logo'),
-				'order' => $order,
-				'billing_state' => Location::find($checkout['billing-state-id']),
-				'billing_country' => Location::find($checkout['billing-country-id']),
-				'shipping_state' => Location::find($checkout['shipping-state-id']),
-				'shipping_country' => Location::find($checkout['shipping-country-id']),
-				'status' => $order->status->name,
-				'contribution' => $order->contribution()
-			],
-			function ($message) use ($user, $order) {
-				$message->to($user->email)->subject('Your Gamerosity Order: #'.$order->id);
-				$message->to('info@gamerosity.com')->subject('Your Gamerosity Order: #'.$order->id);
-			}
-		);
+		Mail::queue('emails.order.create-html', [
+			'title' => 'Gamerosity Order #'.$order->id,
+			'logo' => config('mail.view.logo'),
+			'order' => $order,
+			'billing_state' => Location::find($checkout['billing-state-id']),
+			'billing_country' => Location::find($checkout['billing-country-id']),
+			'shipping_state' => Location::find($checkout['shipping-state-id']),
+			'shipping_country' => Location::find($checkout['shipping-country-id']),
+			'status' => $order->status->name,
+			'contribution' => $order->contribution()
+		], function ($message) use ($user) {
+			$message->to($user->email)->subject('Your Gamerosity Order');
+			$message->bcc('info@gamerosity.com')->subject('Your Gamerosity Order');
+			$message->bcc('kevin@grizzdev.com')->subject('Your Gamerosity Order');
+		});
 	}
 
 }

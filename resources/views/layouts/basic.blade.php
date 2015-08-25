@@ -7,7 +7,6 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<link rel="canonical" href="{{ url() }}" />
-		<link rel="stylesheet" type="text/css" href="{{ elixir('css/app.css') }}" />
 		<link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}" sizes="16x16">
 		<link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}" sizes="32x32">
 		<link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}" sizes="96x96">
@@ -30,18 +29,10 @@
 		<meta property="og:title" content="{{ $title or null }} | Gamerosity" />
 		<meta property="og:description" content="{{ $description or 'Gamerosity' }}" />
 		<meta property="og:image" content="{{ asset('img/footer.png') }}" />
+		@yield('head')
 	</head>
 	<body>
 		@yield('page')
-		<div id="fb-root"></div>
-		<script src="https://checkout.stripe.com/checkout.js"></script>
-		<script src="{{ elixir('js/all.js') }}"></script>
-		<script>
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-			ga('create', 'UA-50032356-5', 'auto');
-			ga('send', 'pageview');
-		</script>
+		@yield('foot')
 	</body>
 </html>

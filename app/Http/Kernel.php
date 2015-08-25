@@ -17,6 +17,7 @@ class Kernel extends HttpKernel {
 		\Illuminate\Session\Middleware\StartSession::class,
 		\Illuminate\View\Middleware\ShareErrorsFromSession::class,
 		\App\Http\Middleware\VerifyCsrfToken::class,
+		\Barryvdh\Cors\HandleCors::class,
 	];
 
 	/**
@@ -30,5 +31,6 @@ class Kernel extends HttpKernel {
 		'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
 		'secure' => \App\Http\Middleware\Secure::class,
 		'insecure' => \App\Http\Middleware\Insecure::class,
+		'permission' => \App\Http\Middleware\Permission::class,
 	];
 }

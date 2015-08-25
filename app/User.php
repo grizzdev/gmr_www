@@ -37,12 +37,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		return $this->hasMany('\App\Order');
 	}
 
-	//public function logs() { // logs the user is responsible for creating
-		//return $this->hasMany('\App\Log');
-	//}
-
 	public function logs() { // logs about the user's account
 		return $this->morphMany('\App\Log', 'loggable');
 	}
+
+	//addresses
+	//cards
+	//new orders
+	//cart
 
 }

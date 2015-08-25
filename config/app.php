@@ -155,6 +155,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
         Vinkla\Hashids\HashidsServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
 
     ],
 

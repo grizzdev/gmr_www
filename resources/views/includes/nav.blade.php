@@ -34,6 +34,9 @@
 						<ul class="dropdown-menu">
 							<li><a href="{{ url('my-account') }}"><i class="fa fa-user"></i> My Account</a></li>
 							<li><a href="{{ url('my-account/orders') }}"><i class="fa fa-gift"></i> My Orders</a></li>
+							@if(Auth::user()->can('cms'))
+							<li><a href="{{ url('cms/dashboard') }}"><i class="fa fa-tachometer"></i> Dashboard</a></li>
+							@endif
 							<li><a href="{{ url('auth/logout') }}"><i class="fa fa-sign-out"></i> Logout</a></li>
 						</ul>
 					</li>
@@ -44,24 +47,7 @@
 							<span class="caret"></span>
 						</a>
 						<div class="dropdown-menu pt-5 pb-5 pl-5 pr-5 text-center">
-							{!! Form::open(['url' => secure_url('auth/login'), 'id' => 'loginForm', 'data-remote' => true]) !!}
-								<div class="form-group has-feedback">
-									<div class="input-group">
-										{!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'email address', 'required' => true, 'id' => 'login-email']) !!}
-										<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-									</div>
-								</div>
-								<div class="form-group has-feedback">
-									<div class="input-group">
-										{!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'password', 'required' => true, 'id' => 'login-password']) !!}
-										<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-									</div>
-								</div>
-								<div class="form-group has-feedback text-center">
-									{!! Form::submit('Login', ['class' => 'btn btn-danger']) !!}
-								</div>
-							{!! Form::close() !!}
-							<a href="#forgotModal" id="forgotModalLink"><small>Forgot Password?</small></a>
+							@include('includes.login-form')
 						</div>
 					</li>
 					@endif
