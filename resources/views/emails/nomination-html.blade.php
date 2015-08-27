@@ -1,5 +1,5 @@
 <?php
-$request['hero-state'] = \App\Location::find($request['hero-state-id']);
+$state = \App\Location::find($nominee['state_id']);
 ?>
 @extends('layouts.email')
 
@@ -7,59 +7,59 @@ $request['hero-state'] = \App\Location::find($request['hero-state-id']);
 <table cellspacing="2">
 	<tr>
 		<th align="right" valign="top">Name:</th>
-		<td>{!! $request['hero-name'] !!}</td>
+		<td>{!! $nominee['name'] !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Birth Date:</th>
-		<td>{!! $birth_date !!}</td>
+		<td>{!! $nominee['birth_date'] !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Gender:</th>
-		<td>{!! ($request['hero-gender'] == 'm') ? 'Male' : 'Female' !!}</td>
+		<td>{!! ($nominee['gender'] == 'm') ? 'Male' : 'Female' !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Address:</th>
-		<td>{!! $request['hero-address'] !!}, {!! $request['hero-city'] !!}, {!! $request['hero-state']->name !!} {!! $request['hero-zip'] !!}</td>
+		<td>{!! $nominee['address'] !!}, {!! $nominee['city'] !!}, {!! $state->name !!} {!! $nominee['zip'] !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Shirt Size:</th>
-		<td>{!! strtoupper($request['hero-shirt-size']) !!}</td>
+		<td>{!! strtoupper($nominee['shirt_size']) !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Hospital:</th>
-		<td>{!! $request['hospital-name'] !!}, {!! $request['hospital-location'] !!}</td>
+		<td>{!! $nominee['hospital_name'] !!}, {!! $nominee['hospital_location'] !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Cancer Type(s):</th>
-		<td>{!! $request['cancer'] !!}</td>
+		<td>{!! $nominee['cancer_type'] !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Nominee:</th>
-		<td>{!! $request['name'] !!}</td>
+		<td>{!! $user['name'] !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Relationship:</th>
-		<td>{!! $request['relationship'] !!}</td>
+		<td>{!! $nominee['relationship'] !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Facebook:</th>
-		<td>{!! $request['facebook-url'] !!}</td>
+		<td>{!! $nominee['facebook_url'] !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Twitter:</th>
-		<td>{!! $request['twitter-url'] !!}</td>
+		<td>{!! $nominee['twitter_url'] !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">YouTube:</th>
-		<td>{!! $request['youtube-url'] !!}</td>
+		<td>{!! $nominee['youtube_url'] !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Caring Bridge:</th>
-		<td>{!! $request['caringbridge-url'] !!}</td>
+		<td>{!! $nominee['caringbridge_url'] !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Overview:</th>
-		<td><p>{!! nl2br($request['overview']) !!}</p></td>
+		<td><p>{!! nl2br($nominee['overview']) !!}</p></td>
 	</tr>
 </table>
 @endsection

@@ -8,7 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'AddCashierColumns' => $baseDir . '/database/migrations/2015_08_04_163606_add_cashier_columns.php',
     'CreateAddressesTable' => $baseDir . '/database/migrations/2015_08_24_111633_create_addresses_table.php',
-    'CreateAttributeItemTable' => $baseDir . '/database/migrations/2015_08_24_111613_create_attribute_items_table.php',
+    'CreateAttributeItemTable' => $baseDir . '/database/migrations/2015_08_24_111613_create_attribute_item_table.php',
     'CreateAttributeProductTable' => $baseDir . '/database/migrations/2015_08_06_095510_create_attribute_product_table.php',
     'CreateAttributesTable' => $baseDir . '/database/migrations/2015_08_06_031202_create_attributes_table.php',
     'CreateCardsTable' => $baseDir . '/database/migrations/2015_08_24_111529_create_cards_table.php',
@@ -28,6 +28,7 @@ return array(
     'CreateLocationsTable' => $baseDir . '/database/migrations/2015_08_06_232101_create_locations_table.php',
     'CreateLogsTable' => $baseDir . '/database/migrations/2015_08_19_220728_create_logs_table.php',
     'CreateNewordersTable' => $baseDir . '/database/migrations/2015_08_24_111646_create_neworders_table.php',
+    'CreateNominationsTable' => $baseDir . '/database/migrations/2015_08_27_101858_create_nominations_table.php',
     'CreateOrdersTable' => $baseDir . '/database/migrations/2015_08_09_112620_create_orders_table.php',
     'CreatePackagesTable' => $baseDir . '/database/migrations/2015_08_09_223300_create_packages_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',

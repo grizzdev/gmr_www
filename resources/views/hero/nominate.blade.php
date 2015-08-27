@@ -37,26 +37,26 @@
 					</div>
 					<div class="col-sm-12 col-md-6">
 						<div class="form-group has-feedback">
-							{!! Form::label('hero-name', 'Hero\'s Name', ['class' => 'control-label']) !!}
+							{!! Form::label('hero_name', 'Hero\'s Name', ['class' => 'control-label']) !!}
 							<div class="input-group">
-								{!! Form::text('hero-name', null, ['class' => 'form-control', 'required' => true]) !!}
+								{!! Form::text('hero_name', null, ['class' => 'form-control', 'required' => true]) !!}
 								<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
-					{!! Form::label('hero-dob', 'Hero\'s Birthday', ['class' => 'control-label']) !!}
+					{!! Form::label('hero_dob', 'Hero\'s Birthday', ['class' => 'control-label']) !!}
 					<div class="input-group">
 						<div class="row">
 							<div class="col-sm-12 col-md-6 pb-5">
-								{!! Form::select('hero-dob-month', $months, null, ['class' => 'form-control']) !!}
+								{!! Form::select('hero_dob_month', $months, null, ['class' => 'form-control']) !!}
 							</div>
 							<div class="col-sm-12 col-md-3 pb-5">
-								{!! Form::select('hero-dob-day', $days, null, ['class' => 'form-control']) !!}
+								{!! Form::select('hero_dob_day', $days, null, ['class' => 'form-control']) !!}
 							</div>
 							<div class="col-sm-12 col-md-3">
-								{!! Form::select('hero-dob-year', $years, null, ['class' => 'form-control']) !!}
+								{!! Form::select('hero_dob_year', $years, null, ['class' => 'form-control']) !!}
 							</div>
 						</div>
 					</div>
@@ -71,51 +71,51 @@
 									<span>Add Image</span>
 									{!! Form::file('image', ['data-url' => 'upload']) !!}
 								</span>
-								<span id="file-name"></span>
+								<span id="file_name"></span>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-12 col-md-3">
 						<div class="form-group">
-							{!! Form::label('hero-shirt-size', 'Hero\'s Shirt Size', ['class' => 'control-label']) !!}
-							{!! Form::select('hero-shirt-size', $sizes, null, ['class' => 'form-control']) !!}
+							{!! Form::label('hero_shirt_size', 'Hero\'s Shirt Size', ['class' => 'control-label']) !!}
+							{!! Form::select('hero_shirt_size', $sizes, null, ['class' => 'form-control']) !!}
 						</div>
 					</div>
 					<div class="col-sm-12 col-md-3">
 						<div class="form-group">
-							{!! Form::label('hero-gender', 'Hero\'s Gender', ['class' => 'control-label']) !!}
-							{!! Form::select('hero-gender', ['m' => 'Male', 'f' => 'Female'], null, ['class' => 'form-control']) !!}
+							{!! Form::label('hero_gender', 'Hero\'s Gender', ['class' => 'control-label']) !!}
+							{!! Form::select('hero_gender', ['m' => 'Male', 'f' => 'Female'], null, ['class' => 'form-control']) !!}
 						</div>
 					</div>
 				</div>
 				<div class="form-group has-feedback">
-					{!! Form::label('hero-address', 'Hero\'s Shipping Address', ['class' => 'control-label']) !!}
+					{!! Form::label('hero_address', 'Hero\'s Shipping Address', ['class' => 'control-label']) !!}
 					<div class="input-group">
-						{!! Form::text('hero-address', null, ['class' => 'form-control', 'required' => true]) !!}
+						{!! Form::text('hero_address', null, ['class' => 'form-control', 'required' => true]) !!}
 						<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12 col-md-5">
 						<div class="form-group has-feedback">
-							{!! Form::label('hero-city', 'Hero\'s City', ['class' => 'control-label']) !!}
+							{!! Form::label('hero_city', 'Hero\'s City', ['class' => 'control-label']) !!}
 							<div class="input-group">
-								{!! Form::text('hero-city', null, ['class' => 'form-control', 'required' => true]) !!}
+								{!! Form::text('hero_city', null, ['class' => 'form-control', 'required' => true]) !!}
 								<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-12 col-md-4">
 						<div class="form-group has-feedback">
-							{!! Form::label('hero-state-id', 'Hero\'s State', ['class' => 'control-label']) !!}
-							{!! Form::select('hero-state-id', $states, null, ['class' => 'form-control']) !!}
+							{!! Form::label('hero_state_id', 'Hero\'s State', ['class' => 'control-label']) !!}
+							{!! Form::select('hero_state_id', $states, null, ['class' => 'form-control']) !!}
 						</div>
 					</div>
 					<div class="col-sm-12 col-md-3">
 						<div class="form-group has-feedback">
-							{!! Form::label('hero-zip', 'Hero\'s Zip', ['class' => 'control-label']) !!}
+							{!! Form::label('hero_zip', 'Hero\'s Zip', ['class' => 'control-label']) !!}
 							<div class="input-group">
-								{!! Form::text('hero-zip', null, ['class' => 'form-control', 'required' => true]) !!}
+								{!! Form::text('hero_zip', null, ['class' => 'form-control', 'required' => true]) !!}
 								<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 							</div>
 						</div>
@@ -131,18 +131,18 @@
 				<div class="row">
 					<div class="col-sm-12 col-md-6">
 						<div class="form-group">
-							{!! Form::label('hospital-name', 'Hospital Name', ['class' => 'control-label']) !!}
+							{!! Form::label('hospital_name', 'Hospital Name', ['class' => 'control-label']) !!}
 							<div class="input-group">
-								{!! Form::text('hospital-name', null, ['class' => 'form-control', 'required' => true]) !!}
+								{!! Form::text('hospital_name', null, ['class' => 'form-control', 'required' => true]) !!}
 								<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-12 col-md-6">
 						<div class="form-group">
-							{!! Form::label('hospital-location', 'Hospital City, State', ['class' => 'control-label']) !!}
+							{!! Form::label('hospital_location', 'Hospital City, State', ['class' => 'control-label']) !!}
 							<div class="input-group">
-								{!! Form::text('hospital-location', null, ['class' => 'form-control', 'required' => true]) !!}
+								{!! Form::text('hospital_location', null, ['class' => 'form-control', 'required' => true]) !!}
 								<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 							</div>
 						</div>
@@ -161,28 +161,28 @@
 						<div class="row">
 							<div class="col-sm-12 col-md-6">
 								<div class="form-group">
-									{!! Form::label('facebook-url', 'Facebook', ['class' => 'control-label']) !!}
-									{!! Form::text('facebook-url', null, ['class' => 'form-control']) !!}
+									{!! Form::label('facebook_url', 'Facebook', ['class' => 'control-label']) !!}
+									{!! Form::text('facebook_url', null, ['class' => 'form-control']) !!}
 								</div>
 							</div>
 							<div class="col-sm-12 col-md-6">
 								<div class="form-group">
-									{!! Form::label('twitter-url', 'Twitter', ['class' => 'control-label']) !!}
-									{!! Form::text('twitter-url', null, ['class' => 'form-control']) !!}
+									{!! Form::label('twitter_url', 'Twitter', ['class' => 'control-label']) !!}
+									{!! Form::text('twitter_url', null, ['class' => 'form-control']) !!}
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-sm-12 col-md-6">
 								<div class="form-group">
-									{!! Form::label('youtube-url', 'YouTube', ['class' => 'control-label']) !!}
-									{!! Form::text('youtube-url', null, ['class' => 'form-control']) !!}
+									{!! Form::label('youtube_url', 'YouTube', ['class' => 'control-label']) !!}
+									{!! Form::text('youtube_url', null, ['class' => 'form-control']) !!}
 								</div>
 							</div>
 							<div class="col-sm-12 col-md-6">
 								<div class="form-group">
-									{!! Form::label('caringbridge-url', 'Caring Bridge', ['class' => 'control-label']) !!}
-									{!! Form::text('caringbridge-url', null, ['class' => 'form-control']) !!}
+									{!! Form::label('caringbridge_url', 'Caring Bridge', ['class' => 'control-label']) !!}
+									{!! Form::text('caringbridge_url', null, ['class' => 'form-control']) !!}
 								</div>
 							</div>
 						</div>
@@ -209,7 +209,7 @@
 				<div class="form-group text-right">
 					{!! Form::submit('Send Nomination', ['class' => 'btn btn-danger', 'data-disable-with' => 'Nominating...']) !!}
 				</div>
-				{!! Form::hidden('file-id', null, ['id' => 'file-id']) !!}
+				{!! Form::hidden('file_id', null, ['id' => 'file_id']) !!}
 				{!! Form::token() !!}
 			{!! Form::close() !!}
 		</div>

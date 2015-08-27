@@ -9971,8 +9971,8 @@ $('input[type="file"]').fileupload({
 	dataType: 'json',
 	done: function (e, data) {
 		if (data.result.image.id) {
-			$('#file-id').val(data.result.image.id);
-			$('#file-name').html(data.result.image.name);
+			$('#file_id').val(data.result.image.id);
+			$('#file_name').html(data.result.image.name);
 		}
 	}
 });
