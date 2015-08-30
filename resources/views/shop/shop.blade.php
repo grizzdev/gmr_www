@@ -3,7 +3,7 @@
 @section('content')
 @if(session('hero_slug'))
 	</section>
-	@include('includes.hero-bar', ['hero' => \App\Hero::where('slug', '=', session('hero_slug'))->first(), 'mt' => 75])
+	@include('includes.hero-bar', ['hero' => \App\Hero::where('slug', '=', session('hero_slug'))->first(), 'mt' => 75, 'cart' => $cart])
 	<section class="container-fluid">
 @endif
 <div class="row shop-content">

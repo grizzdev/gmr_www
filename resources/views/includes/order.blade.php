@@ -154,7 +154,7 @@
 								<b>Total Contribution:</b>
 							</div>
 							<div class="col-xs-6">
-								${{ $order->contribution() }}
+								${{ number_format($order->contribution(), 2, '.', '') }}
 							</div>
 						</div>
 						<div class="row">
@@ -181,6 +181,11 @@
 									<tr>
 										<td>
 											<b>{{ $item->product->name }}</b>
+											@if($item->hero)
+											<div>
+												<b>Hero:</b> {{ $item->hero->name }}
+											</div>
+											@endif
 											@foreach($item->itemAttributes as $attribute)
 												@if($attribute->attribute->name != 'Amount')
 												<div>

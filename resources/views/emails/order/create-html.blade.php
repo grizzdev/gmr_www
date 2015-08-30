@@ -87,6 +87,11 @@
 					<tr>
 						<td>
 							<b>{{ $item->product->name }}</b>
+							@if($item->hero)
+							<div>
+								<b>Hero:</b> {{ $item->hero->name }}
+							</div>
+							@endif
 							@foreach($item->itemAttributes as $attribute)
 								@if($attribute->attribute->name != 'Amount')
 								<div>

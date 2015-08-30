@@ -25,6 +25,7 @@ use App\Item;
 use App\ItemAttribute;
 use App\Address;
 use App\Neworder;
+use App\PaymentMethod;
 use View;
 use Response;
 use GuzzleHttp\Client as Client;
@@ -82,7 +83,8 @@ class ShopController extends Controller {
 			'title' => 'Shop',
 			'products' => $products,
 			'categories' => $categories,
-			'slugs' => $slugs
+			'slugs' => $slugs,
+			'cart' => Cart::find(session('cart_id'))
 		]);
 	}
 
@@ -97,7 +99,8 @@ class ShopController extends Controller {
 			return view('shop.product', [
 				'title' => $product->name,
 				'product' => $product,
-				'hero' => (!empty($hero_slug)) ? Hero::where('slug', '=', $hero_slug)->first() : null
+				'hero' => (!empty($hero_slug)) ? Hero::where('slug', '=', $hero_slug)->first() : null,
+				'cart' => Cart::find(session('cart_id'))
 			]);
 		} else {
 			return redirect('');
@@ -370,7 +373,7 @@ class ShopController extends Controller {
 				'data' => 'Created Order #'.$order->id
 			]);
 
-			//$order->sendEmail()
+			$order->sendEmail();
 
 			$request->session()->forget('cart_id');
 

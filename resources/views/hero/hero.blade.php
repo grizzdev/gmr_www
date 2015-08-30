@@ -59,20 +59,20 @@
 							<div class="col-xs-12 pt-13">
 								<div class="progress">
 									<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{ $hero->percent() }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $hero->percent() }}%;">
-										<span>{{ $hero->percent() }}% Complete</span>
+										<span>{{ $hero->percent() }}%</span>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-xs-12 text-right">
-								<span class="raised-of-goal">${{ $hero->raised }} RAISED OF ${{ $hero->goal() }} GOAL</span>
+								<span class="raised-of-goal">${{ $hero->raised() }} RAISED OF ${{ $hero->goal() }} GOAL</span>
 							</div>
 						</div>
 						@if(!$hero->funded)
 						<div class="row pt-10 text-center">
 							<div class="col-xs-6">
-								<h2>${{ (($hero->goal() - $hero->raised) > 0) ? ($hero->goal() - $hero->raised): 0 }}</h2>
+								<h2>${{ (($hero->goal() - $hero->raised()) > 0) ? ($hero->goal() - $hero->raised()): 0 }}</h2>
 								<h6>LEFT TO FUND</h6>
 							</div>
 							<div class="col-xs-6">
@@ -99,7 +99,6 @@
 	</section>
 	@if(!$hero->funded)
 	@include('includes.hero-bar', ['hero' => $hero]);
-	@endif
 	<section class="container-fluid">
 		<div class="row hero-content-bottom">
 			<div class="col-sm-12 col-md-10 col-md-offset-1 pt-40">
@@ -120,6 +119,7 @@
 			</div>
 		</div>
 	</section>
+	@endif
 	@include('includes.footer')
 @endsection
 

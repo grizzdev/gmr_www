@@ -60,4 +60,12 @@ class Item extends Model {
 		return $price;
 	}
 
+	public function contribution() {
+		if ($this->product->id == 1) { // donation
+			return $this->price();
+		} else {
+			return ($this->product->contribution_amount * $this->quantity);
+		}
+	}
+
 }
