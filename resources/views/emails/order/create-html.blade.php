@@ -1,7 +1,3 @@
-<?php
-$checkout = (array)json_decode($order['checkout_json']);
-$cart = (array)json_decode($order['cart_json']);
-?>
 @extends('layouts.email')
 
 @section('content')
@@ -21,26 +17,26 @@ $cart = (array)json_decode($order['cart_json']);
 	</tr>
 	<tr>
 		<td valign="top">
-			{{ $checkout['billing-address-1'] }}
+			{{ $order->billing_address->address_1 }}
 			<br />
-			@if(!empty($checkout['billing-address-2']))
-			{{ $checkout['billing-address-2'] }}
+			@if(!empty($order->billing_address->address_2))
+			{{ $order->billing_address->address_2 }}
 			<br />
 			@endif
-			{{ $checkout['shipping-city'] }}, {{ $billing_state['name'] }} {{ $checkout['shipping-zip'] }}
+			{{ $order->billing_address->city }}, {{ $order->billing_address->state->name }} {{ $order->billing_address->zip }}
 			<br />
-			{{ $billing_country['name'] }}
+			{{ $order->billing_address->country->name }}
 		</td>
 		<td valign="top">
-			{{ $checkout['shipping-address-1'] }}
+			{{ $order->shipping_address->address_1 }}
 			<br />
-			@if(!empty($checkout['shipping-address-2']))
-			{{ $checkout['shipping-address-2'] }}
+			@if(!empty($order->shipping_address->address_2))
+			{{ $order->shipping_address->address_2 }}
 			<br />
 			@endif
-			{{ $checkout['shipping-city'] }}, {{ $shipping_state['name'] }} {{ $checkout['shipping-zip'] }}
+			{{ $order->shipping_address->city }}, {{ $order->shipping_address->state->name }} {{ $order->shipping_address->zip }}
 			<br />
-			{{ $shipping_country['name'] }}
+			{{ $order->shipping_address->country->name }}
 		</td>
 	</tr>
 	<tr>
@@ -53,26 +49,26 @@ $cart = (array)json_decode($order['cart_json']);
 	</tr>
 	<tr>
 		<td valign="top">
-			<b>Name:</b> {{ $checkout['first-name'] }} {{ $checkout['last-name']}}
+			<b>Name:</b> {{ $order->user->name }}
 			<br />
-			@if(!empty($checkout['company-name']))
-			<b>Company:</b> {{ $checkout['company-name'] }}
+			@if(!empty($order->user->company))
+			<b>Company:</b> {{ $order->user->company }}
 			<br />
 			@endif
-			<b>Email:</b> {{ $checkout['email-address'] }}
+			<b>Email:</b> {{ $order->user->email }}
 			<br />
-			<b>Phone:</b> {{ $checkout['phone-number'] }}
+			<b>Phone:</b> {{ $order->user->phone }}
 			<br />
-			<b>Notes:</b> {!! nl2br($checkout['notes']) !!}
+			<b>Notes:</b> {!! nl2br($order->notes) !!}
 		</td>
 		<td valign="top">
-			<b>Order Date:</b> {{ date('n/j/y g:ia', strtotime($order['created_at'])) }}
+			<b>Order Date:</b> {{ date('n/j/y g:ia', strtotime($order->created_at)) }}
 			<br />
-			<b>Order Status:</b> {{ $status }}
+			<b>Order Status:</b> {{ $order->status->name }}
 			<br />
-			<b>Total Contribution:</b> ${{ $contribution }}
+			<b>Total Contribution:</b> ${{ $order->contribution() }}
 			<br />
-			<b>Payment Type:</b> {{ ($checkout['payment-type'] == 'paypal') ? 'PayPal' : 'Credit Card' }}
+			<b>Payment Type:</b> {{ ($order->payment_method->slug == 'paypal') ? 'PayPal' : 'Credit Card' }}
 		</td>
 	</tr>
 	<tr>
@@ -87,47 +83,59 @@ $cart = (array)json_decode($order['cart_json']);
 					</tr>
 				</thead>
 				<tbody>
-					@foreach($cart as $item)
+					@foreach($order->cart->items as $item)
 					<tr>
 						<td>
-							<b>{{ $item->name }}</b>
-						@foreach($item->attributes as $attr)
-							@if($attr->name != 'Amount')
-							<br />
-							<small>
-								<b>{{ $attr->name }}:</b>
-								{{ $attr->value }}
-							</small>
-							@else
-							<?php $item->price += $attr->value ?>
-							@endif
-						@endforeach
+							<b>{{ $item->product->name }}</b>
+							@foreach($item->itemAttributes as $attribute)
+								@if($attribute->attribute->name != 'Amount')
+								<div>
+									<b>{{ $attribute->attribute->name }}:</b>
+									<?php
+										switch ($attribute->attribute->type) {
+											case 'text':
+											case 'number':
+												echo $attribute->value;
+												break;
+											case 'select':
+												echo \App\Attribute::find($attribute->value)->name;
+											case 'model':
+												//if (!empty($attribute->attribute->model)) {
+													//$modelname = "\\App\\{$attribute['attribute']->model}";
+													//echo $modelname::find($attribute['value'])->name;
+												//}
+												break;
+										}
+									?>
+								</div>
+								@endif
+							@endforeach
 						</td>
-						<td>${{ number_format($item->price, 2, '.', '') }}</td>
+						<td>${{ number_format($item->price(), 2, '.', '') }}</td>
 						<td align="center">{{ $item->quantity }}</td>
-						<td align="right">${{ number_format($item->price * $item->quantity, 2, '.', '') }}</td>
+						<td align="right">${{ number_format($item->price() * $item->quantity, 2, '.', '') }}</td>
 					</tr>
 					@endforeach
 				</tbody>
 				<tfoot>
 					<tr>
-						<th colspan="2" rowspan="{{ ($checkout['discount'] > 0) ? 4 : 3 }}"></th>
+						<th colspan="2" rowspan="{{ ($order->discount() > 0) ? 4 : 3 }}"></th>
 						<th align="right">Subtotal</th>
-						<td align="right">${{ number_format($checkout['subtotal'] + $checkout['gamerosity-donation'], 2, '.', '') }}
+						<td align="right">${{ number_format($order->subtotal(), 2, '.', '') }}
 					</tr>
 					<tr>
 						<th align="right">Shipping</th>
-						<td align="right">{{ ($checkout['shipping'] > 0) ? '$'.number_format($checkout['shipping'], 2, '.', '') : 'FREE' }}</td>
+						<td align="right">{{ ($order->shipping() > 0) ? '$'.number_format($order->shipping(), 2, '.', '') : 'FREE' }}</td>
 					</tr>
-					@if($checkout['discount'] > 0)
+					@if($order->discount() > 0)
 					<tr>
 						<th align="right">Discount</th>
-						<td align="right">{{ '- $'.number_format($checkout['discount'], 2, '.', '') }}</td>
+						<td align="right">{{ '- $'.number_format($order->discount(), 2, '.', '') }}</td>
 					</tr>
 					@endif
 					<tr>
 						<th align="right">Total</th>
-						<td align="right">${{ (($checkout['total'] + $checkout['shipping'] - $checkout['discount'] + $checkout['gamerosity-donation']) < 0) ? '0.00' : number_format($checkout['subtotal'] + $checkout['shipping'] - $checkout['discount'] + $checkout['gamerosity-donation'], 2, '.', '') }}</td>
+						<td align="right">${{ number_format($order->total(), 2, '.', '') }}</td>
 					</tr>
 				</tfoot>
 			</table>

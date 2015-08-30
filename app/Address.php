@@ -36,4 +36,12 @@ class Address extends Model {
 		'is_shipping' => 'boolean'
 	];
 
+	public function state() {
+		return $this->belongsTo('\App\Location', 'state_id');
+	}
+
+	public function country() {
+		return $this->belongsTo('\App\Location', 'country_id');
+	}
+
 }

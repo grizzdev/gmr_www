@@ -46,4 +46,24 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	//new orders
 	//cart
 
+	public function sendPasswordEmail() {
+		/*
+		Mail::queue(
+			[
+				'emails.user.create-html',
+				'emails.user.create-text'
+			],
+			[
+				'logo' => config('mail.view.logo'),
+				'name' => $user->name,
+				'email' => $user->email,
+				'password' => $password
+			],
+			function ($message) use ($user) {
+				$message->to($user->email)->subject('Your Gamerosity Account');
+			}
+		);
+		*/
+	}
+
 }

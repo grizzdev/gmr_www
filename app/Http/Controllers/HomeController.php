@@ -15,13 +15,14 @@ class HomeController extends Controller {
 		$allowed = [
 			'127.0.0.1',
 			'10.0.4.1',
-			 '65.103.70.94'
+			'65.103.70.94'
 		];
-		exit();
 
 		if (!in_array($request->ip(), $allowed)) {
 			return Redirect::to('/');
 		} else {
+			\App\Neworder::find(1)->sendEmail();
+			exit();
 			// let's do some work
 			\Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 

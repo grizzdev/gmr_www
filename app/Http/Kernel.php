@@ -18,6 +18,7 @@ class Kernel extends HttpKernel {
 		\Illuminate\View\Middleware\ShareErrorsFromSession::class,
 		\App\Http\Middleware\VerifyCsrfToken::class,
 		\Barryvdh\Cors\HandleCors::class,
+		\App\Http\Middleware\Session::class,
 	];
 
 	/**

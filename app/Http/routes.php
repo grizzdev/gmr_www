@@ -19,7 +19,7 @@ Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('test', 'HomeController@test');
 Route::get('cart', 'ShopController@cart');
 Route::post('cart', 'ShopController@updateCart');
-Route::delete('cart/{key}', 'ShopController@deleteCart');
+Route::delete('cart/{id}', 'ShopController@deleteCart');
 Route::put('cart', 'ShopController@addCart');
 Route::get('robots.txt', 'HomeController@robots');
 Route::get('humans.txt', 'HomeController@humans');
