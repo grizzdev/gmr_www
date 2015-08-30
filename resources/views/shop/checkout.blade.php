@@ -206,37 +206,40 @@
 							</tr>
 						</thead>
 						<tbody>
-						@foreach($cart['items'] as $item)
+						@foreach($cart->items as $item)
 							<tr>
 								<td>
-									<p>{!! $item['product']->name !!}</p>
-									@foreach ($item['attributes'] as $attribute)
-										@if($attribute['attribute']->type != 'currency')
+									<p>{!! $item->product->name !!}</p>
+									<div>
+										<b>Hero:</b> {{ $item->hero->name }}
+									</div>
+									@foreach($item->itemAttributes as $attribute)
+										@if($attribute->attribute->name != 'Amount')
 										<div>
-											<b>{{ $attribute['attribute']->name }}:</b>
+											<b>{{ $attribute->attribute->name }}:</b>
 											<?php
-											switch ($attribute['attribute']->type) {
-												case 'text':
-												case 'number':
-													echo $attribute['value'];
-													break;
-												case 'select':
-													echo \App\Attribute::find($attribute['value'])->name;
-												case 'model':
-													if (!empty($attribute['attribute']->model)) {
-														$modelname = "\\App\\{$attribute['attribute']->model}";
-														echo $modelname::find($attribute['value'])->name;
-													}
-													break;
-											}
+												switch ($attribute->attribute->type) {
+													case 'text':
+													case 'number':
+														echo $attribute->value;
+														break;
+													case 'select':
+														echo \App\Attribute::find($attribute->value)->name;
+													case 'model':
+														//if (!empty($attribute->attribute->model)) {
+															//$modelname = "\\App\\{$attribute['attribute']->model}";
+															//echo $modelname::find($attribute['value'])->name;
+														//}
+														break;
+												}
 											?>
 										</div>
 										@endif
 									@endforeach
 								</td>
-								<td>${!! $item['price'] !!}</td>
-								<td>{!! $item['quantity'] !!}</td>
-								<td align="right">${!! number_format(($item['price'] * $item['quantity']), 2, '.', '') !!}</td>
+								<td>${!! number_format($item->price(), 2, '.', '') !!}</td>
+								<td>{!! $item->quantity !!}</td>
+								<td align="right">${!! number_format(($item->price() * $item->quantity), 2, '.', '') !!}</td>
 							</tr>
 						@endforeach
 							<tr>
@@ -246,7 +249,7 @@
 								<td>
 									<div class="input-group">
 										<div class="input-group-addon">$</div>
-										{!! Form::number('gamerosity-donation', session('checkout.gamerosity-donation'), ['class' => 'form-control gamerosity-donation']) !!}
+										{!! Form::number('gamerosity_donation', session('checkout.gamerosity_donation'), ['class' => 'form-control gamerosity-donation']) !!}
 										<div class="input-group-addon">.00</div>
 									</div>
 								</td>
@@ -254,23 +257,23 @@
 						</tbody>
 						<tfoot>
 							<tr>
-								<th rowspan="{{ (\App\Http\Controllers\ShopController::calculate_discount() == 0) ? 3 : 4 }}" colspan="2"></th>
+								<th rowspan="{{ ($cart->discount() == 0) ? 3 : 4 }}" colspan="2"></th>
 								<th>SUBTOTAL</th>
-								<td align="right" class="cart-subtotal">${!! number_format($cart['subtotal'] + session('checkout.gamerosity-donation'), 2, '.', '') !!}
+								<td align="right" class="cart-subtotal">${!! number_format($cart->subtotal() + session('checkout.gamerosity_donation'), 2, '.', '') !!}
 							</tr>
 							<tr>
 								<th>SHIPPING</th>
-								<td align="right" class="cart-shipping">{{ (\App\Http\Controllers\ShopController::calculate_shipping() > 0) ? '$'.number_format(\App\Http\Controllers\ShopController::calculate_shipping(), 2, '.', '') : 'FREE' }}</td>
+								<td align="right" class="cart-shipping">{{ ($cart->shipping() > 0) ? '$'.number_format($cart->shipping(), 2, '.', '') : 'FREE' }}</td>
 							</tr>
-							@if(session('coupon') && \App\Http\Controllers\ShopController::calculate_discount() > 0)
+							@if($cart->discount() > 0)
 							<tr>
 								<th align="right">DISCOUNT</th>
-								<td align="right" class="cart-discount">- ${{ number_format(\App\Http\Controllers\ShopController::calculate_discount(), 2, '.', '') }}</td>
+								<td align="right" class="cart-discount">- ${{ number_format($cart->discount(), 2, '.', '') }}</td>
 							</tr>
 							@endif
 							<tr>
 								<th>TOTAL</th>
-								<td align="right" class="cart-total">${{ number_format(($cart['subtotal'] + session('checkout.gamerosity-donation') + \App\Http\Controllers\ShopController::calculate_shipping() - \App\Http\Controllers\ShopController::calculate_discount()), 2, '.', '') }}
+								<td align="right" class="cart-total">${{ number_format(($cart->subtotal() + session('checkout.gamerosity_donation') + $cart->shipping() - $cart->discount()), 2, '.', '') }}
 							</tr>
 						</tfoot>
 					</table>
@@ -308,10 +311,10 @@
 			{!! Form::hidden(null, config('services.stripe.key'), ['id' => 'stripe-pk']) !!}
 			{!! Form::hidden('payment-type', null, ['id' => 'payment-type']) !!}
 			{!! Form::hidden('payment-token', null, ['id' => 'payment-token']) !!}
-			{!! Form::hidden('discount', number_format(\App\Http\Controllers\ShopController::calculate_discount(), 2, '.', '')) !!}
-			{!! Form::hidden('shipping', number_format(\App\Http\Controllers\ShopController::calculate_shipping(), 2, '.', '')) !!}
-			{!! Form::hidden('subtotal', number_format($cart['subtotal'], 2, '.', ''), ['id' => 'subtotal']) !!}
-			{!! Form::hidden('total', number_format(\App\Http\Controllers\ShopController::calculate_total(), 2, '.', ''), ['id' => 'total']) !!}
+			{!! Form::hidden('discount', number_format($cart->discount(), 2, '.', '')) !!}
+			{!! Form::hidden('shipping', number_format($cart->shipping(), 2, '.', '')) !!}
+			{!! Form::hidden('subtotal', number_format($cart->subtotal(), 2, '.', ''), ['id' => 'subtotal']) !!}
+			{!! Form::hidden('total', number_format($cart->total(), 2, '.', ''), ['id' => 'total']) !!}
 			{!! Form::hidden('_token', csrf_token()) !!}
 		{!! Form::close() !!}
 	</div>

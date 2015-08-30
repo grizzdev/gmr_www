@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Hero;
 use App\Location;
+use App\Nomination;
 
 class HeroController extends Controller {
 
@@ -131,54 +132,40 @@ class HeroController extends Controller {
 	}
 
 	public function postNominate(Request $request) {
-		$nominee = User::firstOrNew([
-			'email' => $request->input('email')
-		]);
-		$nominee->name = $request->input('name');
-		$nominee->save();
+		$nominee = User::where('email', '=', $request->input('email'))->first();
 
-		$birth_date = date('Y-m-d', strtotime($request->input('hero-dob-month').'/'.$request->input('hero-dob-day').'/'.$request->input('hero-dob-year')));
+		if (!$nominee) {
+			$nominee = User::Create([
+				'email' => $request->input('email'),
+				'name' => $request->input('name')
+			]);
+		}
 
-		$hero = Hero::create([
-			'name' => $request->input('hero-name'),
+		$birth_date = date('Y-m-d', strtotime($request->input('hero_dob_month').'/'.$request->input('hero_dob_day').'/'.$request->input('hero_dob_year')));
+
+		$nomination = Nomination::create([
+			'name' => $request->input('hero_name'),
 			'overview' => $request->input('overview'),
 			'birth_date' => $birth_date,
-			'gender' => $request->input('hero-gender'),
-			'address' => $request->input('hero-address'),
-			'city' => $request->input('hero-city'),
-			'state' => $request->input('hero-state'),
-			'zip' => $request->input('hero-zip'),
-			'shirt_size' => $request->input('hero-shirt-size'),
-			'hospital_name' => $request->input('hospital-name'),
-			'hospital_location' => $request->input('hospital-location'),
+			'gender' => $request->input('hero_gender'),
+			'address' => $request->input('hero_address'),
+			'city' => $request->input('hero_city'),
+			'state_id' => $request->input('hero_state_id'),
+			'zip' => $request->input('hero_zip'),
+			'shirt_size' => $request->input('hero_shirt_size'),
+			'hospital_name' => $request->input('hospital_name'),
+			'hospital_location' => $request->input('hospital_location'),
 			'cancer_type' => $request->input('cancer'),
-			'facebook_url' => $request->input('facebook-url'),
-			'twitter_url' => $request->input('twitter-url'),
-			'youtube_url' => $request->input('youtube-url'),
-			'caringbridge_url' => $request->input('caringbridge-url'),
-			'goal' => 0,
-			'raised' => 0,
-			'active' => false,
-			'funded' => false,
-			'file_id' => $request->input('file-id'),
-			'nominee_id' => $nominee->id
+			'facebook_url' => $request->input('facebook_url'),
+			'twitter_url' => $request->input('twitter_url'),
+			'youtube_url' => $request->input('youtube_url'),
+			'caringbridge_url' => $request->input('caringbridge_url'),
+			'file_id' => $request->input('file_id'),
+			'nominee_id' => $nominee->id,
+			'relationship' => $request->input('relationship')
 		]);
 
-		Mail::queue(
-			[
-				'emails.nomination-html',
-				'emails.nomination-text'
-			],
-			[
-				'title' => 'New Hero Nomination',
-				'logo' => config('mail.view.logo'),
-				'request' => $request->all(),
-				'birth_date' => $birth_date
-			],
-			function ($message) {
-				$message->to('info@gamerosity.com')->subject('New Hero Nomination');
-			}
-		);
+		$nomination->sendEmail();
 	}
 
 	public function raf() {

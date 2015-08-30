@@ -1,0 +1,750 @@
+Order: 3858
+Total: 2700
+Charge: Stripe\Charge JSON: {
+    "id": "ch_6qoXT1LlzPpnPO",
+    "object": "charge",
+    "created": 1440368728,
+    "livemode": true,
+    "paid": true,
+    "status": "succeeded",
+    "amount": 2700,
+    "currency": "usd",
+    "refunded": false,
+    "source": {
+        "id": "card_6nqPsPj4h7sa3Y",
+        "object": "card",
+        "last4": "8342",
+        "brand": "Visa",
+        "funding": "credit",
+        "exp_month": 11,
+        "exp_year": 2017,
+        "fingerprint": "L0pDMyiqp5m7JTcJ",
+        "country": "US",
+        "name": "Emmarose95@wi.rr.com",
+        "address_line1": null,
+        "address_line2": null,
+        "address_city": null,
+        "address_state": null,
+        "address_zip": null,
+        "address_country": null,
+        "cvc_check": null,
+        "address_line1_check": null,
+        "address_zip_check": null,
+        "tokenization_method": null,
+        "dynamic_last4": null,
+        "metadata": [
+
+        ],
+        "customer": null
+    },
+    "captured": true,
+    "balance_transaction": "txn_6qoXlXzxaEuQgo",
+    "failure_message": null,
+    "failure_code": null,
+    "amount_refunded": 0,
+    "customer": null,
+    "invoice": null,
+    "description": "Gamerosity Order #3858",
+    "dispute": null,
+    "metadata": [
+
+    ],
+    "statement_descriptor": null,
+    "fraud_details": [
+
+    ],
+    "receipt_email": null,
+    "receipt_number": null,
+    "shipping": null,
+    "destination": null,
+    "application_fee": null,
+    "refunds": {
+        "object": "list",
+        "total_count": 0,
+        "has_more": false,
+        "url": "\/v1\/charges\/ch_6qoXT1LlzPpnPO\/refunds",
+        "data": [
+
+        ]
+    }
+}
+
+Order: 3860
+Total: 9650
+Charge: Stripe\Charge JSON: {
+    "id": "ch_6qoXgWq5NWwgYP",
+    "object": "charge",
+    "created": 1440368729,
+    "livemode": true,
+    "paid": true,
+    "status": "succeeded",
+    "amount": 9650,
+    "currency": "usd",
+    "refunded": false,
+    "source": {
+        "id": "card_6nrH88cEYd30SE",
+        "object": "card",
+        "last4": "2635",
+        "brand": "Visa",
+        "funding": "debit",
+        "exp_month": 4,
+        "exp_year": 2018,
+        "fingerprint": "i8FFKqw44mQCL5PU",
+        "country": "US",
+        "name": "ghhardcastle@gmail.com",
+        "address_line1": null,
+        "address_line2": null,
+        "address_city": null,
+        "address_state": null,
+        "address_zip": null,
+        "address_country": null,
+        "cvc_check": null,
+        "address_line1_check": null,
+        "address_zip_check": null,
+        "tokenization_method": null,
+        "dynamic_last4": null,
+        "metadata": [
+
+        ],
+        "customer": null
+    },
+    "captured": true,
+    "balance_transaction": "txn_6qoXfxtd68j8Hg",
+    "failure_message": null,
+    "failure_code": null,
+    "amount_refunded": 0,
+    "customer": null,
+    "invoice": null,
+    "description": "Gamerosity Order #3860",
+    "dispute": null,
+    "metadata": [
+
+    ],
+    "statement_descriptor": null,
+    "fraud_details": [
+
+    ],
+    "receipt_email": null,
+    "receipt_number": null,
+    "shipping": null,
+    "destination": null,
+    "application_fee": null,
+    "refunds": {
+        "object": "list",
+        "total_count": 0,
+        "has_more": false,
+        "url": "\/v1\/charges\/ch_6qoXgWq5NWwgYP\/refunds",
+        "data": [
+
+        ]
+    }
+}
+
+Order: 3861
+Total: 1500
+Charge: Stripe\Charge JSON: {
+    "id": "ch_6qoXiQOVNZujtk",
+    "object": "charge",
+    "created": 1440368730,
+    "livemode": true,
+    "paid": true,
+    "status": "succeeded",
+    "amount": 1500,
+    "currency": "usd",
+    "refunded": false,
+    "source": {
+        "id": "card_6nzboA3Mb8CM3I",
+        "object": "card",
+        "last4": "3089",
+        "brand": "Visa",
+        "funding": "prepaid",
+        "exp_month": 5,
+        "exp_year": 2019,
+        "fingerprint": "MJizkTcwfphkhLvI",
+        "country": "US",
+        "name": "jamesnita@gmail.com",
+        "address_line1": null,
+        "address_line2": null,
+        "address_city": null,
+        "address_state": null,
+        "address_zip": null,
+        "address_country": null,
+        "cvc_check": null,
+        "address_line1_check": null,
+        "address_zip_check": null,
+        "tokenization_method": null,
+        "dynamic_last4": null,
+        "metadata": [
+
+        ],
+        "customer": null
+    },
+    "captured": true,
+    "balance_transaction": "txn_6qoXCWYcL9Qs27",
+    "failure_message": null,
+    "failure_code": null,
+    "amount_refunded": 0,
+    "customer": null,
+    "invoice": null,
+    "description": "Gamerosity Order #3861",
+    "dispute": null,
+    "metadata": [
+
+    ],
+    "statement_descriptor": null,
+    "fraud_details": [
+
+    ],
+    "receipt_email": null,
+    "receipt_number": null,
+    "shipping": null,
+    "destination": null,
+    "application_fee": null,
+    "refunds": {
+        "object": "list",
+        "total_count": 0,
+        "has_more": false,
+        "url": "\/v1\/charges\/ch_6qoXiQOVNZujtk\/refunds",
+        "data": [
+
+        ]
+    }
+}
+
+Order: 3863
+Total: 100
+Charge: Stripe\Charge JSON: {
+    "id": "ch_6qoXo7vQvgvQoY",
+    "object": "charge",
+    "created": 1440368731,
+    "livemode": true,
+    "paid": true,
+    "status": "succeeded",
+    "amount": 100,
+    "currency": "usd",
+    "refunded": false,
+    "source": {
+        "id": "card_6o7pUYVqd75ZOu",
+        "object": "card",
+        "last4": "8924",
+        "brand": "Visa",
+        "funding": "debit",
+        "exp_month": 9,
+        "exp_year": 2018,
+        "fingerprint": "yTK1pFm8QROjWcja",
+        "country": "US",
+        "name": "k.glick@me.com",
+        "address_line1": null,
+        "address_line2": null,
+        "address_city": null,
+        "address_state": null,
+        "address_zip": null,
+        "address_country": null,
+        "cvc_check": null,
+        "address_line1_check": null,
+        "address_zip_check": null,
+        "tokenization_method": null,
+        "dynamic_last4": null,
+        "metadata": [
+
+        ],
+        "customer": null
+    },
+    "captured": true,
+    "balance_transaction": "txn_6qoXngnurKTfL9",
+    "failure_message": null,
+    "failure_code": null,
+    "amount_refunded": 0,
+    "customer": null,
+    "invoice": null,
+    "description": "Gamerosity Order #3863",
+    "dispute": null,
+    "metadata": [
+
+    ],
+    "statement_descriptor": null,
+    "fraud_details": [
+
+    ],
+    "receipt_email": null,
+    "receipt_number": null,
+    "shipping": null,
+    "destination": null,
+    "application_fee": null,
+    "refunds": {
+        "object": "list",
+        "total_count": 0,
+        "has_more": false,
+        "url": "\/v1\/charges\/ch_6qoXo7vQvgvQoY\/refunds",
+        "data": [
+
+        ]
+    }
+}
+
+Order: 3874
+Total: 7300
+Status is:402
+Type is:card_error
+Code is:card_declined
+Message is:Your card was declined.
+
+Order: 3875
+Total: 5000
+Charge: Stripe\Charge JSON: {
+    "id": "ch_6qoXXGJivpFJhE",
+    "object": "charge",
+    "created": 1440368733,
+    "livemode": true,
+    "paid": true,
+    "status": "succeeded",
+    "amount": 5000,
+    "currency": "usd",
+    "refunded": false,
+    "source": {
+        "id": "card_6qoXEgLe6F2OM7",
+        "object": "card",
+        "last4": "7003",
+        "brand": "American Express",
+        "funding": "credit",
+        "exp_month": 1,
+        "exp_year": 2019,
+        "fingerprint": "iwRfLo0WTSTZNfg1",
+        "country": "US",
+        "name": null,
+        "address_line1": null,
+        "address_line2": null,
+        "address_city": null,
+        "address_state": null,
+        "address_zip": null,
+        "address_country": null,
+        "cvc_check": null,
+        "address_line1_check": null,
+        "address_zip_check": null,
+        "tokenization_method": null,
+        "dynamic_last4": null,
+        "metadata": [
+
+        ],
+        "customer": null
+    },
+    "captured": true,
+    "balance_transaction": "txn_6qoXntDJDPFfAR",
+    "failure_message": null,
+    "failure_code": null,
+    "amount_refunded": 0,
+    "customer": null,
+    "invoice": null,
+    "description": "Gamerosity Order #3875",
+    "dispute": null,
+    "metadata": [
+
+    ],
+    "statement_descriptor": null,
+    "fraud_details": [
+
+    ],
+    "receipt_email": null,
+    "receipt_number": null,
+    "authorization_code": "163538",
+    "shipping": null,
+    "destination": null,
+    "application_fee": null,
+    "refunds": {
+        "object": "list",
+        "total_count": 0,
+        "has_more": false,
+        "url": "\/v1\/charges\/ch_6qoXXGJivpFJhE\/refunds",
+        "data": [
+
+        ]
+    }
+}
+
+Order: 3876
+Total: 2500
+Charge: Stripe\Charge JSON: {
+    "id": "ch_6qoXHGBnCSbpka",
+    "object": "charge",
+    "created": 1440368734,
+    "livemode": true,
+    "paid": true,
+    "status": "succeeded",
+    "amount": 2500,
+    "currency": "usd",
+    "refunded": false,
+    "source": {
+        "id": "card_6qoXARiuP4CGhO",
+        "object": "card",
+        "last4": "1024",
+        "brand": "Visa",
+        "funding": "debit",
+        "exp_month": 11,
+        "exp_year": 2015,
+        "fingerprint": "NtIVytFQpOrHOIy7",
+        "country": "US",
+        "name": null,
+        "address_line1": null,
+        "address_line2": null,
+        "address_city": null,
+        "address_state": null,
+        "address_zip": null,
+        "address_country": null,
+        "cvc_check": null,
+        "address_line1_check": null,
+        "address_zip_check": null,
+        "tokenization_method": null,
+        "dynamic_last4": null,
+        "metadata": [
+
+        ],
+        "customer": null
+    },
+    "captured": true,
+    "balance_transaction": "txn_6qoXDap9istxrC",
+    "failure_message": null,
+    "failure_code": null,
+    "amount_refunded": 0,
+    "customer": null,
+    "invoice": null,
+    "description": "Gamerosity Order #3876",
+    "dispute": null,
+    "metadata": [
+
+    ],
+    "statement_descriptor": null,
+    "fraud_details": [
+
+    ],
+    "receipt_email": null,
+    "receipt_number": null,
+    "authorization_code": "066335",
+    "shipping": null,
+    "destination": null,
+    "application_fee": null,
+    "refunds": {
+        "object": "list",
+        "total_count": 0,
+        "has_more": false,
+        "url": "\/v1\/charges\/ch_6qoXHGBnCSbpka\/refunds",
+        "data": [
+
+        ]
+    }
+}
+
+Order: 3877
+Total: 2700
+Charge: Stripe\Charge JSON: {
+    "id": "ch_6qoXcLiqbTPiQj",
+    "object": "charge",
+    "created": 1440368735,
+    "livemode": true,
+    "paid": true,
+    "status": "succeeded",
+    "amount": 2700,
+    "currency": "usd",
+    "refunded": false,
+    "source": {
+        "id": "card_6qoXaa2WPEki6d",
+        "object": "card",
+        "last4": "8518",
+        "brand": "Visa",
+        "funding": "debit",
+        "exp_month": 7,
+        "exp_year": 2018,
+        "fingerprint": "lNMjtqgtBR9JLAUV",
+        "country": "US",
+        "name": null,
+        "address_line1": null,
+        "address_line2": null,
+        "address_city": null,
+        "address_state": null,
+        "address_zip": null,
+        "address_country": null,
+        "cvc_check": null,
+        "address_line1_check": null,
+        "address_zip_check": null,
+        "tokenization_method": null,
+        "dynamic_last4": null,
+        "metadata": [
+
+        ],
+        "customer": null
+    },
+    "captured": true,
+    "balance_transaction": "txn_6qoXvCgX95SGA9",
+    "failure_message": null,
+    "failure_code": null,
+    "amount_refunded": 0,
+    "customer": null,
+    "invoice": null,
+    "description": "Gamerosity Order #3877",
+    "dispute": null,
+    "metadata": [
+
+    ],
+    "statement_descriptor": null,
+    "fraud_details": [
+
+    ],
+    "receipt_email": null,
+    "receipt_number": null,
+    "authorization_code": "062518",
+    "shipping": null,
+    "destination": null,
+    "application_fee": null,
+    "refunds": {
+        "object": "list",
+        "total_count": 0,
+        "has_more": false,
+        "url": "\/v1\/charges\/ch_6qoXcLiqbTPiQj\/refunds",
+        "data": [
+
+        ]
+    }
+}
+
+Order: 3880
+Total: 2400
+Charge: Stripe\Charge JSON: {
+    "id": "ch_6qoXlYbCDUaCnn",
+    "object": "charge",
+    "created": 1440368736,
+    "livemode": true,
+    "paid": true,
+    "status": "succeeded",
+    "amount": 2400,
+    "currency": "usd",
+    "refunded": false,
+    "source": {
+        "id": "card_6qoXdfrcTgjD0o",
+        "object": "card",
+        "last4": "3662",
+        "brand": "MasterCard",
+        "funding": "debit",
+        "exp_month": 8,
+        "exp_year": 2016,
+        "fingerprint": "iiIFEHbvNhh81FLk",
+        "country": "US",
+        "name": null,
+        "address_line1": null,
+        "address_line2": null,
+        "address_city": null,
+        "address_state": null,
+        "address_zip": null,
+        "address_country": null,
+        "cvc_check": null,
+        "address_line1_check": null,
+        "address_zip_check": null,
+        "tokenization_method": null,
+        "dynamic_last4": null,
+        "metadata": [
+
+        ],
+        "customer": null
+    },
+    "captured": true,
+    "balance_transaction": "txn_6qoXvSZbaKwdf3",
+    "failure_message": null,
+    "failure_code": null,
+    "amount_refunded": 0,
+    "customer": null,
+    "invoice": null,
+    "description": "Gamerosity Order #3880",
+    "dispute": null,
+    "metadata": [
+
+    ],
+    "statement_descriptor": null,
+    "fraud_details": [
+
+    ],
+    "receipt_email": null,
+    "receipt_number": null,
+    "authorization_code": "H75006",
+    "shipping": null,
+    "destination": null,
+    "application_fee": null,
+    "refunds": {
+        "object": "list",
+        "total_count": 0,
+        "has_more": false,
+        "url": "\/v1\/charges\/ch_6qoXlYbCDUaCnn\/refunds",
+        "data": [
+
+        ]
+    }
+}
+
+Order: 3881
+Total: 11400
+Status is:402
+Type is:card_error
+Code is:invalid_expiry_month
+Message is:Your card's expiration month is invalid.
+
+Order: 3882
+Total: 500
+Status is:402
+Type is:card_error
+Code is:invalid_expiry_month
+Message is:Your card's expiration month is invalid.
+
+Order: 3883
+Total: 48000
+Charge: Stripe\Charge JSON: {
+    "id": "ch_6qoX6MOfHP5fGb",
+    "object": "charge",
+    "created": 1440368737,
+    "livemode": true,
+    "paid": true,
+    "status": "succeeded",
+    "amount": 48000,
+    "currency": "usd",
+    "refunded": false,
+    "source": {
+        "id": "card_6qoX4AD20tdzf1",
+        "object": "card",
+        "last4": "5460",
+        "brand": "Visa",
+        "funding": "debit",
+        "exp_month": 3,
+        "exp_year": 2018,
+        "fingerprint": "DN5pYBFRWendcrpu",
+        "country": "US",
+        "name": null,
+        "address_line1": null,
+        "address_line2": null,
+        "address_city": null,
+        "address_state": null,
+        "address_zip": null,
+        "address_country": null,
+        "cvc_check": null,
+        "address_line1_check": null,
+        "address_zip_check": null,
+        "tokenization_method": null,
+        "dynamic_last4": null,
+        "metadata": [
+
+        ],
+        "customer": null
+    },
+    "captured": true,
+    "balance_transaction": "txn_6qoXvpmkz3hA3y",
+    "failure_message": null,
+    "failure_code": null,
+    "amount_refunded": 0,
+    "customer": null,
+    "invoice": null,
+    "description": "Gamerosity Order #3883",
+    "dispute": null,
+    "metadata": [
+
+    ],
+    "statement_descriptor": null,
+    "fraud_details": [
+
+    ],
+    "receipt_email": null,
+    "receipt_number": null,
+    "authorization_code": "082518",
+    "shipping": null,
+    "destination": null,
+    "application_fee": null,
+    "refunds": {
+        "object": "list",
+        "total_count": 0,
+        "has_more": false,
+        "url": "\/v1\/charges\/ch_6qoX6MOfHP5fGb\/refunds",
+        "data": [
+
+        ]
+    }
+}
+
+Order: 3884
+Total: 9100
+Status is:402
+Type is:card_error
+Code is:incorrect_number
+Message is:Your card number is incorrect.
+
+Order: 3885
+Total: 8800
+Charge: Stripe\Charge JSON: {
+    "id": "ch_6qoXpkvnsyol2b",
+    "object": "charge",
+    "created": 1440368740,
+    "livemode": true,
+    "paid": true,
+    "status": "succeeded",
+    "amount": 8800,
+    "currency": "usd",
+    "refunded": false,
+    "source": {
+        "id": "card_6qoXENsyPhHRnX",
+        "object": "card",
+        "last4": "7208",
+        "brand": "Visa",
+        "funding": "credit",
+        "exp_month": 1,
+        "exp_year": 2018,
+        "fingerprint": "GyVaJmasXSo03Fqh",
+        "country": "US",
+        "name": null,
+        "address_line1": null,
+        "address_line2": null,
+        "address_city": null,
+        "address_state": null,
+        "address_zip": null,
+        "address_country": null,
+        "cvc_check": null,
+        "address_line1_check": null,
+        "address_zip_check": null,
+        "tokenization_method": null,
+        "dynamic_last4": null,
+        "metadata": [
+
+        ],
+        "customer": null
+    },
+    "captured": true,
+    "balance_transaction": "txn_6qoXx0cg7R2HK1",
+    "failure_message": null,
+    "failure_code": null,
+    "amount_refunded": 0,
+    "customer": null,
+    "invoice": null,
+    "description": "Gamerosity Order #3885",
+    "dispute": null,
+    "metadata": [
+
+    ],
+    "statement_descriptor": null,
+    "fraud_details": [
+
+    ],
+    "receipt_email": null,
+    "receipt_number": null,
+    "authorization_code": "06218C",
+    "shipping": null,
+    "destination": null,
+    "application_fee": null,
+    "refunds": {
+        "object": "list",
+        "total_count": 0,
+        "has_more": false,
+        "url": "\/v1\/charges\/ch_6qoXpkvnsyol2b\/refunds",
+        "data": [
+
+        ]
+    }
+}
+
+Order: 3889
+Total: 1550
+Status is:402
+Type is:card_error
+Code is:invalid_expiry_month
+Message is:Your card's expiration month is invalid.

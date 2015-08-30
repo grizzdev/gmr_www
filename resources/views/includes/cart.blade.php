@@ -1,4 +1,4 @@
-@if(is_array($cart['items']) && count($cart['items']))
+@if($cart->count())
 {!! Form::open(['url' => 'cart', 'id' => 'cartForm', 'data-remote' => true]) !!}
 	<div class="table-responsive">
 		<table class="table table-striped">
@@ -13,50 +13,57 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach($cart['items'] as $key => $item)
+				@foreach($cart->items as $item)
 				<tr>
 					<td style="width:72px" align="center">
-						<a href="{{ url('cart', $key) }}" data-method="delete" data-remote="true" rel="nofollow" class="item-remove"><i class="glyphicon glyphicon-remove"></i></a>
+						<a href="{{ url('cart', $item->id) }}" data-method="delete" data-remote="true" rel="nofollow" class="item-remove" data-toggle="tooltip" title="Remove Item from Cart"><i class="glyphicon glyphicon-remove"></i></a>
 					</td>
 					<td class="hidden-xs" style="width:72px" align="center">
-						@if(!empty($item['product']->files()->first()->id))
-						<img src="{{ $item['product']->files()->first()->url() }}" alt="{{ $item['product']->name }}" class="img-thumbnail hidden-xs" />
+						@if(!empty($item->product->files()->first()->id))
+						<img src="{{ $item->product->files()->first()->url() }}" alt="{{ $item->product->name }}" class="img-thumbnail hidden-xs" />
 						@endif
 					</td>
 					<td>
-						<p><a href="{{ url('product/'.$item['product']->sku) }}">{{ $item['product']->name }}</a></p>
-					@foreach ($item['attributes'] as $attribute)
-						@if($attribute['attribute']->type != 'currency')
+						<p><a href="{{ url('product/'.$item->product->sku) }}">{{ $item->product->name }}</a></p>
 						<div>
-							<b>{{ $attribute['attribute']->name }}:</b>
-							<?php
-							switch ($attribute['attribute']->type) {
-								case 'text':
-								case 'number':
-									echo $attribute['value'];
-									break;
-								case 'select':
-									echo \App\Attribute::find($attribute['value'])->name;
-								case 'model':
-									if (!empty($attribute['attribute']->model)) {
-										$modelname = "\\App\\{$attribute['attribute']->model}";
-										echo $modelname::find($attribute['value'])->name;
-									}
-									break;
-							}
-							?>
+							<b>Hero:</b> {{ $item->hero->name }}
 						</div>
-						@endif
-					@endforeach
+						@foreach($item->itemAttributes as $attribute)
+							@if($attribute->attribute->name != 'Amount')
+							<div>
+								<b>{{ $attribute->attribute->name }}:</b>
+								<?php
+									switch ($attribute->attribute->type) {
+										case 'text':
+										case 'number':
+											echo $attribute->value;
+											break;
+										case 'select':
+											echo \App\Attribute::find($attribute->value)->name;
+										case 'model':
+											//if (!empty($attribute->attribute->model)) {
+												//$modelname = "\\App\\{$attribute['attribute']->model}";
+												//echo $modelname::find($attribute['value'])->name;
+											//}
+											break;
+									}
+								?>
+							</div>
+							@endif
+						@endforeach
 					</td>
 					<td align="center">
-						${{ number_format($item['price'], 2, '.', '') }}
+						@if($item->id != 1)
+						${{ number_format($item->price(), 2, '.', '') }}
+						@endif
 					</td>
 					<td>
-						{!! Form::number("cart[$key]", $item['quantity'], ['class' => 'form-control text-center']) !!}
+						@if($item->id != 1)
+						{!! Form::number("items[$item->id]", $item->quantity, ['class' => 'form-control text-center']) !!}
+						@endif
 					</td>
 					<td align="center">
-						${{ number_format(($item['price'] * $item['quantity']), 2, '.', '') }}
+						${{ number_format(($item->price() * $item->quantity), 2, '.', '') }}
 					</td>
 				</tr>
 				@endforeach
@@ -80,28 +87,28 @@
 					</td>
 				</tr>
 				<tr>
-					<td rowspan="{{ (\App\Http\Controllers\ShopController::calculate_discount() == 0) ? 3 : 4 }}" width="50%"></td>
-					<td rowspan="{{ (\App\Http\Controllers\ShopController::calculate_discount() == 0) ? 3 : 4 }}" align="right">
+					<td rowspan="{{ ($cart->discount() > 0) ? 4 : 3 }}" width="50%"></td>
+					<td rowspan="{{ ($cart->discount() > 0) ? 4 : 3 }}" align="right">
 						<h3 style="margin:0">Cart Totals</h3>
 					</td>
 					<th align="right">SUBTOTAL</th>
-					<td align="right">${{ number_format($cart['subtotal'], 2, '.', '') }}
+					<td align="right">${{ number_format($cart->subtotal(), 2, '.', '') }}
 				</tr>
 				<tr>
 					<th align="right">SHIPPING</th>
 					<td align="right">
-						{{ (\App\Http\Controllers\ShopController::calculate_shipping() > 0) ? '$'.number_format(\App\Http\Controllers\ShopController::calculate_shipping(), 2, '.', '') : 'FREE' }}
+						{{ ($cart->shipping()) ? '$'.number_format($cart->shipping(), 2, '.', '') : 'FREE' }}
 					</td>
 				</tr>
-				@if(session('coupon') && \App\Http\Controllers\ShopController::calculate_discount() > 0)
+				@if($cart->discount())
 				<tr>
 					<th align="right">DISCOUNT</th>
-					<td align="right">- ${{ number_format(\App\Http\Controllers\ShopController::calculate_discount(), 2, '.', '') }}</td>
+					<td align="right">- ${{ number_format($cart->discount(), 2, '.', '') }}</td>
 				</tr>
 				@endif
 				<tr>
 					<th align="right">TOTAL</th>
-					<td align="right">${{ number_format(($cart['subtotal'] + \App\Http\Controllers\ShopController::calculate_shipping() - \App\Http\Controllers\ShopController::calculate_discount()), 2, '.', '') }}
+					<td align="right">${{ number_format($cart->total(), 2, '.', '') }}
 				</tr>
 			</tfoot>
 		</table>

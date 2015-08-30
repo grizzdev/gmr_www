@@ -136,6 +136,7 @@
 	.multi-columns-row .col-sm-2:nth-child(6n + 7) { clear: left; }
 	.multi-columns-row .col-sm-1:nth-child(12n + 13) { clear: left; }
 }
+
 @media (min-width: $screen-md-min) {
 	// reset previous grid
 	.multi-columns-row .col-sm-6:nth-child(2n + 3) { clear: none; }
@@ -151,6 +152,7 @@
 	.multi-columns-row .col-md-2:nth-child(6n + 7) { clear: left; }
 	.multi-columns-row .col-md-1:nth-child(12n + 13) { clear: left; }
 }
+
 @media (min-width: $screen-lg-min) {
 	// reset previous grid
 	.multi-columns-row .col-md-6:nth-child(2n + 3) { clear: none; }

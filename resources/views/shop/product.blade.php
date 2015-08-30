@@ -83,6 +83,9 @@
 											@if($attr->parent_id == $attribute->id)
 											<option value="{{ $attr->id }}">
 												{{ $attr->name }}
+												@if($attr->price)
+												+ ${{ $attr->price }}
+												@endif
 											</option>
 											@endif
 										@endforeach

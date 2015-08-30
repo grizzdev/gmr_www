@@ -16,15 +16,15 @@
 								<b>Address:</b>
 							</div>
 							<div class="col-xs-6">
-								{{ $checkout['billing-address-1'] }}
+								{{ $order->billing_address->address_1 }}
 								<br />
-								@if(!empty($checkout['billing-address-2']))
-								{{ $checkout['billing-address-2'] }}
+								@if(!empty($order->billing_address->address_2))
+								{{ $order->billing_address->address_2 }}
 								<br />
 								@endif
-								{{ $checkout['shipping-city'] }}, {{ $billing_state->name }} {{ $checkout['shipping-zip'] }}
+								{{ $order->billing_address->city }}, {{ $order->billing_address->state->name }} {{ $order->billing_address->zip }}
 								<br />
-								{{ $billing_country->name }}
+								{{ $order->billing_address->country->name }}
 							</div>
 						</div>
 					</div>
@@ -41,15 +41,15 @@
 								<b>Address:</b>
 							</div>
 							<div class="col-xs-6">
-								{{ $checkout['shipping-address-1'] }}
+								{{ $order->shipping_address->address_1 }}
 								<br />
-								@if(!empty($checkout['shipping-address-2']))
-								{{ $checkout['shipping-address-2'] }}
+								@if(!empty($order->shipping_address->address_2))
+								{{ $order->shipping_address->address_2 }}
 								<br />
 								@endif
-								{{ $checkout['shipping-city'] }}, {{ $shipping_state->name }} {{ $checkout['shipping-zip'] }}
+								{{ $order->shipping_address->city }}, {{ $order->shipping_address->state->name }} {{ $order->shipping_address->zip }}
 								<br />
-								{{ $shipping_country->name }}
+								{{ $order->shipping_address->country->name }}
 							</div>
 						</div>
 					</div>
@@ -66,16 +66,16 @@
 								<b>Name:</b>
 							</div>
 							<div class="col-xs-6">
-								{{ $checkout['first-name'] }} {{ $checkout['last-name']}}
+								{{ $order->user->name }}
 							</div>
 						</div>
-						@if(!empty($checkout['company-name']))
+						@if(!empty($order->user->company))
 						<div class="row">
 							<div class="col-xs-6">
 								<b>Company:</b>
 							</div>
 							<div class="col-xs-6">
-								{{ $checkout['company-name'] }}
+								{{ $order->user->company }}
 							</div>
 						</div>
 						@endif
@@ -84,7 +84,7 @@
 								<b>Email:</b>
 							</div>
 							<div class="col-xs-6">
-								{{ $checkout['email-address'] }}
+								{{ $order->user->email }}
 							</div>
 						</div>
 						<div class="row">
@@ -92,7 +92,7 @@
 								<b>Phone:</b>
 							</div>
 							<div class="col-xs-6">
-								{{ $checkout['phone-number'] }}
+								{{ $order->user->phone }}
 							</div>
 						</div>
 						<div class="row">
@@ -100,7 +100,7 @@
 								<b>Notes:</b>
 							</div>
 							<div class="col-xs-6">
-								{!! nl2br($checkout['notes']) !!}
+								{!! nl2br($order->notes) !!}
 							</div>
 						</div>
 					</div>
@@ -162,7 +162,7 @@
 								<b>Payment Type:</b>
 							</div>
 							<div class="col-xs-6">
-								{{ ($checkout['payment-type'] == 'paypal') ? 'PayPal' : 'Credit Card' }}
+								{{ ($order->payment_method->slug == 'paypal') ? 'PayPal' : 'Credit Card' }}
 							</div>
 						</div>
 						<br />
@@ -177,52 +177,60 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($cart as $item)
+									@foreach($order->cart->items as $item)
 									<tr>
 										<td>
-											<b>{{ $item->name }}</b>
-									@foreach($item->attributes as $attr)
-										@if($attr->name != 'Amount')
-											<br />
-											<small>
-												<b>{{ $attr->name }}:</b>
-												{{ $attr->value }}
-											</small>
-										@else
-											<?php $item->price += $attr->value ?>
-										@endif
-									@endforeach
+											<b>{{ $item->product->name }}</b>
+											@foreach($item->itemAttributes as $attribute)
+												@if($attribute->attribute->name != 'Amount')
+												<div>
+													<b>{{ $attribute->attribute->name }}:</b>
+													<?php
+														switch ($attribute->attribute->type) {
+															case 'text':
+															case 'number':
+																echo $attribute->value;
+																break;
+															case 'select':
+																echo \App\Attribute::find($attribute->value)->name;
+															case 'model':
+																//if (!empty($attribute->attribute->model)) {
+																	//$modelname = "\\App\\{$attribute['attribute']->model}";
+																	//echo $modelname::find($attribute['value'])->name;
+																//}
+																break;
+														}
+													?>
+												</div>
+												@endif
+											@endforeach
 										</td>
-										<td>${{ number_format($item->price, 2, '.', '') }}</td>
+										<td>${{ number_format($item->price(), 2, '.', '') }}</td>
 										<td align="center">{{ $item->quantity }}</td>
-										<td align="right">${{ number_format($item->price * $item->quantity, 2, '.', '') }}</td>
+										<td align="right">${{ number_format($item->price() * $item->quantity, 2, '.', '') }}</td>
 									</tr>
 									@endforeach
 								</tbody>
 								<tfoot>
 									<tr>
-										<th colspan="2" rowspan="{{ ($checkout['discount'] > 0) ? 4 : 3 }}"></th>
+										<th colspan="2" rowspan="{{ ($order->discount() > 0) ? 4 : 3 }}"></th>
 										<td align="right">Subtotal</td>
-										<td align="right">${{ number_format($checkout['subtotal'] + $checkout['gamerosity-donation'], 2, '.', '') }}
+										<td align="right">${{ number_format($order->subtotal(), 2, '.', '') }}
 									</tr>
 									<tr>
 										<td align="right">Shipping</td>
-										<td align="right">{{ (!empty($checkout['shipping'])) ? number_format($checkout['shipping'], 2, '.', '') : 'FREE' }}</td>
+										<td align="right">{{ (!empty($order->shipping())) ? number_format($order->shipping(), 2, '.', '') : 'FREE' }}</td>
 									</tr>
-									@if($checkout['discount'] > 0)
+									@if($order->discount() > 0)
 									<tr>
 										<td align="right">Discount</td>
-										<td align="right">- ${{ number_format($checkout['discount'], 2, '.', '') }}</td>
+										<td align="right">- ${{ number_format($order->discount(), 2, '.', '') }}</td>
 									</tr>
 									@endif
 									<tr>
 										<td align="right">Total</td>
 										<td align="right">
-											@if(0 > ($checkout['subtotal'] + $checkout['shipping'] - $checkout['discount'] + $checkout['gamerosity-donation']))
-											$0.00
-											@else
-											${{ number_format($checkout['subtotal'] + $checkout['shipping'] - $checkout['discount'] + $checkout['gamerosity-donation'], 2, '.', '') }}
-											@endif
+											${{ number_format($order->total(), 2, '.', '') }}
 										</td>
 									</tr>
 								</tfoot>

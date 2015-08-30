@@ -1,17 +1,17 @@
 <?php
-$request['hero-state'] = \App\Location::find($request['hero-state-id']);
+$state = \App\Location::find($nominee['state_id']);
 ?>
-Name: {!! $request['hero-name'] !!}
-Birth Date: {!! $birth_date !!}
-Gender: {!! ($request['hero-gender'] == 'm') ? 'Male' : 'Female' !!}
-Address: {!! $request['hero-address'] !!}, {!! $request['hero-city'] !!}, {!! $request['hero-state']->name !!} {!! $request['hero-zip'] !!}
-Shirt Size: {!! strtoupper($request['hero-shirt-size']) !!}
-Hospital: {!! $request['hospital-name'] !!}, {!! $request['hospital-location'] !!}
-Cancer Type(s): {!! $request['cancer'] !!}
-Nominee: {!! $request['name'] !!} <{!! $request['email'] !!}>
-Relationship: {!! $request['relationship'] !!}
-Facebook: {!! $request['facebook-url'] !!}
-Twitter: {!! $request['twitter-url'] !!}
-YouTube: {!! $request['youtube-url'] !!}
-Caring Bridge: {!! $request['caringbridge-url'] !!}
-Overview: {!! $request['overview'] !!}
+Name: {!! $nominee['name'] !!}
+Birth Date: {!! $nominee['birth_date'] !!}
+Gender: {!! ($nominee['gender'] == 'm') ? 'Male' : 'Female' !!}
+Address: {!! $nominee['address'] !!}, {!! $nominee['city'] !!}, {!! $state->name !!} {!! $nominee['zip'] !!}
+Shirt Size: {!! strtoupper($nominee['shirt_size']) !!}
+Hospital: {!! $nominee['hospital_name'] !!}, {!! $nominee['hospital_location'] !!}
+Cancer Type(s): {!! $nominee['cancer_type'] !!}
+Nominee: {!! $user['name'] !!} <{!! $user['email'] !!}>
+Relationship: {!! $nominee['relationship'] !!}
+Facebook: {!! $nominee['facebook_url'] !!}
+Twitter: {!! $nominee['twitter_url'] !!}
+YouTube: {!! $nominee['youtube_url'] !!}
+Caring Bridge: {!! $nominee['caringbridge_url'] !!}
+Overview: {!! $nominee['overview'] !!}

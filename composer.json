@@ -14,7 +14,11 @@
         "zizaco/entrust": "dev-laravel-5",
         "jenssegers/agent": "^2.1",
         "vinkla/hashids": "^2.0",
+<<<<<<< HEAD
 	"laravel/cashier": "~5.0"
+=======
+        "barryvdh/laravel-cors": "0.7.x"
+>>>>>>> d677d346ee5e9cf69b035c83ac7eb20377c47bb5
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

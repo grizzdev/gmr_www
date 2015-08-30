@@ -25,23 +25,6 @@ class HomeController extends Controller {
 		if (!in_array($request->ip(), $allowed)) {
 			return Redirect::to('/');
 		} else {
-			/*
-			$noms = DB::table('failed_jobs')->where('payload', 'LIKE', '%emails.nomination%')->get();
-			foreach ($noms as $nom) {
-				$payload = json_decode($nom->payload);
-				echo '<pre>';
-				print_r($payload);
-				echo '</pre>';
-				Mail::send('emails.nomination-html',[
-					'request' => (array)$payload->data->data->request,
-					'birth_date' => $payload->data->data->birth_date
-				], function($message) {
-					$message->to('kevin@grizzdev.com')->subject('New Hero Nomination');
-					$message->to('info@gamerosity.com')->subject('New Hero Nomination');
-				});
-			}
-			*/
-
 			// let's do some work
 			/*
 			\Stripe\Stripe::setApiKey(config('services.stripe.secret'));

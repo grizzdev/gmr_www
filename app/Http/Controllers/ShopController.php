@@ -6,20 +6,25 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Product as Product;
-use App\File as File;
-use App\Category as Category;
-use App\Tag as Tag;
-use App\Attribute as Attribute;
-use App\Location as Location;
-use App\Order as Order;
-use App\User as User;
-use App\Coupon as Coupon;
-use App\Package as Package;
-use App\Hero as Hero;
-use App\Status as Status;
-use App\Shop as Shop;
-use App\Log as Log;
+use App\Product;
+use App\File;
+use App\Category;
+use App\Tag;
+use App\Attribute;
+use App\Location;
+use App\Order;
+use App\User;
+use App\Coupon;
+use App\Package;
+use App\Hero;
+use App\Status;
+use App\Shop;
+use App\Log;
+use App\Cart;
+use App\Item;
+use App\ItemAttribute;
+use App\Address;
+use App\Neworder;
 use View;
 use Response;
 use GuzzleHttp\Client as Client;
@@ -100,106 +105,91 @@ class ShopController extends Controller {
 	}
 
 	public function cart(Request $request) {
-		$items = $request->session()->get('cart');
-
 		return view('shop.cart', [
 			'title' => 'Cart',
-			'cart' => $this->buildItemsForView($items)
+			'cart' => Cart::find(session('cart_id'))
 		]);
 	}
 
 	public function updateCart(Request $request) {
-		$items = $request->session()->get('cart');
-		$cart = $request->input('cart');
+		$cart = Cart::find(session('cart_id'));
 
 		if (!empty($request->input('coupon_code'))) {
-			session(['coupon' => $request->input('coupon_code')]);
-		}
+			$coupon = Coupon::where('code', '=', strtolower($request->input('coupon_code')))->first();
 
-		foreach ($cart as $key => $quantity) {
-			if ($quantity) {
-				$items[$key]['quantity'] = $quantity;
+			if ($coupon) {
+				$cart->coupon_id = $coupon->id;
 			} else {
-				unset($items[$key]);
+				$cart->coupon_id = null;
 			}
+			$cart->save();
 		}
 
-		$request->session()->put('cart', $items);
+		foreach ($request->input('items') as $id => $quantity) {
+			$item = Item::find($id);
 
-		return Response::json([
-			'view' => View::make('includes.cart', [
-				'cart' => $this->buildItemsForView($items),
-			])->render(),
-			'count' => count($items)
-		]);
-	}
-
-	public function deleteCart(Request $request, $key) {
-		$items = $request->session()->get('cart');
-		unset($items[$key]);
-
-		$request->session()->put('cart', $items);
-
-		return Response::json([
-			'view' => View::make('includes.cart', [
-				'cart' => $this->buildItemsForView($items)
-			])->render(),
-			'count' => count($items)
-		]);
-	}
-
-	public function addCart(Request $request) {
-		$cart = $request->session()->get('cart');
-		$exists = null;
-		$attributes = [];
-		$quantity = $request->input('quantity');
-
-		if (!empty($request->input('attributes'))) {
-			$attributes = $request->input('attributes');
-		}
-
-		if (is_array($cart)) {
-			foreach ($cart as $key => $item) {
-				if ($item['product_id'] == $request->input('product_id') && $item['attributes'] == $attributes) {
-					$exists = $key;
+			if ($item) {
+				if ($quantity) {
+					$item->quantity = $quantity;
+					$item->save();
+				} else {
+					$item->delete();
 				}
 			}
 		}
 
-		if (!is_null($exists)) {
-			$cart[$exists]['quantity'] = ($cart[$exists]['quantity'] + $quantity);
-		} else {
-			$cart[microtime(true)] = [
-				'product_id' => $request->input('product_id'),
-				'attributes' => $attributes,
-				'quantity' => $quantity,
-			];
-		}
+		return Response::json([
+			'view' => View::make('includes.cart', [
+				'cart' => $cart
+			])->render(),
+			'count' => $cart->count()
+		]);
+	}
 
-		$request->session()->put('cart', $cart);
+	public function deleteCart(Request $request, $id) {
+		$cart = Cart::find(session('cart_id'));
+		$item = Item::find($id);
 
-		if (session('hero_slug')) {
-			$hero = Hero::where('slug', '=', session('hero_slug'))->first();
-			$contribution = $hero->contribution_in_cart();
-			$percentage = floor((($hero->raised + $contribution) / $hero->goal) * 100);
-		} else {
-			$contribution = 0;
-			$percentage = 0;
+		if ($item) {
+			$item->delete();
 		}
 
 		return Response::json([
-			'count' => count($cart),
+			'view' => View::make('includes.cart', [
+				'cart' => $cart
+			])->render(),
+			'count' => $cart->count()
+		]);
+	}
+
+	public function addCart(Request $request) {
+		$cart = Cart::find(session('cart_id'));
+
+		$cart->add($request->input('product_id'), $request->input('quantity'), $request->input('attributes')[39], $request->input('attributes'));
+
+		$contribution = 0;
+		$percentage = 0;
+		if (session('hero_slug')) {
+			$hero = Hero::where('slug', '=', session('hero_slug'))->first();
+			if ($hero) {
+				$contribution = $cart->contribution($hero->id);
+				$percentage = floor((($hero->raised + $contribution) / $hero->goal) * 100);
+			}
+		}
+
+		return Response::json([
+			'count' => $cart->count(),
 			'contribution' => $contribution,
 			'percentage' => $percentage
 		]);
 	}
 
 	public function checkout(Request $request) {
+		$cart = Cart::find(session('cart_id'));
 		$countries = [];
 		$states = [];
-		$items = $request->session()->get('cart');
 
-		if (empty($items)) {
+		if ($cart->count() == 0) {
 			return redirect(url('cart'));
 		}
 
@@ -235,7 +225,7 @@ class ShopController extends Controller {
 
 		return view('shop.checkout', [
 			'title' => 'Checkout',
-			'cart' => $this->buildItemsForView($items),
+			'cart' => $cart,
 			'countries' => $countries,
 			'states' => $states,
 			'months' => $months,
@@ -266,78 +256,77 @@ class ShopController extends Controller {
 	}
 
 	public function postCheckout(Request $request) {
-		$checkout = $request->session()->get('checkout');
-
-		foreach ($request->all() as $key => $val) {
-			$checkout[$key] = $val;
-		}
-
-		if (!empty($checkout['same-as-billing'])) {
-			$checkout['shipping-country-id'] = $checkout['billing-country-id'];
-			$checkout['shipping-address-1'] = $checkout['billing-address-1'];
-			$checkout['shipping-address-2'] = $checkout['billing-address-2'];
-			$checkout['shipping-city'] = $checkout['billing-city'];
-			$checkout['shipping-state-id'] = $checkout['billing-state-id'];
-			$checkout['shipping-zip'] = $checkout['billing-zip'];
-		}
-
-		$request->session()->put('checkout', $checkout);
-
 		if ($request->input('payment-type') == 'paypal' && !empty($request->input('payment-token'))) {
 		} else {
-			$cart = $request->session()->get('cart');
-			$items = [];
+			$cart = Cart::find(session('cart_id'));
 
-			foreach ($cart as $item) {
-				$product = Product::find($item['product_id']);
+			$user = $request->user();
+			if (!$user) {
+				$user = User::where('email', '=', $request->input('email-address'))->first();
 
-				$attributes = [];
-				foreach ($item['attributes'] as $id => $value) {
-					$attribute = Attribute::find($id);
-					if ($attribute) {
-						switch ($attribute->type) {
-							case 'text':
-							case 'number':
-								$value = $attribute['value'];
-								break;
-							case 'select':
-								$value = \App\Attribute::find($value)->name;
-							case 'model':
-								if (!empty($attribute->model)) {
-									$modelname = "\\App\\{$attribute->model}";
-									$model = $modelname::find($value);
-									$value = $model->name;
-								}
-								break;
-						}
-
-						$attributes[] = [
-							'name' => $attribute->name,
-							'value' => $value
-						];
-					}
+				if (!$user) {
+					$user = User::create([
+						'email' => $request->input('email-address'),
+						'name' => $request->input('first-name').' '.$request->input('last-name'),
+						'company' => $request->input('company-name'),
+						'phone' => $request->input('phone-number')
+					]);
 				}
 
-				$items[] = [
-					'name' => $product->name,
-					'sku' => $product->sku,
-					'price' => (empty($item['price'])) ? $product->price : $item['price'],
-					'contribution' => $product->contribution_amount,
-					'attributes' => $attributes,
-					'quantity' => $item['quantity']
-				];
+				$cart->user_id = $user->id;
+				$cart->save();
+
+				if (!empty($checkout['create-account']) && $checkout['create-account'] == 'Y') {
+					$password = HashIDs::encode(rand(5,2005));
+					$user->password = Hash::make($password);
+					$user->save();
+					$user->sendPasswordEmail();
+				}
 			}
 
-			if (!empty($request->session()->get('checkout.gamerosity-donation'))) {
-				$items[] = [
-					'name' => 'Gamerosity Donation',
-					'sku' => 'gamerosity-donation',
-					'price' => $request->session()->get('checkout.gamerosity-donation'),
-					'contribution' => 0,
-					'file_id' => null,
-					'attributes' => [],
-					'quantity' => 1
-				];
+			$billing_address = Address::create([
+				'name' => null,
+				'address_1' => $request->input('billing-address-1'),
+				'address_2' => $request->input('billing-address-2'),
+				'city' => $request->input('billing-city'),
+				'state_id' => $request->input('billing-state-id'),
+				'zip' => $request->input('billing-zip'),
+				'country_id' => $request->input('billing-country-id'),
+				'user_id' => $user->id,
+				'is_billing' => 1,
+				'is_shipping' => (!empty($request->input('same-as-billing'))) ? 1 : 0
+			]);
+
+			if (empty($checkout['same-as-billing'])) {
+				$shipping_address = Address::create([
+					'name' => null,
+					'address_1' => $request->input('billing-address-1'),
+					'address_2' => $request->input('billing-address-2'),
+					'city' => $request->input('billing-city'),
+					'state_id' => $request->input('billing-state-id'),
+					'zip' => $request->input('billing-zip'),
+					'country_id' => $request->input('billing-country-id'),
+					'user_id' => $user->id,
+					'is_billing' => 0,
+					'is_shipping' => 1
+				]);
+			} else {
+				$shipping_address = $billing_address;
+			}
+
+			if (!empty($request->input('gamerosity_donation'))) {
+				$item = Item::create([
+					'product_id' => 1,
+					'quantity' => 1,
+					'hero_id' => 0,
+					'cart_id' => $cart->id
+				]);
+
+				ItemAttribute::create([
+					'item_id' => $item->id,
+					'attribute_id' => 38,
+					'value' => $request->input('gamerosity_donation')
+				]);
 			}
 
 			$browser = Agent::browser();
@@ -360,80 +349,43 @@ class ShopController extends Controller {
 				'ip' => $request->getClientIp()
 			];
 
-			$user = $request->user();
-			if (!$user) {
-				$user = User::firstOrCreate([
-					'email' => $checkout['email-address'],
-				]);
+			$payment_method = PaymentMethod::where('slug', '=', $request->input('payment-type'))->first();
 
-				$user->name = $checkout['first-name'].' '.$checkout['last-name'];
-
-				if (!empty($checkout['create-account']) && $checkout['create-account'] == 'Y') {
-					$password = HashIDs::encode(rand(5,2005));
-					$user->password = Hash::make($password);
-
-					Mail::queue(
-						[
-							'emails.user.create-html',
-							'emails.user.create-text'
-						],
-						[
-							'logo' => config('mail.view.logo'),
-							'name' => $user->name,
-							'email' => $user->email,
-							'password' => $password
-						],
-						function ($message) use ($user) {
-							$message->to($user->email)->subject('Your Gamerosity Account');
-							$message->bcc('kevin@grizzdev.com')->subject('Your Gamerosity Account');
-						}
-					);
-				}
-
-				$user->save();
-			}
-
-			$order = Order::create([
-				'checkout_json' => json_encode($checkout),
-				'cart_json' => json_encode($items),
-				'meta_json' => json_encode($meta),
+			$order = Neworder::create([
 				'user_id' => $user->id,
-				'status_id' => 1
+				'cart_id' => $cart->id,
+				'payment_method_id' => $payment_method->id,
+				'payment_token' => $request->input('payment-token'),
+				'status_id' => 1,
+				'billing_address_id' => $billing_address->id,
+				'shipping_address_id' => $shipping_address->id,
+				'meta' => json_encode($meta),
+				'notes' => $request->input('notes')
 			]);
 
 			Log::create([
 				'user_id' => $user->id,
 				'loggable_id' => $order->id,
-				'loggable_type' => 'App\Order',
+				'loggable_type' => 'App\Neworder',
 				'data' => 'Created Order #'.$order->id
 			]);
 
-			$this->send_order_email($order->id, $user->id);
+			//$order->sendEmail()
 
-			$hash = HashIDs::encode($order->id);
-
-			if (env('APP_ENV') != 'development') {
-				$request->session()->forget('cart');
-				$request->session()->forget('checkout');
-				$request->session()->forget('coupon');
-			}
+			$request->session()->forget('cart_id');
 
 			if (!empty($request->input('token'))) {
-				return redirect(url("order/$hash"));
+				return redirect(url('order/'.$order->hash()));
 			} else {
 				return Response::json([
 					'order_id' => $order->id,
-					'hash' => $hash
+					'hash' => $order->hash()
 				]);
 			}
 		}
 	}
 
 	public function postPayPal(Request $request) {
-		foreach ($request->all() as $key => $value) {
-			$request->session()->put("checkout.$key", $value);
-		}
-
 		$response = (new Client())->get(config('services.paypal.url'), [
 			'verify' => false,
 			'query' => [
@@ -481,6 +433,7 @@ class ShopController extends Controller {
 		return $this->postCheckout($request);
 	}
 
+	/*
 	private static function buildItemsForView($items = []) {
 		$cart = [
 			'subtotal' => 0,
@@ -530,24 +483,16 @@ class ShopController extends Controller {
 
 		return $cart;
 	}
+	*/
 
 	public function order($hash) {
 		$id = HashIDs::decode($hash)[0];
-		$order = Order::find($id);
-
-		$checkout = (array) $order->checkout;
+		$order = Neworder::find($id);
 
 		if (!empty($order->id)) {
 			return view('shop.order', [
 				'title' => 'Order #'.$order->id,
 				'order' => $order,
-				'checkout' => $checkout,
-				'cart' => (array) $order->cart,
-				'meta' => (array) $order->meta,
-				'billing_state' => Location::find($checkout['billing-state-id']),
-				'billing_country' => Location::find($checkout['billing-country-id']),
-				'shipping_state' => Location::find($checkout['shipping-state-id']),
-				'shipping_country' => Location::find($checkout['shipping-country-id'])
 			]);
 		} else {
 			return redirect();
@@ -611,6 +556,7 @@ class ShopController extends Controller {
 		return $products->paginate(24);
 	}
 
+	/*
 	public static function calculate_shipping() {
 		$base_shipping = 0;
 		$lightweight = 0; // (bracelets, stickers, etc) $2 for first item, $.50 for each additional
@@ -709,6 +655,7 @@ class ShopController extends Controller {
 		$total = $cart['subtotal'] + self::calculate_shipping() - self::calculate_discount() + session('checkout.gamerosity-donation');
 		return $total;
 	}
+	*/
 
 	public static function monthly_total() {
 		$monthly_total = 0;
@@ -726,28 +673,21 @@ class ShopController extends Controller {
 		$user = \App\User::find($user_id);
 		$checkout = (array) $order->checkout;
 
-		Mail::queue(
-			[
-				'emails.order.create-html',
-				'emails.order.create-text'
-			],
-			[
-				'title' => 'Gamerosity Order #'.$order->id,
-				'logo' => config('mail.view.logo'),
-				'order' => $order,
-				'billing_state' => Location::find($checkout['billing-state-id']),
-				'billing_country' => Location::find($checkout['billing-country-id']),
-				'shipping_state' => Location::find($checkout['shipping-state-id']),
-				'shipping_country' => Location::find($checkout['shipping-country-id']),
-				'status' => $order->status->name,
-				'contribution' => $order->contribution()
-			],
-			function ($message) use ($user, $order) {
-				$message->to($user->email)->subject('Your Gamerosity Order #'.$order->id);
-				$message->bcc('info@gamerosity.com')->subject('Your Gamerosity Order #'.$order->id);
-				$message->bcc('kevin@grizzdev.com')->subject('Your Gamerosity Order #'.$order->id);
-			}
-		);
+		Mail::queue('emails.order.create-html', [
+			'title' => 'Gamerosity Order #'.$order->id,
+			'logo' => config('mail.view.logo'),
+			'order' => $order,
+			'billing_state' => Location::find($checkout['billing-state-id']),
+			'billing_country' => Location::find($checkout['billing-country-id']),
+			'shipping_state' => Location::find($checkout['shipping-state-id']),
+			'shipping_country' => Location::find($checkout['shipping-country-id']),
+			'status' => $order->status->name,
+			'contribution' => $order->contribution()
+		], function ($message) use ($user) {
+			$message->to($user->email)->subject('Your Gamerosity Order');
+			$message->bcc('info@gamerosity.com')->subject('Your Gamerosity Order');
+			$message->bcc('kevin@grizzdev.com')->subject('Your Gamerosity Order');
+		});
 	}
 
 }

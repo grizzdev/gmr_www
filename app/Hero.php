@@ -98,10 +98,6 @@ class Hero extends Model implements SluggableInterface {
 		return $this->belongsToMany('\App\Product');
 	}
 
-	public function sidekicks() {
-		return $this->belongsToMany('\App\User', 'hero_sidekick', 'hero_id', 'user_id');
-	}
-
 	public function nominee() {
 		return $this->belongsTo('\App\User', 'nominee_id');
 	}
