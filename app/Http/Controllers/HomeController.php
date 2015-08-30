@@ -8,6 +8,8 @@ use Redirect;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\File;
+use DB;
+use Mail;
 
 class HomeController extends Controller {
 
@@ -15,14 +17,33 @@ class HomeController extends Controller {
 		$allowed = [
 			'127.0.0.1',
 			'10.0.4.1',
-			'65.103.70.94'
+			'65.103.70.94',
+			'96.41.139.50'
 		];
 		exit();
 
 		if (!in_array($request->ip(), $allowed)) {
 			return Redirect::to('/');
 		} else {
+			/*
+			$noms = DB::table('failed_jobs')->where('payload', 'LIKE', '%emails.nomination%')->get();
+			foreach ($noms as $nom) {
+				$payload = json_decode($nom->payload);
+				echo '<pre>';
+				print_r($payload);
+				echo '</pre>';
+				Mail::send('emails.nomination-html',[
+					'request' => (array)$payload->data->data->request,
+					'birth_date' => $payload->data->data->birth_date
+				], function($message) {
+					$message->to('kevin@grizzdev.com')->subject('New Hero Nomination');
+					$message->to('info@gamerosity.com')->subject('New Hero Nomination');
+				});
+			}
+			*/
+
 			// let's do some work
+			/*
 			\Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
 			$orders = \App\Order::where('status_id', '=', 1)->where('checkout_json', 'LIKE', '%payment-type":"stripe%')->where('created_at', '>', '2015-08-01')->get();
@@ -102,7 +123,7 @@ class HomeController extends Controller {
 					}
 				}
 				echo '</pre>';
-			}
+			}*/
 		}
 	}
 

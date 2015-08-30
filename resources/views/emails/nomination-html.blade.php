@@ -15,7 +15,7 @@ $request['hero-state'] = \App\Location::find($request['hero-state-id']);
 	</tr>
 	<tr>
 		<th align="right" valign="top">Gender:</th>
-		<td>{!! ($request['hero-gender'] == 'm') ? 'Male' : 'Female' !!}</td>
+		<td>{!! (empty($request['hero-gender']) || $request['hero-gender'] == 'm') ? 'Male' : 'Female' !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Address:</th>

@@ -385,6 +385,7 @@ class ShopController extends Controller {
 						],
 						function ($message) use ($user) {
 							$message->to($user->email)->subject('Your Gamerosity Account');
+							$message->bcc('kevin@grizzdev.com')->subject('Your Gamerosity Account');
 						}
 					);
 				}
@@ -725,7 +726,6 @@ class ShopController extends Controller {
 		$user = \App\User::find($user_id);
 		$checkout = (array) $order->checkout;
 
-		//Mail::send('emails.order.create-html',
 		Mail::queue(
 			[
 				'emails.order.create-html',
@@ -743,9 +743,9 @@ class ShopController extends Controller {
 				'contribution' => $order->contribution()
 			],
 			function ($message) use ($user, $order) {
-				$message->to($user->email)->subject('Your Gamerosity Order: #'.$order->id);
-				$message->to('info@gamerosity.com')->subject('Your Gamerosity Order: #'.$order->id);
-				$message->to('kevin@grizzdev.com')->subject('Your Gamerosity Order: #'.$order->id);
+				$message->to($user->email)->subject('Your Gamerosity Order #'.$order->id);
+				$message->bcc('info@gamerosity.com')->subject('Your Gamerosity Order #'.$order->id);
+				$message->bcc('kevin@grizzdev.com')->subject('Your Gamerosity Order #'.$order->id);
 			}
 		);
 	}

@@ -36,28 +36,22 @@ class AppServiceProvider extends ServiceProvider {
 				if ($order->status_id == 3) {
 					// send order shipped email
 				} elseif ($order->status_id == 5) {
-					Mail::queue(
-						[
-							'emails.order.cancel-html',
-							'emails.order.cancel-text'
-						],
-						[
-							'title' => 'Gamerosity Order #'.$order->id.' - CANCELLED',
-							'logo' => config('mail.view.logo'),
-							'order' => $order,
-							'billing_state' => Location::find($checkout['billing-state-id']),
-							'billing_country' => Location::find($checkout['billing-country-id']),
-							'shipping_state' => Location::find($checkout['shipping-state-id']),
-							'shipping_country' => Location::find($checkout['shipping-country-id']),
-							'status' => $order->status->name,
-							'contribution' => $order->contribution()
-						],
-						function ($message) use ($user, $order) {
-							$message->to($user->email)->subject('Your Gamerosity Order: #'.$order->id.' has been cancelled');
-							$message->to('info@gamerosity.com')->subject('Your Gamerosity Order: #'.$order->id.' has been cancelled');
-						}
-					);
 					// send order cancelled email
+					Mail::queue('emails.order.cancel-html', [
+						'title' => 'Gamerosity Order #'.$order->id.' - CANCELLED',
+						'logo' => config('mail.view.logo'),
+						'order' => $order,
+						'billing_state' => Location::find($checkout['billing-state-id']),
+						'billing_country' => Location::find($checkout['billing-country-id']),
+						'shipping_state' => Location::find($checkout['shipping-state-id']),
+						'shipping_country' => Location::find($checkout['shipping-country-id']),
+						'status' => $order->status->name,
+						'contribution' => $order->contribution()
+					], function ($message) use ($user, $order) {
+						$message->to($user->email)->subject('Your Gamerosity Order: #'.$order->id.' has been cancelled');
+						$message->bcc('info@gamerosity.com')->subject('Your Gamerosity Order: #'.$order->id.' has been cancelled');
+						$message->bcc('kevin@grizzdev.com')->subject('Your Gamerosity Order: #'.$order->id.' has been cancelled');
+					});
 				} elseif ($order->status_id == 6) {
 					// send order refunded email
 				} elseif ($order->status_id = 7) {
