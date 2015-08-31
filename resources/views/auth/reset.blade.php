@@ -4,9 +4,9 @@ $title = 'Reset Password';
 @extends('layouts.master')
 
 @section('content')
-{!! Form::open(['url' => 'password/reset', 'id' => 'resetForm', 'data-remote' => true, 'class' => 'pt-140']) !!}
-	<div class="row">
-		<div class="col-xs-12 col-sm-4 col-sm-offset-4">
+<div class="row login-content pb-40">
+	<div class="col-xs-12 col-sm-4 col-sm-offset-4">
+		{!! Form::open(['url' => 'password/reset', 'id' => 'resetForm', 'data-remote' => true, 'class' => 'pt-140']) !!}
 			<div class="form-group has-feedback">
 				{!! Form::label('reset-email', 'Email Address', ['class' => 'control-label']) !!}
 				<div class="input-group">
@@ -14,10 +14,6 @@ $title = 'Reset Password';
 					<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 				</div>
 			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-12 col-sm-4 col-sm-offset-4">
 			<div class="form-group has-feedback">
 				{!! Form::label('reset-password', 'Password', ['class' => 'control-label']) !!}
 				<small>(Minimum 6 characters)</small>
@@ -26,10 +22,6 @@ $title = 'Reset Password';
 					<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 				</div>
 			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-12 col-sm-4 col-sm-offset-4">
 			<div class="form-group has-feedback">
 				{!! Form::label('reset-password-confirm', 'Confirm Password', ['class' => 'control-label']) !!}
 				<div class="input-group">
@@ -37,13 +29,11 @@ $title = 'Reset Password';
 					<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 				</div>
 			</div>
-		</div>
+			<div class="col-xs-12 text-center">
+				{!! Form::submit('Reset Password', ['class' => 'btn btn-danger']) !!}
+			</div>
+			{!! Form::hidden('token', $token) !!}
+		{!! Form::close() !!}
 	</div>
-	<div class="row">
-		<div class="col-xs-12 text-center">
-			{!! Form::submit('Reset Password', ['class' => 'btn btn-danger']) !!}
-		</div>
-	</div>
-	{!! Form::hidden('token', $token) !!}
-{!! Form::close() !!}
+</div>
 @endsection

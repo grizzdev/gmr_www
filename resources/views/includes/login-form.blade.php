@@ -15,4 +15,4 @@
 		{!! Form::submit('Login', ['class' => 'btn btn-danger']) !!}
 	</div>
 {!! Form::close() !!}
-<a href="#forgotModal" class="forgot-modal-link"><small>Forgot Password?</small></a>
+<a href="{{ url('password/email') }}"><small>Forgot Password?</small></a>

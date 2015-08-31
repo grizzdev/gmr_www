@@ -34,12 +34,17 @@ trait ResetsPasswords
             $message->subject($this->getEmailSubject());
         });
 
+        return trans($response); //kg 8/31/15
+
         switch ($response) {
             case Password::RESET_LINK_SENT:
-                return redirect()->back()->with('status', trans($response));
+                break;
+                //return redirect()->back()->with('status', trans($response));
 
             case Password::INVALID_USER:
-                return redirect()->back()->withErrors(['email' => trans($response)]);
+                echo 'bad';
+                break;
+                //return redirect()->back()->withErrors(['email' => trans($response)]);
         }
     }
 

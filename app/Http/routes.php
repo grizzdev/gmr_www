@@ -12,9 +12,15 @@
 */
 
 // http/s routes
-Route::get('auth/logout', 'Auth\AuthController@getLogout');
-Route::post('password/email', 'Auth\PasswordController@getEmail');
+Route::get('password/email', 'Auth\PasswordController@getEmail');
+Route::post('password/email', 'Auth\PasswordController@postEmail');
+Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+Route::post('password/reset', 'Auth\PasswordController@postReset');
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::get('login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
+
 
 Route::get('test', 'HomeController@test');
 Route::get('cart', 'ShopController@cart');
@@ -55,11 +61,6 @@ Route::group(['middleware' => 'insecure'], function() {
 
 // https-only routes
 Route::group(['middleware' => 'secure'], function() {
-	Route::get('login', 'Auth\AuthController@getLogin');
-	Route::get('auth/login', 'Auth\AuthController@getLogin');
-	Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
-	Route::post('password/reset', 'Auth\PasswordController@postReset');
-
 	// routes requiring authenticated user
 	Route::group(['middleware' => 'auth'], function() {
 		Route::get('my-account', 'AccountController@index');

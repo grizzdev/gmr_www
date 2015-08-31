@@ -16742,9 +16742,6 @@ i.caring-bridge {
 #accountForm .input-group {
   width: 100%; }
 
-#forgotForm .row .col-xs-12:last-child {
-  display: none; }
-
 .cart-form .img-thumbnail {
   max-width: 32px; }
 
@@ -16841,16 +16838,14 @@ i.caring-bridge {
     .order-content table {
       display: block; } }
 
-@media (min-width: 1200px) {
-  .login-content {
-    padding-top: 80px;
-    min-height: 500px;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center; } }
+.login-content {
+  min-height: 500px;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center; }
 
 .footer-push {
   height: 483px; }

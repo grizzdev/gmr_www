@@ -21,9 +21,10 @@ class HomeController extends Controller {
 		if (!in_array($request->ip(), $allowed)) {
 			return Redirect::to('/');
 		} else {
-			\App\Neworder::find(1)->sendEmail();
+			$orders = \App\Order::all();
 			exit();
 			// let's do some work
+			/*
 			\Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
 			$orders = \App\Order::where('status_id', '=', 1)->where('checkout_json', 'LIKE', '%payment-type":"stripe%')->where('created_at', '>', '2015-08-01')->get();
@@ -104,6 +105,7 @@ class HomeController extends Controller {
 				}
 				echo '</pre>';
 			}
+			*/
 		}
 	}
 

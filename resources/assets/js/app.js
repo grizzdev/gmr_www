@@ -71,16 +71,6 @@ $('.link-to-top').on('click', function(e) {
 	$('html, body').animate({ scrollTop: 0 }, 'slow');
 });
 
-$('.forgot-modal-link').on('click', function(e) {
-	e.preventDefault();
-	$('#forgotModal').modal('show');
-});
-
-$('#forgotModal').on('click', '.btn-danger', function(e) {
-	e.preventDefault();
-	$('#forgotForm').submit();
-});
-
 $('.login-form').validator({
 	disable: true
 }).on('submit', function(e) {
@@ -104,11 +94,8 @@ $('#forgotForm').validator({
 		return false;
 	}
 }).on('ajax:success', function(e, data, status, xhr) {
-	$('#forgotForm .row').find('.col-xs-12:first-child').hide();
-	$('#forgotForm .row').find('.col-xs-12:last-child').show();
-	$('#forgotModal .modal-footer button').hide();
+	$('#forgotForm .form-result').html(data);
 }).on('ajax:error', function(e, data, status, xhr) {
-	$('#forgotModal').modal('hide');
 	showModal('errorModal', '<p>An unspecified error has occurred.</p><p>Please try again later.</p>', 'Error!');
 });
 
@@ -418,6 +405,14 @@ if ($('#heroesSearchForm').length) {
 			dataType: 'html',
 			data: $(this).serialize(),
 		}).done(function(response) {
+			if ($('input[name="hero-search"]').val() != '') {
+				$('.heroes-longest').hide();
+				$('.heroes-closest').hide();
+			} else {
+				$('.heroes-longest').show();
+				$('.heroes-closest').show();
+			}
+
 			$('.heroes-list').html(response);
 		});
 	});
