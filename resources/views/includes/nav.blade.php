@@ -28,7 +28,7 @@
 					<li><a href="{{ url('hall-of-heroes') }}">Hall of Heroes</a></li>
 					<li><a href="{{ url('nominate-a-hero') }}">Nominate A Hero</a></li>
 					<li><a href="{{ url('cart') }}"><i class="fa fa-shopping-cart"></i> (<span id="cart-count">{{ \App\Cart::find(session('cart_id'))->count() }}</span>)</a></li>
-					@if(Auth::check())
+					@if(0 && Auth::check())
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cogs"></i> <span class="caret"></span></a>
 						<ul class="dropdown-menu">
@@ -40,7 +40,7 @@
 							<li><a href="{{ url('auth/logout') }}"><i class="fa fa-sign-out"></i> Logout</a></li>
 						</ul>
 					</li>
-					@else
+					@elseif(0)
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 							<i class="fa fa-sign-in"></i>
