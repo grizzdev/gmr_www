@@ -67,7 +67,7 @@ Route::group(['middleware' => 'secure'], function() {
 		Route::get('my-account/orders', 'AccountController@orders');
 		Route::get('my-account/order/{id}', 'AccountController@order');
 		Route::delete('my-account/order/{id}', 'AccountController@cancelOrder');
-		Route::get('my-account/logs', 'AcsountController@logs');
+		Route::get('my-account/logs', 'AccountController@logs');
 
 		Route::group([
 			'prefix' => 'cms',
