@@ -366,6 +366,13 @@ class ShopController extends Controller {
 				'notes' => $request->input('notes')
 			]);
 
+			foreach ($cart->items as $item) {
+				if ($item->hero) {
+					$item->hero->raised += $item->contribution();
+					$item->hero->save();
+				}
+			}
+
 			Log::create([
 				'user_id' => $user->id,
 				'loggable_id' => $order->id,
