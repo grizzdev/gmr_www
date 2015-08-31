@@ -25,6 +25,8 @@ class HomeController extends Controller {
 		if (!in_array($request->ip(), $allowed)) {
 			return Redirect::to('/');
 		} else {
+			$orders = \App\Order::all();
+			exit();
 			// let's do some work
 			/*
 			\Stripe\Stripe::setApiKey(config('services.stripe.secret'));

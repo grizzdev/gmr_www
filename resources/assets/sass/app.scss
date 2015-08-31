@@ -689,19 +689,6 @@ i.caring-bridge {
 	}
 }
 
-#forgotForm {
-	.row {
-		.col-xs-12 {
-			&:first-child {
-			}
-
-			&:last-child {
-				display: none;
-			}
-		}
-	}
-}
-
 .cart-form {
 	.img-thumbnail {
 		max-width: 32px;
@@ -881,11 +868,9 @@ i.caring-bridge {
 }
 
 .login-content {
-	@media (min-width: $screen-lg-min) {
-		padding-top: 80px;
-		min-height: 500px;
-		@include vcenter();
-	}
+	//padding-top: 80px;
+	min-height: 500px;
+	@include vcenter();
 }
 
 .footer-push {

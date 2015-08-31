@@ -22,18 +22,6 @@
 			'<a type="button" class="btn btn-primary" data-dismiss="modal">OK</a>'
 		]
 	])
-	@if(!Auth::check())
-	@include('includes.modal', [
-		'id' => 'forgotModal',
-		'title' => 'Forgot Password',
-		'content' => null,
-		'view' => 'includes/forgot-form',
-		'buttons' => [
-			'<a href="#" class="btn btn-danger">Reset Password</a>',
-			'<a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>'
-		]
-	])
-	@endif
 @endsection
 
 @section('foot')

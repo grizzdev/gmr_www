@@ -1,6 +1,10 @@
 <? $title = '503: Be Right Back' ?>
 @extends('layouts.basic')
 
+@section('head')
+<link rel="stylesheet" type="text/css" href="/css/app.css" />
+@endsection
+
 @section('page')
 <div class="pt-150 pb-110 error-content full-width">
 	<div class="row pt-100 pb-110">

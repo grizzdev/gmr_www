@@ -43,7 +43,7 @@
 							<hr />
 						</div>
 					</div>
-					@if($product->price != 0)
+					@if($product->price > 0)
 					<div class="row">
 						<div class="col-xs-12">
 							@if($product->sale_price != 0 && $product->sale_price != $product->price)
