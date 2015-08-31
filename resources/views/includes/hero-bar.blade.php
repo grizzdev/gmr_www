@@ -15,7 +15,7 @@
 				</div>
 			</div>
 			<div class="col-md-3 hidden-xs hidden-sm">
-				<p class="brd-rt brd-lt pl-10 pr-10 text-center">So far, you'll be contributing <b class="hero-contributing">${{ $hero->contribution_in_cart() }}</b> to this campaign!</p>
+				<p class="brd-rt brd-lt pl-10 pr-10 text-center">So far, you'll be contributing <b class="hero-contributing">${{ number_format($cart->contribution($hero->id), 2, '.', '') }}</b> to this campaign!</p>
 			</div>
 			<div class="col-xs-5 col-sm-4 col-md-3 text-center">
 				<a href="{{ url('product/donate/'.$hero->slug) }}" class="btn btn-danger hidden-xs">DONATE TO THIS CAMPAIGN</a>

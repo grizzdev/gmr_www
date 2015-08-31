@@ -142,7 +142,7 @@ class Cart extends Model {
 
 		foreach ($this->items as $item) {
 			if (empty($hero_id) || $item->hero_id == $hero_id) {
-				$contribution += $item->product->contribution_amount;
+				$contribution += $item->contribution();
 			}
 		}
 

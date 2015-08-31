@@ -74,6 +74,13 @@ class Hero extends Model implements SluggableInterface {
 		return $diff;
 	}
 
+	public function raised() {
+		if ($this->funded) {
+			return $this->goal();
+		} else {
+			return $this->raised;
+		}
+	}
 	public function goal() {
 		$goal = 0;
 
@@ -85,9 +92,12 @@ class Hero extends Model implements SluggableInterface {
 	}
 
 	public function percent() {
-		$percent = floor(($this->raised / $this->goal) * 100);
-
-		return ($percent > 100) ? 100 : $percent;
+		if ($this->funded) {
+			return 100;
+		} else {
+			$percent = floor(($this->raised / $this->goal) * 100);
+			return ($percent > 100) ? 100 : $percent;
+		}
 	}
 
 	public function packages() {

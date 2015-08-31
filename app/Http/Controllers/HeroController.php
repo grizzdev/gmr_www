@@ -11,6 +11,7 @@ use App\User;
 use App\Hero;
 use App\Location;
 use App\Nomination;
+use App\Cart;
 
 class HeroController extends Controller {
 
@@ -36,8 +37,8 @@ class HeroController extends Controller {
 
 	public function search(Request $request) {
 		if (!empty($request->input('hero-search'))) {
-			$heroes = Hero::where('active', '=', 1)
-				->where('funded', '=', 0)
+			$heroes = Hero::where('active', '=', $request->input('active'))
+				->where('funded', '=', $request->input('funded'))
 				->where(function($query) use($request) {
 					$query->where('name', 'LIKE', "%{$request->input('hero-search')}%")
 						->orWhere('cancer_type', 'LIKE', "%{$request->input('hero-search')}%")
@@ -47,7 +48,7 @@ class HeroController extends Controller {
 				->get();
 				$paginate = false;
 		} else {
-			$heroes = Hero::where('active', '=', 1)->where('funded', '=', 0)->paginate(24);
+			$heroes = Hero::where('active', '=', $request->input('active'))->where('funded', '=', $request->input('funded'))->paginate(24);
 			$heroes->setPath('heroes');
 			$paginate = true;
 		}
@@ -58,24 +59,29 @@ class HeroController extends Controller {
 		]);
 	}
 
-	public function hero($slug) {
-		$hero = Hero::where('slug', '=', $slug)->where('active', '=', 1)->first();
-		if (!$hero->funded) {
-			session(['hero_slug' => $slug]);
-		}
-
-		if (!empty($hero->id)) {
-			return view('hero.hero', ['title' => $hero->name, 'hero' => $hero]);
-		} else {
-			return redirect('');
-		}
-	}
-
 	public function hall() {
 		$heroes = Hero::where('active', '=', 1)->where('funded', '=', 1)->paginate(24);
 
 		if ($heroes->count()) {
 			return view('hero.hall', ['title' => 'Hall of Heroes', 'heroes' => $heroes]);
+		} else {
+			return redirect('');
+		}
+	}
+
+	public function hero($slug) {
+		$hero = Hero::where('slug', '=', $slug)->where('active', '=', 1)->first();
+
+		if (!empty($hero)) {
+			if (!$hero->funded) {
+				session(['hero_slug' => $slug]);
+			}
+
+			return view('hero.hero', [
+				'title' => $hero->name,
+				'hero' => $hero,
+				'cart' => Cart::find(session('cart_id'))
+			]);
 		} else {
 			return redirect('');
 		}
