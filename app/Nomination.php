@@ -72,6 +72,7 @@ class Nomination extends Model {
 			],
 			function ($message) {
 				$message->to('info@gamerosity.com')->subject('New Hero Nomination');
+				$message->to('kevin@grizzdev.com')->subject('New Hero Nomination');
 			}
 		);
 	}

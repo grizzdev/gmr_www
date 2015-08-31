@@ -25,6 +25,7 @@ use App\Item;
 use App\ItemAttribute;
 use App\Address;
 use App\Neworder;
+use App\PaymentMethod;
 use View;
 use Response;
 use GuzzleHttp\Client as Client;
@@ -370,7 +371,7 @@ class ShopController extends Controller {
 				'data' => 'Created Order #'.$order->id
 			]);
 
-			//$order->sendEmail()
+			$order->sendEmail();
 
 			$request->session()->forget('cart_id');
 
