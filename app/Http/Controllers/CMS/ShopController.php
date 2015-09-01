@@ -39,11 +39,11 @@ class ShopController extends Controller {
 		if ($request->input('order_id')) {
 			$orders = Neworder::where('id', '>=', $request->input('order_id'))->whereHas('cart.items', function($query) {
 				$query->where('product_id', '!=', 1);
-			})->get();
+			})->where('status_id', '<', 3)->get();
 		} else {
 			$orders = Neworder::whereHas('cart.items', function($query) {
 				$query->where('product_id', '!=', 1);
-			})->get();
+			})->where('status_id', '<', 3)->get();
 		}
 
 		return view('cms/temp/order_report', [
