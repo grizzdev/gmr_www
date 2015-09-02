@@ -14,101 +14,76 @@ use Mail;
 class HomeController extends Controller {
 
 	public function test(Request $request) {
+		exit();
 		$allowed = [
 			'127.0.0.1',
 			'10.0.4.1',
 			'65.103.70.94',
-			'96.41.139.50'
+			'96.41.139.50',
+			'207.109.248.12'
 		];
-		exit();
 
 		if (!in_array($request->ip(), $allowed)) {
 			return Redirect::to('/');
 		} else {
-			$orders = \App\Order::all();
-			exit();
 			// let's do some work
-			/*
 			\Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
-			$orders = \App\Order::where('status_id', '=', 1)->where('checkout_json', 'LIKE', '%payment-type":"stripe%')->where('created_at', '>', '2015-08-01')->get();
-
-			$paymenttoken = 'payment-token';
-			$ccnumber = 'credit-card-number';
-			$ccexmonth = 'credit-card-expiration-month';
-			$ccexyear = 'credit-card-expiration-year';
+			$orders = \App\Neworder::where('payment_method_id', '=', 1)->whereNotNull('payment_token')->whereNull('payment_status_id')->where('status_id', '=', 1)->get();
 
 			foreach ($orders as $order) {
-				$subtotal = 0;
 				echo '<pre>';
-				if (isset($order->checkout->$paymenttoken)) {
-					if ($order->checkout->$paymenttoken == 'true') {
-						$card = [
-							'number' => ((empty($order->checkout->$ccnumber)) ? '4242424242424242' : $order->checkout->$ccnumber),
-							'exp_month' => ((empty($order->checkout->$ccexmonth)) ? 09 : $order->checkout->$ccexmonth),
-							'exp_year' => ((empty($order->checkout->$ccexyear)) ? 2016 : $order->checkout->$ccexyear),
-						];
+				$charge_data = [
+					'source' => $order->payment_token,
+					'amount' => ($order->cart->total() * 100),
+					'currency' => 'usd',
+					'description' => 'Gamerosity Order #'.$order->id
+				];
 
-						$amount = ($order->checkout->total * 100);
+				echo "Order: {$order->id}\n";
+				echo "Total: ".($order->cart->total() * 100)."\n";
+				echo "Charge: ";
+				print_r($charge_data);
+				echo "\n";
 
-						$charge_data = [
-							'card' => $card,
-							'amount' => $amount,
-							'currency' => 'usd',
-							'description' => 'Gamerosity Order #'.$order->id
-						];
-					} elseif (preg_match('/tok_/', $order->checkout->$paymenttoken)) {
-						$amount = ($order->checkout->total * 100);
-						$charge_data = [
-							'source' => $order->checkout->$paymenttoken,
-							'amount' => $amount,
-							'currency' => 'usd',
-							'description' => 'Gamerosity Order #'.$order->id
-						];
-					}
+				try {
+					$charge = \Stripe\Charge::create($charge_data);
+					echo "Charge: $charge\n";
+				} catch(\Stripe\Error\Card $e) {
+					// Since it's a decline, \Stripe\Error\Card will be caught
+					$body = $e->getJsonBody();
+					$err  = $body['error'];
 
-					echo "Order: {$order->id}\n";
-					echo "Total: $amount\n";
+					print('Status is:' . $e->getHttpStatus() . "\n");
+					print('Type is:' . $err['type'] . "\n");
+					print('Code is:' . $err['code'] . "\n");
+					// param is '' in this case
+					//print('Param is:' . $err['param'] . "\n");
+					print('Message is:' . $err['message'] . "\n");
+				} catch (\Stripe\Error\InvalidRequest $e) {
+					// Invalid parameters were supplied to Stripe's API
+					$body = $e->getJsonBody();
+					$err  = $body['error'];
 
-					try {
-						$charge = \Stripe\Charge::create($charge_data);
-						echo "Charge: $charge\n";
-					} catch(\Stripe\Error\Card $e) {
-						// Since it's a decline, \Stripe\Error\Card will be caught
-						$body = $e->getJsonBody();
-						$err  = $body['error'];
-
-						print('Status is:' . $e->getHttpStatus() . "\n");
-						print('Type is:' . $err['type'] . "\n");
-						print('Code is:' . $err['code'] . "\n");
-						// param is '' in this case
-						//print('Param is:' . $err['param'] . "\n");
-						print('Message is:' . $err['message'] . "\n");
-					} catch (\Stripe\Error\InvalidRequest $e) {
-						// Invalid parameters were supplied to Stripe's API
-						$body = $e->getJsonBody();
-						$err  = $body['error'];
-
-						print('Status is:' . $e->getHttpStatus() . "\n");
-						print('Type is:' . $err['type'] . "\n");
-						//print('Code is:' . $err['code'] . "\n");
-						// param is '' in this case
-						//print('Param is:' . $err['param'] . "\n");
-						print('Message is:' . $err['message'] . "\n");
-					} catch (\Stripe\Error\Authentication $e) {
-						// Authentication with Stripe's API failed
-						// (maybe you changed API keys recently)
-					} catch (\Stripe\Error\ApiConnection $e) {
-						// Network communication with Stripe failed
-					} catch (\Stripe\Error\Base $e) {
-						// Display a very generic error to the user, and maybe send
-						// yourself an email
-					} catch (Exception $e) {
-						// Something else happened, completely unrelated to Stripe
-					}
+					print('Status is:' . $e->getHttpStatus() . "\n");
+					print('Type is:' . $err['type'] . "\n");
+					//print('Code is:' . $err['code'] . "\n");
+					// param is '' in this case
+					//print('Param is:' . $err['param'] . "\n");
+					print('Message is:' . $err['message'] . "\n");
+				} catch (\Stripe\Error\Authentication $e) {
+					// Authentication with Stripe's API failed
+					// (maybe you changed API keys recently)
+				} catch (\Stripe\Error\ApiConnection $e) {
+					// Network communication with Stripe failed
+				} catch (\Stripe\Error\Base $e) {
+					// Display a very generic error to the user, and maybe send
+					// yourself an email
+				} catch (Exception $e) {
+					// Something else happened, completely unrelated to Stripe
 				}
 				echo '</pre>';
-			}*/
+			}
 		}
 	}
 

@@ -352,7 +352,11 @@ class ShopController extends Controller {
 				'ip' => $request->getClientIp()
 			];
 
-			$payment_method = PaymentMethod::where('slug', '=', $request->input('payment-type'))->first();
+			if ($request->input('payment-type') == 'paypal') {
+				$payment_method = PaymentMethod::find(2);
+			} else {
+				$payment_method = PaymentMethod::find(1);
+			}
 
 			$order = Neworder::create([
 				'user_id' => $user->id,
