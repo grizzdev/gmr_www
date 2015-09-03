@@ -94,7 +94,7 @@
 										<select name="attributes[{{ $attribute->id }}]" class="form-control" required>
 										<?php $modelname = '\\App\\'.$attribute->model; ?>
 											<option value=""> -- select --</option>
-										@foreach($modelname::where('active', '=', 1)->where('funded', '=', 0)->orderBy('name')->get() as $model)
+										@foreach($modelname::where('active', '=', 1)->where('funded', '=', 0)->orderBy('order', 'DESC')->orderBy('name')->get() as $model)
 											<option value="{{ $model->id }}"
 											@if(!empty($hero->slug) && $model->slug == $hero->slug)
 											selected
