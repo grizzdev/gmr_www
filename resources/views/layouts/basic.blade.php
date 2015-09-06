@@ -6,7 +6,7 @@
 		<meta name="csrf-param" content="_token" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<link rel="canonical" href="{{ url() }}" />
+		<link rel="canonical" href="{{ Request::url() }}" />
 		<link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}" sizes="16x16">
 		<link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}" sizes="32x32">
 		<link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}" sizes="96x96">
