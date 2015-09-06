@@ -24,11 +24,11 @@
 		<meta name="msapplication-square70x70logo" content="{{ asset('img/favicon.png') }}" />
 		<meta name="msapplication-square150x150logo" content="{{ asset('img/favicon.png') }}" />
 		<meta name="msapplication-wide310x150logo" content="{{ asset('img/favicon.png') }}" />
-		<meta property="og:url" content="{{ config('app.url') }}" />
+		<meta property="og:url" content="{{ Request::url() }}" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="{{ $title or null }} | Gamerosity" />
-		<meta property="og:description" content="{{ $description or 'Gamerosity' }}" />
-		<meta property="og:image" content="{{ asset('img/footer.png') }}" />
+		<meta property="og:description" content="{{ (Request::is('hero/*')) ? $hero->overview : 'Gamerosity' }}" />
+		<meta property="og:image" content="{{ (Request::is('hero/*') && $hero->file) ? asset($hero->file->url()) : asset('img/footer.png') }}" />
 		@yield('head')
 	</head>
 	<body>

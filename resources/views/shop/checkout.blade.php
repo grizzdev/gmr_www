@@ -291,8 +291,11 @@
 							<label>PayPal <img src="{{ asset('img/checkout/paypal.png') }}" alt="PayPal" />
 						</div>
 						<div class="panel-body">
+							<p>We're having issues with PayPal processing.  We'll work it out soon!</p>
+							<?/*
 							<p>You can pay with your PayPal account or Credit Card, via PayPal</p>
 							<button class="btn btn-primary pay-pal-button">Pay with PayPal</button>
+							*/?>
 						</div>
 					</div>
 				</div>
