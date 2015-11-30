@@ -16,7 +16,7 @@
 				<ul class="nav navbar-nav navbar-left">
 					<li>
 						<a href="{{ url('product/donate') }}">
-							<button class="btn btn-primary">Donate Now</button>
+							<button class="btn btn-lg btn-primary">Donate Now</button>
 						</a>
 					</li>
 				</ul>
