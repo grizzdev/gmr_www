@@ -23,6 +23,7 @@ Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
 Route::get('test', 'HomeController@test');
+Route::get('noms', 'HomeController@noms');
 Route::get('cart', 'ShopController@cart');
 Route::post('cart', 'ShopController@updateCart');
 Route::delete('cart/{id}', 'ShopController@deleteCart');

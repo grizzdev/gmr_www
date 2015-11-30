@@ -70,12 +70,21 @@
 					</div>
 					<div class="row pb-20">
 						<div class="col-xs-12">
-							<h5>SORT BY CATEGORY</h5>
+							<h5>SHOP BY CATEGORY</h5>
 							@foreach($categories as $slug => $name)
 							<a href="{{ url('shop/category/'.$slug) }}" class="category-link{{ ($slug == $slugs['category']) ? ' active': '' }}" data-slug="{{ $slug }}">{{ $name }}</a>
 							@endforeach
 						</div>
 					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<h5>SHOP BY DESIGN</h5>
+							@foreach($tags as $tag)
+							<a href="{{ url('shop/tag/'.$tag->slug) }}" class="tag-link{{ ($tag->slug == $slugs['tag']) ? ' active': '' }}" data-slug="{{ $tag->slug }}">{{ $tag->name }}</a>
+							@endforeach
+						</div>
+					</div>
+					<!--
 					<div class="row most-popular">
 						<div class="col-xs-12">
 							<h5>MOST POPULAR PRODUCTS</h5>
@@ -101,6 +110,7 @@
 							@endforeach
 						</div>
 					</div>
+					-->
 				</div>
 			</div>
 		</div>

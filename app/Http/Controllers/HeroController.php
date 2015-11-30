@@ -151,6 +151,8 @@ class HeroController extends Controller {
 
 		$nomination = Nomination::create([
 			'name' => $request->input('hero_name'),
+			'email_address' => $request->input('hero_email_address'),
+			'phone_number' => $request->input('hero_phone_number'),
 			'overview' => $request->input('overview'),
 			'birth_date' => $birth_date,
 			'gender' => $request->input('hero_gender'),

@@ -83,13 +83,14 @@ class ShopController extends Controller {
 			'title' => 'Shop',
 			'products' => $products,
 			'categories' => $categories,
+			'tags' => Tag::all(),
 			'slugs' => $slugs,
 			'cart' => Cart::find(session('cart_id'))
 		]);
 	}
 
 	public function product($sku, $hero_slug = null) {
-		$product = Product::where('sku', '=', $sku)->first();
+		$product = Product::where('sku', '=', $sku)->where('active', '=', 1)->first();
 
 		if ($hero_slug) {
 			session(['hero_slug' => $hero_slug]);
@@ -265,17 +266,30 @@ class ShopController extends Controller {
 
 			$user = $request->user();
 			if (!$user) {
-				$user = User::where('email', '=', $request->input('email-address'))->first();
+				if ($request->input('email-address')) {
+					$user = User::where('email', '=', $request->input('email-address'))->first();
 
-				if (!$user) {
-					$user = User::create([
-						'email' => $request->input('email-address'),
-						'name' => $request->input('first-name').' '.$request->input('last-name'),
-						'company' => $request->input('company-name'),
-						'phone' => $request->input('phone-number')
-					]);
+					if (!$user) {
+						$user = User::create([
+							'email' => $request->input('email-address'),
+							'name' => $request->input('first-name').' '.$request->input('last-name'),
+							'company' => $request->input('company-name'),
+							'phone' => $request->input('phone-number')
+						]);
+					}
+				} elseif (session('checkout.email-address')) {
+					$user = User::where('email', '=', session('checkout.email-address'))->first();
+
+					if (!$user) {
+						$user = User::create([
+							'email' => session('checkout.email-address'),
+							'name' => session('checkout.first-name').' '.session('checkout.last-name'),
+							'company' => session('checkout.company-name'),
+							'phone' => session('checkout.phone-number')
+						]);
+					}
 				}
-
+	
 				$cart->user_id = $user->id;
 				$cart->save();
 
@@ -287,21 +301,8 @@ class ShopController extends Controller {
 				}
 			}
 
-			$billing_address = Address::create([
-				'name' => null,
-				'address_1' => $request->input('billing-address-1'),
-				'address_2' => $request->input('billing-address-2'),
-				'city' => $request->input('billing-city'),
-				'state_id' => $request->input('billing-state-id'),
-				'zip' => $request->input('billing-zip'),
-				'country_id' => $request->input('billing-country-id'),
-				'user_id' => $user->id,
-				'is_billing' => 1,
-				'is_shipping' => (!empty($request->input('same-as-billing'))) ? 1 : 0
-			]);
-
-			if (empty($checkout['same-as-billing'])) {
-				$shipping_address = Address::create([
+			if ($request->input('billing-address-1')) {
+				$billing_address = Address::create([
 					'name' => null,
 					'address_1' => $request->input('billing-address-1'),
 					'address_2' => $request->input('billing-address-2'),
@@ -310,9 +311,54 @@ class ShopController extends Controller {
 					'zip' => $request->input('billing-zip'),
 					'country_id' => $request->input('billing-country-id'),
 					'user_id' => $user->id,
-					'is_billing' => 0,
-					'is_shipping' => 1
+					'is_billing' => 1,
+					'is_shipping' => (!empty($request->input('same-as-billing'))) ? 1 : 0
 				]);
+			} elseif (session('checkout.billing-address-1')) {
+				$billing_address = Address::create([
+					'name' => null,
+					'address_1' => session('checkout.billing-address-1'),
+					'address_2' => session('checkout.billing-address-2'),
+					'city' => session('checkout.billing-city'),
+					'state_id' => session('checkout.billing-state-id'),
+					'zip' => session('checkout.billing-zip'),
+					'country_id' => session('checkout.billing-country-id'),
+					'user_id' => $user->id,
+					'is_billing' => 1,
+					'is_shipping' => (!empty($request->input('same-as-billing'))) ? 1 : 0
+				]);
+			}
+
+			if (empty($checkout['same-as-billing'])) {
+				if ($request->input('shipping-address-1')) {
+					$shipping_address = Address::create([
+						'name' => null,
+						'address_1' => $request->input('shipping-address-1'),
+						'address_2' => $request->input('shipping-address-2'),
+						'city' => $request->input('shipping-city'),
+						'state_id' => $request->input('shipping-state-id'),
+						'zip' => $request->input('shipping-zip'),
+						'country_id' => $request->input('shipping-country-id'),
+						'user_id' => $user->id,
+						'is_billing' => 0,
+						'is_shipping' => 1
+					]);
+				} elseif (session('checkout.shipping-address-1')) {
+					$shipping_address = Address::create([
+						'name' => null,
+						'address_1' => session('checkout.shipping-address-1'),
+						'address_2' => session('checkout.shipping-address-2'),
+						'city' => session('checkout.shipping-city'),
+						'state_id' => session('checkout.shipping-state-id'),
+						'zip' => session('checkout.shipping-zip'),
+						'country_id' => session('checkout.shipping-country-id'),
+						'user_id' => $user->id,
+						'is_billing' => 0,
+						'is_shipping' => 1
+					]);
+				} else {
+					$shipping_address = $billing_address;
+				}
 			} else {
 				$shipping_address = $billing_address;
 			}
@@ -352,18 +398,23 @@ class ShopController extends Controller {
 				'ip' => $request->getClientIp()
 			];
 
-			if ($request->input('payment-type') == 'paypal') {
-				$payment_method = PaymentMethod::find(2);
-			} else {
+			if ($request->input('payment-type') == 'stripe') {
 				$payment_method = PaymentMethod::find(1);
+				$token = $request->input('payment-token');
+				$payment_status = 1;
+			} else {
+				$payment_method = PaymentMethod::find(2);
+				$token = $request->input('token');
+				$payment_status = 7;
 			}
 
 			$order = Neworder::create([
 				'user_id' => $user->id,
 				'cart_id' => $cart->id,
 				'payment_method_id' => $payment_method->id,
-				'payment_token' => $request->input('payment-token'),
+				'payment_token' => $token,
 				'status_id' => 1,
+				'payment_status_id' => $payment_status,
 				'billing_address_id' => $billing_address->id,
 				'shipping_address_id' => $shipping_address->id,
 				'meta' => json_encode($meta),
@@ -400,6 +451,44 @@ class ShopController extends Controller {
 	}
 
 	public function postPayPal(Request $request) {
+		$request->session()->put('checkout.billing-address-1', $request->input('billing-address-1'));
+		$request->session()->put('checkout.billing-address-2', $request->input('billing-address-2'));
+		$request->session()->put('checkout.billing-city', $request->input('billing-city'));
+		$request->session()->put('checkout.billing-state-id', $request->input('billing-state-id'));
+		$request->session()->put('checkout.billing-zip', $request->input('billing-zip'));
+		$request->session()->put('checkout.billing-country-id', $request->input('billing-country-id'));
+
+		if (empty($checkout['same-as-billing'])) {
+			$request->session()->put('checkout.shipping-address-1', $request->input('shipping-address-1'));
+			$request->session()->put('checkout.shipping-address-2', $request->input('shipping-address-2'));
+			$request->session()->put('checkout.shipping-city', $request->input('shipping-city'));
+			$request->session()->put('checkout.shipping-state-id', $request->input('shipping-state-id'));
+			$request->session()->put('checkout.shipping-zip', $request->input('shipping-zip'));
+			$request->session()->put('checkout.shipping-country-id', $request->input('shipping-country-id'));
+		} else {
+			$request->session()->put('checkout.shipping-address-1', $request->input('billing-address-1'));
+			$request->session()->put('checkout.shipping-address-2', $request->input('billing-address-2'));
+			$request->session()->put('checkout.shipping-city', $request->input('billing-city'));
+			$request->session()->put('checkout.shipping-state-id', $request->input('billing-state-id'));
+			$request->session()->put('checkout.shipping-zip', $request->input('billing-zip'));
+			$request->session()->put('checkout.shipping-country-id', $request->input('billing-country-id'));
+		}
+
+		$request->session()->put('checkout.first-name', $request->input('first-name'));
+		$request->session()->put('checkout.last-name', $request->input('last-name'));
+		$request->session()->put('checkout.company-name', $request->input('company-name'));
+		$request->session()->put('checkout.email-address', $request->input('email-address'));
+		$request->session()->put('checkout.phone-number', $request->input('phone-number'));
+
+		$request->session()->put('checkout.notes', $request->input('notes'));
+		$request->session()->put('checkout.gamerosity_donation', $request->input('gamerosity_donation'));
+		$request->session()->put('checkout.payment-type', $request->input('payment-type'));
+		$request->session()->put('checkout.payment-token', $request->input('payment-token'));
+		$request->session()->put('checkout.discount', $request->input('discount'));
+		$request->session()->put('checkout.shipping', $request->input('shipping'));
+		$request->session()->put('checkout.subtotal', $request->input('subtotal'));
+		$request->session()->put('checkout.total', $request->input('total'));
+
 		$response = (new Client())->get(config('services.paypal.url'), [
 			'verify' => false,
 			'query' => [
@@ -514,7 +603,8 @@ class ShopController extends Controller {
 	}
 
 	private function getProducts($slugs) {
-		$products = Product::where('deleted_at', '=', null);
+		$products = Product::where('active', '=', 1)->where('deleted_at', '=', null);
+
 		if (!empty($slugs['category'])) {
 			$category = Category::where('slug', '=', $slugs['category'])->first();
 
@@ -674,9 +764,9 @@ class ShopController extends Controller {
 	public static function monthly_total() {
 		$monthly_total = 0;
 
-		$orders = \App\Order::where('created_at', 'LIKE', date('Y-m').'-%')->get();
+		$orders = \App\Neworder::where('created_at', 'LIKE', date('Y-m').'-%')->get();
 		foreach ($orders as $order) {
-			$monthly_total += $order->checkout->total;
+			$monthly_total += $order->total();
 		}
 
 		return floor($monthly_total);

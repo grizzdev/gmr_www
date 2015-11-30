@@ -36,7 +36,8 @@ class Hero extends Model implements SluggableInterface {
 		'funded',
 		'file_id',
 		'nominee_id',
-		'sidekick_id'
+		'goal',
+		'shirt_size'
 	];
 
 	protected $dates = [
@@ -113,43 +114,13 @@ class Hero extends Model implements SluggableInterface {
 	}
 
 	public static function closest($limit = 0, $offset = 0) {
-		$ids = [];
-		$heroes = [];
-
-		$tmp_heroes = self::where('active', '=', 1)->where('funded', '=', 0)->get();
-
-		foreach ($tmp_heroes as $hero) {
-			$diff = ($hero->goal() - $hero->raised);
-
-			if ($diff > 0) {
-				$ids[$diff] = $hero;
-			}
-		}
-
-		ksort($ids);
-
 		if ($offset) {
-			for ($i = 0; $i <= $limit; $i++) {
-				$hero = array_shift($ids);
-				$heroes[] = $hero;
-			}
-		} elseif ($limit > 0) {
-			for ($i = 0; $i < $limit; $i++) {
-				$hero = array_shift($ids);
-				$heroes[] = $hero;
-			}
+			$heroes = Hero::where('id', '!=', 528)->where('active', '=', 1)->where('funded', '=', 0)->where('raised', '>', 0)->orderBy('raised','DESC')->skip($offset)->take($limit)->get();
 		} else {
-			$heroes = $ids;
+			$heroes = Hero::where('id', '!=', 528)->where('active', '=', 1)->where('funded', '=', 0)->where('raised', '>', 0)->orderBy('raised','DESC')->limit($limit)->get();
 		}
 
-		if ($offset) {
-			$heroes = $heroes[$offset];
-		} elseif ($limit == 1) {
-			$heroes = $heroes[0];
-		} elseif ($limit > 1) {
-		}
-
-		return $heroes;
+		return ($limit == 1) ? $heroes[0] : $heroes;
 	}
 
 	public static function longest($limit = -1, $offset = 0) {

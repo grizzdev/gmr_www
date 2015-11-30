@@ -15,12 +15,14 @@ class HomeController extends Controller {
 
 	public function test(Request $request) {
 		exit();
+		echo '<pre>';
 		$allowed = [
 			'127.0.0.1',
 			'10.0.4.1',
 			'65.103.70.94',
 			'96.41.139.50',
-			'207.109.248.12'
+			'207.109.248.12',
+			'71.92.128.183'
 		];
 
 		if (!in_array($request->ip(), $allowed)) {
@@ -29,10 +31,9 @@ class HomeController extends Controller {
 			// let's do some work
 			\Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
-			$orders = \App\Neworder::where('payment_method_id', '=', 1)->whereNotNull('payment_token')->whereNull('payment_status_id')->where('status_id', '=', 1)->get();
+			$orders = \App\Neworder::where('payment_method_id', '=', 1)->whereNotNull('payment_token')->where('payment_status_id', '=', 1)->where('status_id', '=', 1)->get();
 
 			foreach ($orders as $order) {
-				echo '<pre>';
 				$charge_data = [
 					'source' => $order->payment_token,
 					'amount' => ($order->cart->total() * 100),
@@ -82,9 +83,9 @@ class HomeController extends Controller {
 				} catch (Exception $e) {
 					// Something else happened, completely unrelated to Stripe
 				}
-				echo '</pre>';
 			}
 		}
+		echo '</pre>';
 	}
 
 	public function home() {
@@ -108,10 +109,11 @@ class HomeController extends Controller {
 
 		if ($request->hasFile('image') && $request->file('image')->isValid()) {
 			$path = '/uploads/'.date('Y').'/'.date('m').'/';
+			$filename = time().'-'.$request->file('image')->getClientOriginalName();
 
 			$file = File::create([
 				'path' => $path,
-				'name' => $request->file('image')->getClientOriginalName(),
+				'name' => $filename,
 				'mime' => $request->file('image')->getMimeType(),
 				'size' => $request->file('image')->getClientSize()
 			]);
@@ -124,7 +126,7 @@ class HomeController extends Controller {
 				'size' => $file->size
 			];
 
-			$request->file('image')->move(public_path().$path, $request->file('image')->getClientOriginalName());
+			$request->file('image')->move(public_path().$path, $filename);
 		}
 
 		return json_encode(['image' => $result]);

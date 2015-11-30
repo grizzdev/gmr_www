@@ -19,7 +19,7 @@
 						<div class="form-group has-feedback">
 							{!! Form::label('email', 'Your Email', ['class' => 'control-label']) !!}
 							<div class="input-group">
-								{!! Form::email('email', null, ['class' => 'form-control', 'required' => true]) !!}
+								{!! Form::email('email', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'john@example.com']) !!}
 								<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 							</div>
 						</div>
@@ -40,6 +40,26 @@
 							{!! Form::label('hero_name', 'Hero\'s Name', ['class' => 'control-label']) !!}
 							<div class="input-group">
 								{!! Form::text('hero_name', null, ['class' => 'form-control', 'required' => true]) !!}
+								<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12 col-md-6">
+						<div class="form-group has-feedback">
+							{!! Form::label('hero_email_address', 'Hero\'s Email Address', ['class' => 'control-label']) !!}
+							<div class="input-group">
+								{!! Form::email('hero_email_address', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'joe@example.com']) !!}
+								<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-6">
+						<div class="form-group has-feedback">
+							{!! Form::label('hero_phone_number', 'Hero\'s Phone Number', ['class' => 'control-label']) !!}
+							<div class="input-group">
+								{!! Form::tel('hero_phone_number', null, ['class' => 'form-control', 'required' => true, 'placeholder' => '555-555-1234', 'maxlength' => 12]) !!}
 								<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 							</div>
 						</div>

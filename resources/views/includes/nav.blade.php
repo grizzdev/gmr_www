@@ -13,6 +13,13 @@
 				</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-left">
+					<li>
+						<a href="{{ url('product/donate') }}">
+							<button class="btn btn-primary">Donate Now</button>
+						</a>
+					</li>
+				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About <span class="caret"></span></a>

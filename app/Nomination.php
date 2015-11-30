@@ -14,6 +14,8 @@ class Nomination extends Model {
 
 	protected $fillable = [
 		'name',
+		'email_address',
+		'phone_number',
 		'overview',
 		'description',
 		'birth_date',

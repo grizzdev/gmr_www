@@ -11,7 +11,15 @@ $state = \App\Location::find($nominee['state_id']);
 	</tr>
 	<tr>
 		<th align="right" valign="top">Birth Date:</th>
-		<td>{!! $nominee['birth_date'] !!}</td>
+		<td>{!! date('m/d/Y', strtotime($nominee['birth_date'])) !!}</td>
+	</tr>
+	<tr>
+		<th align="right" valign="top">Email Address:</th>
+		<td>{!! $nominee['email_address'] !!}</td>
+	</tr>
+	<tr>
+		<th align="right" valign="top">Phone Number:</th>
+		<td>{!! $nominee['phone_number'] !!}</td>
 	</tr>
 	<tr>
 		<th align="right" valign="top">Gender:</th>

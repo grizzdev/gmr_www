@@ -22,7 +22,7 @@
 			</div>
 		</div>
 		<div class="col-xs-6 col-sm-3">
-			<div class="stat-number">36</div>
+			<div class="stat-number">43</div>
 			<div class="stat-desc">
 				<i class="fa fa-meh-o"></i>
 				<span class="stat-title">children diagnosed today</span>

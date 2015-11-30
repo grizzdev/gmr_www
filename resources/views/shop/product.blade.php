@@ -212,5 +212,5 @@
 		'<a href="'.url('cart').'" class="btn btn-primary">View Cart</a>',
 		'<button type="button" class="btn btn-default" data-dismiss="modal">Continue Shopping</button>'
 	]
-]);
+])
 @endsection
