@@ -18,8 +18,10 @@
 				<p class="brd-rt brd-lt pl-10 pr-10 text-center">So far, you'll be contributing <b class="hero-contributing">${{ number_format($cart->contribution($hero->id), 2, '.', '') }}</b> to this campaign!</p>
 			</div>
 			<div class="col-xs-5 col-sm-4 col-md-3 text-center">
+				@if(!$hero->funded)
 				<a href="{{ url('product/donate/'.$hero->slug) }}" class="btn btn-danger hidden-xs">DONATE TO THIS CAMPAIGN</a>
 				<a href="{{ url('product/donate/'.$hero->slug) }}" class="btn btn-danger visible-xs">DONATE NOW</a>
+				@endif
 			</div>
 		</div>
 	</div>

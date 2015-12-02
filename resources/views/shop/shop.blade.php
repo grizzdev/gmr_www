@@ -42,7 +42,7 @@
 				@endif
 				<div class="row multi-columns-row shop-products mt-40">
 					@if($products->count())
-						@include('includes.products', ['products' => $products, 'hero_slug' => $slugs['hero']]);
+						@include('includes.products', ['products' => $products, 'hero_slug' => $slugs['hero']])
 					@else
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<h2 class="text-center">NO PRODUCTS FOUND</h2>

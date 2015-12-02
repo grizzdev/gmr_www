@@ -115,9 +115,9 @@ class Hero extends Model implements SluggableInterface {
 
 	public static function closest($limit = 0, $offset = 0) {
 		if ($offset) {
-			$heroes = Hero::where('id', '!=', 528)->where('active', '=', 1)->where('funded', '=', 0)->where('raised', '>', 0)->orderBy('raised','DESC')->skip($offset)->take($limit)->get();
+			$heroes = Hero::where('id', '!=', 528)->where('active', '=', 1)->where('funded', '=', 0)->where('raised', '>', 0)->where('raised', '<', 500)->orderBy('raised','DESC')->skip($offset)->take($limit)->get();
 		} else {
-			$heroes = Hero::where('id', '!=', 528)->where('active', '=', 1)->where('funded', '=', 0)->where('raised', '>', 0)->orderBy('raised','DESC')->limit($limit)->get();
+			$heroes = Hero::where('id', '!=', 528)->where('active', '=', 1)->where('funded', '=', 0)->where('raised', '>', 0)->where('raised', '<', 500)->orderBy('raised','DESC')->limit($limit)->get();
 		}
 
 		return ($limit == 1) ? $heroes[0] : $heroes;

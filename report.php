@@ -1,5 +1,5 @@
 <?php
-
+exit();
 $report = '';
 
 $db = mysql_connect('aws-rds-gamerosity.grizzdev.com', 'gamerroot', 'teV^ceevjia');

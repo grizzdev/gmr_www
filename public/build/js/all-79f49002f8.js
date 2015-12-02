@@ -10091,6 +10091,11 @@ $('#nominateForm').validator({
 	if (e.isDefaultPrevented()) {
 		$('html, body').animate({ scrollTop: 0 }, 'slow');
 		return false;
+	} else {
+		if ($('#file_id').val() == '') {
+			alert('Please upload a picture of the Hero');
+			return false;
+		}
 	}
 }).on('ajax:success', function(e, data, status, xhr) {
 	$('#nominateModal').modal('show');

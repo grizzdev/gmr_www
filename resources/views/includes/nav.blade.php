@@ -13,13 +13,6 @@
 				</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav navbar-left">
-					<li>
-						<a href="{{ url('product/donate') }}">
-							<button class="btn btn-lg btn-primary">Donate Now</button>
-						</a>
-					</li>
-				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About <span class="caret"></span></a>
@@ -35,6 +28,11 @@
 					<li><a href="{{ url('hall-of-heroes') }}">Hall of Heroes</a></li>
 					<li><a href="{{ url('nominate-a-hero') }}">Nominate A Hero</a></li>
 					<li><a href="{{ url('cart') }}"><i class="fa fa-shopping-cart"></i> (<span id="cart-count">{{ \App\Cart::find(session('cart_id'))->count() }}</span>)</a></li>
+					<li>
+						<a href="{{ url('product/donate') }}">
+							<button class="btn btn-lg btn-primary">Donate Now</button>
+						</a>
+					</li>
 					@if(0 && Auth::check())
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cogs"></i> <span class="caret"></span></a>

@@ -83,7 +83,7 @@ class ShopController extends Controller {
 			'title' => 'Shop',
 			'products' => $products,
 			'categories' => $categories,
-			'tags' => Tag::all(),
+			'tags' => Tag::orderBy('order')->get(),
 			'slugs' => $slugs,
 			'cart' => Cart::find(session('cart_id'))
 		]);
@@ -421,6 +421,11 @@ class ShopController extends Controller {
 				'notes' => $request->input('notes')
 			]);
 
+			if ($request->input('payment-type') != 'stripe') {
+				$order->payer_id = session('checkout.paypal-payerid');
+				$order->save();
+			}
+
 			foreach ($cart->items as $item) {
 				if ($item->hero) {
 					$item->hero->raised += $item->contribution();
@@ -515,7 +520,7 @@ class ShopController extends Controller {
 		$request->session()->put('checkout.paypal-payerid', $request->input('PayerID'));
 		$request->session()->put('checkout.paypal-token', $request->input('token'));
 
-		if (env('APP_ENV') != 'development') {
+		/*if (env('APP_ENV') != 'development') {
 			$response = (new Client())->get(config('services.paypal.url'), [
 				'verify' => false,
 				'query' => [
@@ -531,7 +536,7 @@ class ShopController extends Controller {
 					'PAYMENTREQUEST_0_CURRENCYCODE' => 'USD',
 				]
 			]);
-		}
+		}*/
 
 		return $this->postCheckout($request);
 	}
@@ -603,7 +608,7 @@ class ShopController extends Controller {
 	}
 
 	private function getProducts($slugs) {
-		$products = Product::where('active', '=', 1)->where('deleted_at', '=', null);
+		$products = Product::where('active', '=', 1);
 
 		if (!empty($slugs['category'])) {
 			$category = Category::where('slug', '=', $slugs['category'])->first();
@@ -614,10 +619,10 @@ class ShopController extends Controller {
 						$query->where('categories.id', '=', $category->id);
 					});
 				} else {
-					$products = Product::where('sale_price', '!=', '0');
+					$products = Product::where('products.sale_price', '!=', '0');
 				}
 			} else {
-				$products->where('id', '=', null);
+				$products->where('products.id', '=', null);
 			}
 		}
 
@@ -629,7 +634,7 @@ class ShopController extends Controller {
 					$query->where('tags.id', '=', $tag->id);
 				});
 			} else {
-				$products->where('id', '=', null);
+				$products->where('products.id', '=', null);
 			}
 		}
 
@@ -649,12 +654,15 @@ class ShopController extends Controller {
 					break;
 				case 'default':
 				default:
+					$products->join('product_tag', 'products.id', '=', 'product_tag.product_id')->join('tags', 'tags.id', '=', 'product_tag.tag_id')->select('products.*', 'tags.order')->orderBy('order');
 					break;
 			}
+		} else {
+			$products->join('product_tag', 'products.id', '=', 'product_tag.product_id')->join('tags', 'tags.id', '=', 'product_tag.tag_id')->select('products.*', 'tags.order')->orderBy('order');
 		}
 
 		if (!empty($slugs['search'])) {
-			$products->where('name', 'LIKE', '%'.urldecode($slugs['search']).'%');
+			$products->where('products.name', 'LIKE', '%'.urldecode($slugs['search']).'%');
 		}
 
 		return $products->paginate(24);

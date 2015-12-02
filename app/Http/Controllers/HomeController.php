@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Redirect;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Client as Client;
 use App\File;
 use DB;
 use Mail;
@@ -14,8 +15,8 @@ use Mail;
 class HomeController extends Controller {
 
 	public function test(Request $request) {
-		exit();
 		echo '<pre>';
+
 		$allowed = [
 			'127.0.0.1',
 			'10.0.4.1',
@@ -24,10 +25,39 @@ class HomeController extends Controller {
 			'207.109.248.12',
 			'71.92.128.183'
 		];
-
 		if (!in_array($request->ip(), $allowed)) {
 			return Redirect::to('/');
 		} else {
+			/*
+			// PayPal processing
+			$orders = \App\Neworder::where('payment_method_id', '=', 2)->where('status_id', '=', 1)->get();
+
+			foreach ($orders as $order) {
+				echo $order->id."\n";
+
+				$response = (new Client())->get(config('services.paypal.url'), [
+					'verify' => false,
+					'query' => [
+						'USER' => config('services.paypal.user'),
+						'PWD' => config('services.paypal.pwd'),
+						'SIGNATURE' => config('services.paypal.signature'),
+						'METHOD' => 'DoExpressCheckoutPayment',
+						'VERSION' => 93,
+						'TOKEN' => $order->payment_token,
+						'PAYERID' => $order->payer_id,
+						'PAYMENTREQUEST_0_PAYMENTACTION' => 'SALE',
+						'PAYMENTREQUEST_0_AMT' => $order->total(),
+						'PAYMENTREQUEST_0_CURRENCYCODE' => 'USD',
+					]
+				]);
+
+				print_r($response);
+				echo "\n\n";
+				exit();
+			}
+			*/
+
+			/*
 			// let's do some work
 			\Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
@@ -84,6 +114,7 @@ class HomeController extends Controller {
 					// Something else happened, completely unrelated to Stripe
 				}
 			}
+			*/
 		}
 		echo '</pre>';
 	}

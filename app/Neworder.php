@@ -15,6 +15,7 @@ class Neworder extends Model {
 		'cart_id',
 		'payment_method_id',
 		'payment_token',
+		'payer_id',
 		'payment_status_id',
 		'status_id',
 		'card_id',

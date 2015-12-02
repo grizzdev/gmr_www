@@ -62,7 +62,7 @@ class Product extends Model implements SluggableInterface {
 	}
 
 	public static function popular($num = -1) {
-		return self::orderBy('total_sales_count')->limit($num)->get();
+		return self::where('active', '=', 1)->orderBy('total_sales_count')->limit($num)->get();
 	}
 
 	public static function totals() {
