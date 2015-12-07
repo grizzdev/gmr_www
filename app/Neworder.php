@@ -16,11 +16,12 @@ class Neworder extends Model {
 		'payment_method_id',
 		'payment_token',
 		'payer_id',
+		'payment_id',
 		'payment_status_id',
 		'status_id',
-		'card_id',
 		'billing_address_id',
 		'shipping_address_id',
+		'notes',
 		'meta'
 	];
 
@@ -30,7 +31,6 @@ class Neworder extends Model {
 		'payment_method_id' => 'integer',
 		'payment_status_id' => 'integer',
 		'status_id' => 'integer',
-		'card_id' => 'integer',
 		'billing_address_id' => 'integer',
 		'shipping_address_id' => 'integer'
 	];

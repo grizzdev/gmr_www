@@ -14,7 +14,7 @@
 						<div class="row">
 							<div class="col-xs-12">
 								@if($hero->file_id)
-								<img src="{{ $hero->file->url() }}" alt="{{ $hero->name }}" class="img-responsive img-rounded" />
+								<img src="{{ $hero->file->url() }}" alt="{{ $hero->name }}" class="img-responsive img-rounded" style="max-height:220px" />
 								@else
 								<img src="{{ asset('uploads/2015/05/Profile-generic.jpg') }}" alt="{{ $hero->name }}" class="img-responsive img-rounded" />
 								@endif
@@ -22,6 +22,7 @@
 						</div>
 						<div class="row">
 							<div class="col-xs-12 pt-5">
+								
 								<h1>
 									@if(!empty($hero->facebook_url))
 									<a href="{{ $hero->facebook_url }}"><i class="fa fa-facebook"></i></a>
@@ -35,13 +36,25 @@
 									@if(!empty($hero->caringbridge_url))
 									<a href="{{ $hero->caringbridge_url }}"><i class="caring-bridge"></i></a>
 									@endif
-									| {{ $hero->name }}, {{ $hero->age() }}
+									@if(!empty($hero->facebook_url) || !empty($hero->twitter_url) || !empty($hero->youtube_url) || !empty($hero->caringbridge_url))
+									|
+									@endif
+									{{ $hero->name }}, {{ $hero->age() }}
 								</h1>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-xs-12 pt-10">
-								<h4>{{ $hero->cancer_type }} | {{ $hero->hospital_name }}, {{ $hero->hospital_location }}</h4>
+								<h4>
+									{{ $hero->cancer_type }}
+									@if(!empty($hero->hospital_name))
+										|
+										{{ $hero->hospital_name }}
+										@if(!empty($hero->hospital_location))
+											, {{ $hero->hospital_location }}
+										@endif
+									@endif
+								</h4>
 							</div>
 						</div>
 					</div>

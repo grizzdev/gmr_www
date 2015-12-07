@@ -28,8 +28,8 @@ class HomeController extends Controller {
 		if (!in_array($request->ip(), $allowed)) {
 			return Redirect::to('/');
 		} else {
-			/*
 			// PayPal processing
+			/*
 			$orders = \App\Neworder::where('payment_method_id', '=', 2)->where('status_id', '=', 1)->get();
 
 			foreach ($orders as $order) {
@@ -52,18 +52,22 @@ class HomeController extends Controller {
 				]);
 
 				print_r($response);
+				print_r($response->getStatusCode());
+				print_r($response->getBody());
 				echo "\n\n";
 				exit();
 			}
 			*/
 
-			/*
 			// let's do some work
+			/*
 			\Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
 			$orders = \App\Neworder::where('payment_method_id', '=', 1)->whereNotNull('payment_token')->where('payment_status_id', '=', 1)->where('status_id', '=', 1)->get();
 
 			foreach ($orders as $order) {
+				$has_donation = false;
+				$only_donation = true;
 				$charge_data = [
 					'source' => $order->payment_token,
 					'amount' => ($order->cart->total() * 100),
@@ -76,11 +80,34 @@ class HomeController extends Controller {
 				echo "Charge: ";
 				print_r($charge_data);
 				echo "\n";
+				foreach ($order->cart->items as $item) {
+					if ($item->product->id == 1) {
+						$has_donation = true;
+					} else {
+						$only_donation = false;
+					}
+				}
+
+				echo "Has Donation: $has_donation\n";
+				echo "Only Donation: $only_donation\n";
+				echo "\n";
 
 				try {
 					$charge = \Stripe\Charge::create($charge_data);
 					echo "Charge: $charge\n";
+					$data = json_decode(preg_replace('/Stripe.*: {/', '{', $charge));
+					$order->payment_id = $data->id;
+					$order->payment_status_id = 7;
+					if ($has_donation && $only_donation) {
+						$order->status_id = 3;
+					} else {
+						$order->status_id = 2;
+					}
+					$order->save();
 				} catch(\Stripe\Error\Card $e) {
+					$order->payment_status_id = 8;
+					$order->status_id = 4;
+					$order->save();
 					// Since it's a decline, \Stripe\Error\Card will be caught
 					$body = $e->getJsonBody();
 					$err  = $body['error'];

@@ -42,31 +42,34 @@ class Cart extends Model {
 		$garments = 0; // $5.50 for first item, $1.50 each additional
 		$hats = 0; // $7 for first item, $1.50 for each additional
 		$hoodies = 0; // $8 for first item, $2.50 for each additional
+		$stuffies = 0; // $4 each
 		$lightweights = ['Bracelets'];
 
 		foreach ($this->items as $item) {
 			if ($item->product->name != 'Donate') {
 				foreach ($item->product->categories as $category) {
-					if($category->name == 'Hats') {
+					if ($category->name == 'Hats') {
 						if ($base_shipping < 7) {
 							$base_shipping = 7;
 						}
 						$hats += $item->quantity;
-					} elseif($category->name == 'Garments') {
+					} elseif ($category->name == 'Garments') {
 						if ($base_shipping < 5.5) {
 							$base_shipping = 5.5;
 						}
 						$garments += $item->quantity;
-					} elseif($category->name == 'Sweats') {
+					} elseif ($category->name == 'Sweats') {
 						if ($base_shipping < 8) {
 							$base_shipping = 8;
 						}
 						$hoodies += $item->quantity;
-					} elseif(in_array($category->name, $lightweights)) {
+					} elseif (in_array($category->name, $lightweights)) {
 						if ($base_shipping < 2) {
 							$base_shipping = 2;
 						}
 						$lightweight += $item->quantity;
+					} elseif ($item->product->id == 213) { // Stuffie
+						$stuffies++;
 					}
 				}
 			}
@@ -98,6 +101,10 @@ class Cart extends Model {
 
 		for ($i = 0; $i < $hoodies; $i++) {
 			$shipping += 2.5;
+		}
+
+		for ($i = 0; $i < $stuffies; $i++) {
+			$shipping += 4;
 		}
 
 		return $shipping;
