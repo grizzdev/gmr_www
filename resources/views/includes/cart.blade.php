@@ -75,10 +75,10 @@
 					<td colspan="3">
 						<div class="row">
 							<div class="col-xs-5 col-sm-2">
-								{!! Form::text('coupon_code', null, ['class' => 'form-control', 'placeholder' => 'COUPON CODE', 'id' => 'coupon_code', 'style' => 'max-width:144px']) !!}
+								{!! Form::text('coupon_code', null, ['class' => 'form-control', 'placeholder' => 'PROMO CODE', 'id' => 'coupon_code', 'style' => 'max-width:144px']) !!}
 							</div>
 							<div class="col-xs-7 col-sm-10">
-								{!! Form::button('APPLY COUPON', ['class' => 'btn btn-sm btn-primary btn-coupon', 'data-disable-with' => 'APPLYING...']) !!}
+								{!! Form::button('APPLY PROMO CODE', ['class' => 'btn btn-sm btn-primary btn-coupon', 'data-disable-with' => 'APPLYING...']) !!}
 							</div>
 						</div>
 					</td>

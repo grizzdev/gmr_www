@@ -126,6 +126,7 @@ class ShopController extends Controller {
 			} else {
 				$cart->coupon_id = null;
 			}
+
 			$cart->save();
 		}
 
@@ -401,11 +402,9 @@ class ShopController extends Controller {
 			if ($request->input('payment-type') == 'stripe') {
 				$payment_method = PaymentMethod::find(1);
 				$token = $request->input('payment-token');
-				$payment_status = 1;
 			} else {
 				$payment_method = PaymentMethod::find(2);
 				$token = $request->input('token');
-				$payment_status = 7;
 			}
 
 			$order = Neworder::create([
@@ -414,7 +413,7 @@ class ShopController extends Controller {
 				'payment_method_id' => $payment_method->id,
 				'payment_token' => $token,
 				'status_id' => 1,
-				'payment_status_id' => $payment_status,
+				'payment_status_id' => 1,
 				'billing_address_id' => $billing_address->id,
 				'shipping_address_id' => $shipping_address->id,
 				'meta' => json_encode($meta),
@@ -430,6 +429,15 @@ class ShopController extends Controller {
 				if ($item->hero) {
 					$item->hero->raised += $item->contribution();
 					$item->hero->save();
+				}
+			}
+
+			if (!empty($cart->coupon_id)) {
+				$coupon = Coupon::find($cart->coupon_id);
+
+				if (!empty($coupon->id)) {
+					$coupon->used = ($coupon->used + 1);
+					$coupon->save();
 				}
 			}
 
