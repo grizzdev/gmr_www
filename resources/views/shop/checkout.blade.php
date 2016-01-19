@@ -212,9 +212,11 @@
 							<tr>
 								<td>
 									<p>{!! $item->product->name !!}</p>
+									@if($item->hero)
 									<div>
 										<b>Hero:</b> {{ $item->hero->name }}
 									</div>
+									@endif
 									@foreach($item->itemAttributes as $attribute)
 										@if($attribute->attribute->name != 'Amount')
 										<div>
@@ -239,8 +241,16 @@
 										@endif
 									@endforeach
 								</td>
-								<td>${!! number_format($item->price(), 2, '.', '') !!}</td>
-								<td>{!! $item->quantity !!}</td>
+								<td>
+									@if(!$item->product->is_donation())
+									${!! number_format($item->price(), 2, '.', '') !!}
+									@endif
+								</td>
+								<td>
+									@if(!$item->product->is_donation())
+									{!! $item->quantity !!}
+									@endif
+								</td>
 								<td align="right">${!! number_format(($item->price() * $item->quantity), 2, '.', '') !!}</td>
 							</tr>
 						@endforeach

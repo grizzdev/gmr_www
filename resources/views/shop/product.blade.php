@@ -121,9 +121,13 @@
 						@endif
 					@endforeach
 						<div class="row">
+							@if(!$product->is_donation())
 							<div class="col-xs-2">
 								{!! Form::number('quantity', 1, ['class' => 'form-control']) !!}
 							</div>
+							@else
+								{!! Form::hidden('quantity', 1, ['class' => 'form-control']) !!}
+							@endif
 							<div class="col-xs-10">
 								{!! Form::submit('ADD TO CART', ['class' => 'btn btn-primary', 'data-disable-with' => 'ADDING...']) !!}
 							</div>

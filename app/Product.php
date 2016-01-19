@@ -91,4 +91,12 @@ class Product extends Model implements SluggableInterface {
 		];
 	}
 
+	public function is_donation() {
+		if (in_array($this->id, [1, 220])) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }

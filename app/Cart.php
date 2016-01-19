@@ -156,7 +156,7 @@ class Cart extends Model {
 		return $contribution;
 	}
 
-	public function add($product_id, $quantity = 1, $hero_id, $attributes) {
+	public function add($product_id, $quantity = 1, $hero_id = null, $attributes) {
 		$item = Item::where('cart_id', '=', $this->id)
 			->where('product_id', '=', $product_id)
 			->where('hero_id', '=', $hero_id)

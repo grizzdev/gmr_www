@@ -67,5 +67,5 @@ class Item extends Model {
 			return ($this->product->contribution_amount * $this->quantity);
 		}
 	}
-
+	
 }

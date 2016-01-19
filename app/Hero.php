@@ -72,7 +72,11 @@ class Hero extends Model implements SluggableInterface {
 
 		$diff = floor(($now_ts - $then_ts) / (24 * 60 * 60));
 
-		return $diff;
+		if ($diff < 1) {
+			return 0;
+		} else {
+			return $diff;
+		}
 	}
 
 	public function raised() {

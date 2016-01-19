@@ -25,9 +25,11 @@
 					</td>
 					<td>
 						<p><a href="{{ url('product/'.$item->product->sku) }}">{{ $item->product->name }}</a></p>
+						@if($item->hero)
 						<div>
 							<b>Hero:</b> {{ $item->hero->name }}
 						</div>
+						@endif
 						@foreach($item->itemAttributes as $attribute)
 							@if($attribute->attribute->name != 'Amount')
 							<div>
@@ -53,12 +55,12 @@
 						@endforeach
 					</td>
 					<td align="center">
-						@if($item->id != 1)
+						@if(!$item->product->is_donation())
 						${{ number_format($item->price(), 2, '.', '') }}
 						@endif
 					</td>
 					<td>
-						@if($item->id != 1)
+						@if(!$item->product->is_donation())
 						{!! Form::number("items[$item->id]", $item->quantity, ['class' => 'form-control text-center']) !!}
 						@endif
 					</td>

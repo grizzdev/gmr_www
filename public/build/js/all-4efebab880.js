@@ -9983,6 +9983,46 @@ new WOW().init();
 
 $('[data-toggle="tooltip"]').tooltip();
 
+$('input[name="gamerosity_donation"]').on('change', function(e) {
+	if (parseInt($(this).val()) < 1) {
+		$(this).val('');
+	}
+}).on('keyup', function(e) {
+	if (parseInt($(this).val()) < 1) {
+		$(this).val('');
+	}
+});
+
+$('input[name="attributes[38]"]').on('change', function(e) {
+	if (parseInt($(this).val()) < 0) {
+		$(this).val(0);
+	}
+}).on('keyup', function(e) {
+	if (parseInt($(this).val()) < 0) {
+		$(this).val(0);
+	}
+});
+
+$('input[name="quantity"]').on('change', function(e) {
+	if (parseInt($(this).val()) < 1) {
+		$(this).val(1);
+	}
+}).on('keyup', function(e) {
+	if (parseInt($(this).val()) < 1) {
+		$(this).val(1);
+	}
+});
+
+$('#cartForm input[name^="items"]').on('change', function(e) {
+	if (parseInt($(this).val()) < 1) {
+		$(this).val(1);
+	}
+}).on('keyup', function(e) {
+	if (parseInt($(this).val()) < 1) {
+		$(this).val(1);
+	}
+});
+
 $('input[type="file"]').fileupload({
 	dataType: 'json',
 	done: function (e, data) {

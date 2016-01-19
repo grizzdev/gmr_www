@@ -170,7 +170,17 @@ class ShopController extends Controller {
 	public function addCart(Request $request) {
 		$cart = Cart::find(session('cart_id'));
 
-		$cart->add($request->input('product_id'), $request->input('quantity'), $request->input('attributes')[39], $request->input('attributes'));
+		if ($request->input('quantity')) {
+			$quantity = $request->input('quantity');
+		} else {
+			$quantity = 1;
+		}
+
+		if (!empty($request->input('attributes')[39])) {
+			$cart->add($request->input('product_id'), $quantity, $request->input('attributes')[39], $request->input('attributes'));
+		} else {
+			$cart->add($request->input('product_id'), $quantity, 0, $request->input('attributes'));
+		}
 
 		$contribution = 0;
 		$percentage = 0;

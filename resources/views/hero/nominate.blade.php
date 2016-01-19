@@ -182,13 +182,13 @@
 							<div class="col-sm-12 col-md-6">
 								<div class="form-group">
 									{!! Form::label('facebook_url', 'Facebook', ['class' => 'control-label']) !!}
-									{!! Form::text('facebook_url', null, ['class' => 'form-control']) !!}
+									{!! Form::text('facebook_url', null, ['class' => 'form-control', 'pattern' => '^http(s?)://.*', 'placeholder' => 'http://facebook.com/...']) !!}
 								</div>
 							</div>
 							<div class="col-sm-12 col-md-6">
 								<div class="form-group">
 									{!! Form::label('twitter_url', 'Twitter', ['class' => 'control-label']) !!}
-									{!! Form::text('twitter_url', null, ['class' => 'form-control']) !!}
+									{!! Form::text('twitter_url', null, ['class' => 'form-control', 'pattern' => '^http(s?)://.*', 'placeholder' => 'http://twitter.com/...']) !!}
 								</div>
 							</div>
 						</div>
@@ -196,13 +196,13 @@
 							<div class="col-sm-12 col-md-6">
 								<div class="form-group">
 									{!! Form::label('youtube_url', 'YouTube', ['class' => 'control-label']) !!}
-									{!! Form::text('youtube_url', null, ['class' => 'form-control']) !!}
+									{!! Form::text('youtube_url', null, ['class' => 'form-control', 'pattern' => '^http(s?)://.*', 'placeholder' => 'http://youtube.com/...']) !!}
 								</div>
 							</div>
 							<div class="col-sm-12 col-md-6">
 								<div class="form-group">
 									{!! Form::label('caringbridge_url', 'Caring Bridge', ['class' => 'control-label']) !!}
-									{!! Form::text('caringbridge_url', null, ['class' => 'form-control']) !!}
+									{!! Form::text('caringbridge_url', null, ['class' => 'form-control', 'pattern' => '^http(s?)://.*', 'placeholder' => 'http://caringbridge.org/...']) !!}
 								</div>
 							</div>
 						</div>
