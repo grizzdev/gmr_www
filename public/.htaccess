@@ -5,6 +5,8 @@
 
     RewriteEngine On
 
+    RewriteRule ^big-strides-little-heroes$ /product/big-strides-little-heroes [L,R=301]
+
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)/$ /$1 [L,R=301]
