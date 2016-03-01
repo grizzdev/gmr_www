@@ -118,7 +118,7 @@
 	{!! Form::hidden('_token', csrf_token()) !!}
 {!! Form::close() !!}
 <div class="text-right">
-	<a href="{{ url('checkout') }}" class="btn btn-danger">PROCEED TO CHECKOUT</a>
+	<a href="{{ url('checkout') }}" class="btn btn-danger" onClick="fbq('track', 'InitiateCheckout')">PROCEED TO CHECKOUT</a>
 </div>
 @else
 <h2 class="text-center pt-30 pb-70">Your Cart is Empty</h2>

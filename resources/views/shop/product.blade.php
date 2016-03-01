@@ -129,7 +129,7 @@
 								{!! Form::hidden('quantity', 1, ['class' => 'form-control']) !!}
 							@endif
 							<div class="col-xs-10">
-								{!! Form::submit('ADD TO CART', ['class' => 'btn btn-primary', 'data-disable-with' => 'ADDING...']) !!}
+								{!! Form::submit('ADD TO CART', ['class' => 'btn btn-primary', 'data-disable-with' => 'ADDING...', 'onClick' => "fbq('track', 'AddToCart')"]) !!}
 							</div>
 						</div>
 						{!! Form::hidden('product_id', $product->id) !!}

@@ -247,3 +247,6 @@
 		</div>
 	</div>
 </div>
+<script>
+	fbq('track', 'Purchase', {value: '{{ $order->total() }}', currency: 'USD'});
+</script>

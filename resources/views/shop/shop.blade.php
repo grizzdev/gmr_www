@@ -20,7 +20,7 @@
 							<div class="input-group">
 								{!! Form::text('shop-search', urldecode($slugs['search']), ['class' => 'form-control', 'placeholder' => 'SEARCH...', 'id' => 'shop-search-top']) !!}
 								<span class="input-group-btn">
-									<button type="submit" class="btn btn-default pt-7"><i class="fa fa-search"></i></button>
+									<button type="submit" class="btn btn-default pt-7" onClick="fbq('track', 'Search')"><i class="fa fa-search"></i></button>
 								</span>
 							</div>
 							{!! Form::hidden('_token', csrf_token()) !!}
@@ -62,7 +62,7 @@
 							{!! Form::open(['url' => 'shop/search', 'id' => 'shopSearchSideForm']) !!}
 								<div class="form-group">
 									{!! Form::text('shop-search', urldecode($slugs['search']), ['class' => 'form-control mb-5', 'placeholder' => 'SEARCH FOR PRODUCTS...', 'id' => 'shop-search-side']) !!}
-									{!! Form::submit('SEARCH', ['class' => 'btn btn-default']) !!}
+									{!! Form::submit('SEARCH', ['class' => 'btn btn-default', 'onClick' => "fbq('track', 'Search')"]) !!}
 								</div>
 								{!! Form::hidden('_token', csrf_token()) !!}
 							{!! Form::close() !!}

@@ -1,3 +1,4 @@
+@if(!empty($hero->id))
 <div class="hero-bar{{ (!empty($mt)) ? ' mt-'.$mt : '' }}">
 	<div class="hero-bar-inner">
 		<div class="row vcenter">
@@ -26,3 +27,4 @@
 		</div>
 	</div>
 </div>
+@endif
