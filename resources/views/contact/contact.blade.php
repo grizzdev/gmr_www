@@ -25,7 +25,7 @@
 							<i class="fa fa-paper-plane"></i>
 						</div>
 						<div class="contact-item-title">mailing</div>
-						<div class="contact-item-text">1750 Delta Waters Rd.<br />Ste 102 PMB 246<br />Medford, OR<br />97504</div>
+						<div class="contact-item-text">691 E. Vilas Rd.<br />Ste 102<br />Central Point, OR<br />97502</div>
 					</div>
 				</div>
 				<div class="col-sm-12 col-md-4">
