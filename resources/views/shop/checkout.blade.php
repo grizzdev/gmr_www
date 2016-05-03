@@ -292,11 +292,12 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-xs-12 col-sm-6">
+				<div class="col-xs-12 col-sm-6 col-sm-offset-6">
 					<h4>Payment</h4>
 				</div>
 			</div>
 			<div class="row">
+				{{--
 				<div class="col-xs-12 col-sm-6">
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -308,7 +309,8 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-6">
+				--}}
+				<div class="col-xs-12 col-sm-6 col-sm-offset-6">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<label>Credit Card <img src="{{ asset('img/checkout/cards.png') }}" alt="Credit Cards" />

@@ -29,6 +29,7 @@ class ContactController extends Controller {
 				'comments' => $request->input('message')
 			],
 			function ($message) {
+				//$message->to('kevin@grizzdev.com')->subject('Contact Form Submission');
 				$message->to('info@gamerosity.com')->subject('Contact Form Submission');
 			}
 		);
