@@ -816,7 +816,7 @@ class ShopController extends Controller {
 		], function ($message) use ($user) {
 			$message->to($user->email)->subject('Your Gamerosity Order');
 			$message->bcc('info@gamerosity.com')->subject('Your Gamerosity Order');
-			$message->bcc('kevin@grizzdev.com')->subject('Your Gamerosity Order');
+			//$message->bcc('kevin@grizzdev.com')->subject('Your Gamerosity Order');
 		});
 	}
 
