@@ -633,11 +633,11 @@ class ShopController extends Controller {
 
 			if ($category) {
 				if ($slugs['category'] != 'sale') {
-					$products = Product::whereHas('categories', function($query) use ($category) {
+					$products = Product::where('active', '=', 1)->whereHas('categories', function($query) use ($category) {
 						$query->where('categories.id', '=', $category->id);
 					});
 				} else {
-					$products = Product::where('products.sale_price', '!=', '0');
+					$products = Product::where('active', '=', 1)->where('products.sale_price', '!=', '0');
 				}
 			} else {
 				$products->where('products.id', '=', null);
