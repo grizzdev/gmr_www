@@ -100,7 +100,7 @@ class Neworder extends Model {
 		], function ($message) use ($order) {
 			$message->to($order->user->email)->subject('Your Gamerosity Order');
 			$message->bcc('info@gamerosity.com')->subject('Your Gamerosity Order');
-			$message->bcc('kevin@grizzdev.com')->subject('Your Gamerosity Order');
+			//$message->bcc('kevin@grizzdev.com')->subject('Your Gamerosity Order');
 		});
 	}
 
