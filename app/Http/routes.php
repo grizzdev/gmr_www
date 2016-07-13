@@ -33,6 +33,7 @@ Route::get('humans.txt', 'HomeController@humans');
 Route::get('crossdomain.xml', 'HomeController@crossdomain');
 Route::post('upload/', 'HomeController@upload');
 
+
 // http-only routes
 Route::group(['middleware' => 'insecure'], function() {
 	Route::get('home', 'HomeController@home');
@@ -58,6 +59,14 @@ Route::group(['middleware' => 'insecure'], function() {
 	Route::get('shop/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}/{h?}/{i?}/{j?}', 'ShopController@shop');
 
 	Route::get('product/{sku}/{hero_slug?}', 'ShopController@product');
+	Route::group([
+		'prefix' => 'events'
+	], function() {
+		Route::get('', 'EventController@index');
+		Route::get('{slug}', 'EventController@event');
+		Route::get('{slug}/volunteer/{shift_id}', 'EventController@volunteer');
+		Route::post('{slug}/volunteer/{shift_id}', 'EventController@postVolunteer');
+	});
 });
 
 // https-only routes

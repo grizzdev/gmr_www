@@ -199,6 +199,22 @@ $('#nominateForm').validator({
 	showModal('errorModal', '<p>An unspecified error has occurred.</p><p>Please try again later.</p>', 'Error!');
 });
 
+$('#volunteerForm').validator({
+	disable: true,
+}).on('submit', function(e) {
+	if (e.isDefaultPrevented()) {
+		$('html, body').animate({ scrollTop: 0 }, 'slow');
+		return false;
+	}
+}).on('ajax:success', function(e, data, status, xhr) {
+	$('#volunteerModal').modal('show');
+	$('#volunteerForm')[0].reset();
+	$('#volunteerForm').find('.has-success').removeClass('has-success');
+	$('#volunteerForm').find('.form-control-feedback').removeClass('glyphicon-ok');
+}).on('ajax:error', function(e, data, status, xhr) {
+	showModal('errorModal', '<p>An unspecified error has occurred.</p><p>Please try again later.</p>', 'Error!');
+});
+
 $('#productFrom').validator({
 	disable: true,
 }).on('submit', function(e) {

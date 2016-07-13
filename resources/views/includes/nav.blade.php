@@ -27,6 +27,7 @@
 					<li><a href="{{ url('shop') }}">Shop</a></li>
 					<li><a href="{{ url('hall-of-heroes') }}">Hall of Heroes</a></li>
 					<li><a href="{{ url('nominate-a-hero') }}">Nominate A Hero</a></li>
+					<!-- <li><a href="{{ url('events') }}">Events</a></li> -->
 					<li><a href="{{ url('cart') }}"><i class="fa fa-shopping-cart"></i> (<span id="cart-count">{{ \App\Cart::find(session('cart_id'))->count() }}</span>)</a></li>
 					<li>
 						<a href="{{ url('product/donate') }}">
