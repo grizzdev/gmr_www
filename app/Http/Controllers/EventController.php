@@ -36,10 +36,10 @@ class EventController extends Controller {
 
 	public function volunteer($slug, $shift_id) {
 		$event = Event::where('slug', '=', $slug)->first();
-		$shift = Shift::whereNull('user_id')->where('id', '=', $shift_id)->first();
+		$shift = Shift::where('id', '=', $shift_id)->first();
 		$shifts = [];
 
-		$shifts_list = $event->shifts()->whereNull('user_id')->get();
+		$shifts_list = $event->shifts()->where('user_id', '=', 0)->get();
 		foreach ($shifts_list as $sl) {
 			$shifts[$sl->id] = $sl->job->title.' '.date('m/d/Y', strtotime($sl->start_at)).' '.date('g:i A', strtotime($sl->start_at)).'-'.date('g:i A', strtotime($sl->end_at));
 		}
@@ -73,7 +73,7 @@ class EventController extends Controller {
 			$shift->user_id = $user->id;
 			$shift->save();
 
-			Mail::queue([
+			Mail::send([
 				'emails.volunteer-html',
 				'emails.volunteer-text'
 			], [

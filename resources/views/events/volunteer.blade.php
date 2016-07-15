@@ -28,18 +28,23 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-12">
-					{!! Form::label('shift_id', 'Shift', ['class' => 'control-label']) !!}
-					<div class="input-group">
-						{!! Form::select('shift_id', $shifts, $shift->id, ['class' => 'form-control', 'required' => true]) !!}
-						<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+					<div class="form-group has-feedback">
+						{!! Form::label('shift_id', 'Shift', ['class' => 'control-label']) !!}
+						<div class="input-group">
+							{!! Form::select('shift_id', $shifts, $shift->id, ['class' => 'form-control', 'required' => true]) !!}
+							<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-xs-12">
-					{!! Form::label('notes', 'Notes', ['class' => 'control-label']) !!}
-					<div class="input-group">
-						{!! Form::textarea('notes', null, ['class' => 'form-control']) !!}
+					<div class="form-group">
+						{!! Form::label('notes', 'Notes', ['class' => 'control-label']) !!}
+						<div class="input-group">
+							{!! Form::textarea('notes', null, ['class' => 'form-control']) !!}
+							<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+						</div>
 					</div>
 				</div>
 			</div>

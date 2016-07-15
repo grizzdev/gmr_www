@@ -41,7 +41,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						@foreach($event->shifts()->whereNull('user_id')->get() as $shift)
+						@foreach($event->shifts()->where('user_id', '=', 0)->get() as $shift)
 						<tr>
 							<td>{!! $shift->job->title !!}</td>
 							<td>{!! $shift->job->description !!}</td>
