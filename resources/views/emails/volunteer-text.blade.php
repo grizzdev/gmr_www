@@ -7,4 +7,5 @@ Email Address: {!! $user['email'] !!}
 Event: {!! $event['title'] !!}
 Job: {!! $job['title'] !!}
 Shift: {!! date('m/d/Y', strtotime($shift['start_at'])) !!} {!! date('g:i A', strtotime($shift['start_at'])) !!}-{!! date('g:i A', strtotime($shift['end_at'])) !!}
+T-shirt size: {!! $shirt_size !!}
 Notes: {!! $notes !!}

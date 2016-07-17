@@ -39,6 +39,17 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-12">
+					<div class="form-group has-feedback">
+						{!! Form::label('shirt_size', 'T-shirt size', ['class' => 'control-label']) !!}
+						<div class="input-group">
+							{!! Form::select('shirt_size', ['Small' => 'Small', 'Medium' => 'Medium', 'Large' => 'Large', 'X-Large' => 'X-Large'], null, ['class' => 'form-control', 'required' => true]) !!}
+							<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
 					<div class="form-group">
 						{!! Form::label('notes', 'Notes', ['class' => 'control-label']) !!}
 						<div class="input-group">

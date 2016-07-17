@@ -81,7 +81,8 @@ class EventController extends Controller {
 				'logo' => config('mail.view.logo'),
 				'shift' => $shift,
 				'user' => $user,
-				'notes' => $request->input('notes')
+				'notes' => $request->input('notes'),
+				'shirt_size' => $request->input('shirt_size')
 			], function ($message) use ($shift) {
 				$message->to($shift->event->lead->email)->subject('New Event Volunteer');
 				$message->to('info@gamerosity.com')->subject('New Event Volunteer');
