@@ -42,7 +42,15 @@
 					<div class="form-group has-feedback">
 						{!! Form::label('shirt_size', 'T-shirt size', ['class' => 'control-label']) !!}
 						<div class="input-group">
-							{!! Form::select('shirt_size', ['Small' => 'Small', 'Medium' => 'Medium', 'Large' => 'Large', 'X-Large' => 'X-Large'], null, ['class' => 'form-control', 'required' => true]) !!}
+							{!! Form::select('shirt_size', [
+								'Small' => 'Small',
+								'Medium' => 'Medium',
+								'Large' => 'Large',
+								'X-Large' => 'X-Large',
+								'2X-Large' => '2X-Large',
+								'3X-Large' => '3X-Large',
+								'4X-Large' => '4X-Large'
+							], null, ['class' => 'form-control', 'required' => true]) !!}
 							<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 						</div>
 					</div>
