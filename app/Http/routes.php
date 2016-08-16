@@ -67,6 +67,13 @@ Route::group(['middleware' => 'insecure'], function() {
 		Route::get('{slug}/volunteer/{shift_id}', 'EventController@volunteer');
 		Route::post('{slug}/volunteer/{shift_id}', 'EventController@postVolunteer');
 	});
+
+	Route::group([
+		'prefix' => 'survey'
+	], function() {
+		Route::get('game-on-day-wisconsin-2016', 'SurveyController@gameOnDayWisconsin2016');
+		Route::post('submit', 'SurveyController@submit');
+	});
 });
 
 // https-only routes
