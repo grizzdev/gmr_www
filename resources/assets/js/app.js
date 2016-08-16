@@ -127,6 +127,23 @@ $('.link-to-top').on('click', function(e) {
 	$('html, body').animate({ scrollTop: 0 }, 'slow');
 });
 
+$('.survey-form').validator({
+	disable: true
+}).on('submit', function(e) {
+	if (e.isDefaultPrevented()) {
+		return false;
+	}
+}).on('ajax:success', function(e, data, status, xhr) {
+	if (typeof data.error === 'undefined') {
+		showModal('surveyModal', 'We appreciate your feedback.', 'Thanks!');
+		$('.survey-form form')[0].reset();
+	} else {
+		showModal('errorModal', data.error, 'Error!');
+	}
+}).on('ajax:error', function(e, data, status, xhr) {
+	showModal('errorModal', '<p>An unspecified error has occurred.</p><p>Please try again later.</p>', 'Error!');
+});
+
 $('.login-form').validator({
 	disable: true
 }).on('submit', function(e) {
