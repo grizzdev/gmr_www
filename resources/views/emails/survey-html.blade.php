@@ -13,7 +13,7 @@
 @foreach($survey_data as $q => $a)
 	@if(!in_array($q, ['name', 'email', 'survey', '_token', 'token']))
 	<tr>
-		<th colspan="2">{!! preg_replace('/_/', ' ', $q) !!}?</th>
+		<th align="left" colspan="2">{!! preg_replace('/_/', ' ', $q) !!}?</th>
 	</tr>
 	<tr>
 		<td colspan="2"><p>{!! nl2br($a) !!}</p></td>
