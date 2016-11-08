@@ -12,7 +12,7 @@
 			<div class="col-sm-12 col-md-6 col-md-offset-3 error-text pb-50">
 				<h1 class="pt-60 pb-25">503</h1>
 				<p class="pb-45">BE RIGHT BACK</p>
-				<img src="{{ asset('img/logo.png') }}" alt="Gamerosity" />
+				<img src="{{ asset('img/logo_new_177x35.png') }}" alt="Gamerosity" />
 			</div>
 		</div>
 	</div>

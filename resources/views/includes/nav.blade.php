@@ -9,7 +9,7 @@
 				</button>
 				<a class="navbar-brand" href="{{ url() }}">
 					<span class="helper"></span>
-					<img src="{{ asset('img/logo.png') }}" alt="Gamerosity" />
+					<img src="{{ asset('img/logo_new_177x35.png') }}" alt="Gamerosity" />
 				</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">

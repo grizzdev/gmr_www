@@ -42,7 +42,7 @@ class Item extends Model {
 	}
 
 	public function price() {
-		$price = (!empty($this->product->sale_price)) ? $this->product->sale_price : $this->product->price;
+		$price = ($this->product->sale_price != 0 || is_null($this->product->sale_price)) ?  $price = $this->product->sale_price : $this->product->price;
 
 		foreach ($this->itemAttributes as $attribute) {
 			if ($attribute->attribute->name == 'Amount') {

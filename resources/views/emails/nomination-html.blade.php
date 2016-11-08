@@ -4,7 +4,7 @@ $state = \App\Location::find($nominee['state_id']);
 @extends('layouts.email')
 
 @section('content')
-<table cellspacing="2">
+<table cellspacing="2" data-date="{!! time() !!}">
 	<tr>
 		<th align="right" valign="top">Name:</th>
 		<td>{!! $nominee['name'] !!}</td>
