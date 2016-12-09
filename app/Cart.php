@@ -43,6 +43,7 @@ class Cart extends Model {
 		$hats = 0; // $7 for first item, $1.50 for each additional
 		$hoodies = 0; // $8 for first item, $2.50 for each additional
 		$stuffies = 0; // $4 each
+		$books = 0; // $3 each
 		$lightweights = ['Bracelets'];
 
 		foreach ($this->items as $item) {
@@ -70,6 +71,8 @@ class Cart extends Model {
 						$lightweight += $item->quantity;
 					} elseif ($item->product->id == 213) { // Stuffie
 						$stuffies++;
+					} elseif ($item->product->id == 272) { // Gameon Book
+						$books++;
 					}
 				}
 			}
@@ -105,6 +108,10 @@ class Cart extends Model {
 
 		for ($i = 0; $i < $stuffies; $i++) {
 			$shipping += 4;
+		}
+
+		for ($i = 0; $i < $books; $i++) {
+			$shipping += 3;
 		}
 
 		return $shipping;

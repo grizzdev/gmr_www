@@ -38,6 +38,8 @@ Route::post('upload/', 'HomeController@upload');
 Route::group(['middleware' => 'insecure'], function() {
 	Route::get('home', 'HomeController@home');
 	Route::get('', 'HomeController@home');
+	Route::get('newhome', 'HomeController@newhome');
+	Route::get('game-on-a-super-story', 'HomeController@gameon');
 
 	Route::get('about', 'AboutController@about');
 	Route::get('team', 'TeamController@team');

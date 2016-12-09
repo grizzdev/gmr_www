@@ -15,6 +15,7 @@ use Mail;
 class HomeController extends Controller {
 
 	public function test(Request $request) {
+		/*
 		echo '<pre>';
 
 		$allowed = [
@@ -29,7 +30,6 @@ class HomeController extends Controller {
 			return Redirect::to('/');
 		} else {
 			// PayPal processing
-			/*
 			$orders = \App\Neworder::where('payment_method_id', '=', 2)->where('status_id', '=', 1)->get();
 
 			foreach ($orders as $order) {
@@ -57,10 +57,8 @@ class HomeController extends Controller {
 				echo "\n\n";
 				exit();
 			}
-			*/
 
 			// let's do some work
-			/*
 			\Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
 			$orders = \App\Neworder::where('payment_method_id', '=', 1)->whereNotNull('payment_token')->where('payment_status_id', '=', 1)->where('status_id', '=', 1)->get();
@@ -141,13 +139,21 @@ class HomeController extends Controller {
 					// Something else happened, completely unrelated to Stripe
 				}
 			}
-			*/
 		}
 		echo '</pre>';
+		*/
 	}
 
 	public function home() {
 		return view('home.home', ['title' => 'Home']);
+	}
+
+	public function newhome() {
+		return view('home.newhome', ['title' => 'Home']);
+	}
+
+	public function gameon() {
+		return view('home.gameon', ['title' => 'Game On: A Super Story']);
 	}
 
 	public function robots() {
